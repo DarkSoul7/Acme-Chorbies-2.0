@@ -30,16 +30,10 @@
 				<li><a href="searchTemplate/listCachedTime.do"><spring:message code="master.page.cachedTime.list" /></a></li>
 				<li><a href="administrator/chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
 				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message	code="master.page.administrator.dashboard" /><span class="caret"></span></a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu inverse-dropdown">
 						<li><a href="administrator/dashboardC.do"><spring:message code="master.page.administrator.dashboradC" /></a></li>
 						<li><a href="administrator/dashboardB.do"><spring:message code="master.page.administrator.dashboradB" /></a></li>
 						<li><a href="administrator/dashboardA.do"><spring:message code="master.page.administrator.dashboradA" /></a></li>
-					</ul>
-				</li>
-				
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 					</ul>
 				</li>
 			</security:authorize>
@@ -47,30 +41,42 @@
 			<security:authorize access="hasRole('CHORBI')">
 				<li><a href="chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
 				<li><a href="searchTemplate/list.do"><spring:message code="master.page.searchTemplate" /></a></li>
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.messagingSystem" /><span class="caret"></span></a>
-					<ul class="dropdown-menu">
+				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.messagingSystem" /><span class="caret"></span></a>
+					<ul class="dropdown-menu inverse-dropdown">
 						<li><a href="chirp/send.do"><spring:message code="master.page.messagingSystem.send" /></a></li>
 						<li><a href="chirp/sentChirps.do"><spring:message code="master.page.messagingSystem.sentChirps" /></a></li>
 						<li><a href="chirp/receivedChirps.do"><spring:message code="master.page.messagingSystem.receivedChirps" /></a></li>
 					</ul>
 				</li>
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="chorbi/edit.do"><spring:message code="master.page.edit.chorbi" /></a></li>	
-						<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
-					</ul>
-				</li>
-			</security:authorize>
-			
-			<security:authorize access="isAnonymous()">
-				<li><a href="security/login.do"><spring:message code="master.page.login" /></a></li>
-				<li><a href="chorbi/register.do"><spring:message code="master.page.chorbi.register" /></a></li>
 			</security:authorize>
 		</ul>
-		<div style="padding-top:6px">
-			<a href="?language=en"><img src="images/us.svg" style="height: 15px;" /></a>
-			<br>
-			<a href="?language=es"><img src="images/es.svg" style="height: 15px;" /></a>
+		
+		<div>
+			<div class="nav navbar-nav navbar-right" style="padding-top:8px; padding-right:6px; padding-left:6px;">
+				<a href="?language=es"><img src="images/es.svg" style="height: 15px;" /></a>
+				<span style="border-top: 6px solid #333; height: 1px;display: block;"></span>
+				<a href="?language=en"><img src="images/us.svg" style="height: 15px;" /></a>
+			</div>
+			<security:authorize access="isAnonymous()">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="chorbi/register.do"><span class="glyphicon glyphicon-user"></span> <spring:message code="master.page.chorbi.register" /></a></li>
+					<li><a href="security/login.do"><span class="glyphicon glyphicon-log-in"></span> <spring:message code="master.page.login" /></a></li>
+				</ul>
+			</security:authorize>
+			<security:authorize access="isAuthenticated()">
+				<div class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav">
+						<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <spring:message code="master.page.profile" /> (<security:authentication property="principal.username" />)<span class="caret"></span></a>
+							<ul class="dropdown-menu inverse-dropdown">
+								<security:authorize access="hasRole('CHORBI')">
+									<li><a href="chorbi/edit.do"><span class="glyphicon glyphicon-edit"></span> <spring:message code="master.page.edit.chorbi" /></a></li>	
+								</security:authorize>
+								<li><a href="j_spring_security_logout"><span class="glyphicon glyphicon-log-out"></span> <spring:message code="master.page.logout" /> </a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</security:authorize>
 		</div>
 	</div>
 </div>
