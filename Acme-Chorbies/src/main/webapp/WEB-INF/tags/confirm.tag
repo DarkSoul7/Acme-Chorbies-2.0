@@ -20,15 +20,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<%--Script --%>
-<script type="text/javascript">
-	function askConfirm(msg, url) {
-		if (confirm(msg)) {
-			window.location.replace(url);
-		}
-	}
-</script>
-
 <%-- Attributes --%> 
  
 <%@ attribute name="code" required="true" %>
