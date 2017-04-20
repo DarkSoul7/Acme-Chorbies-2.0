@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.EventRepository;
 import domain.Event;
 import domain.Manager;
 import forms.EventForm;
+import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -58,6 +58,10 @@ public class EventService {
 		final EventForm result = new EventForm();
 
 		return result;
+	}
+
+	public void update(final Event event) {
+		this.eventRepository.save(event);
 	}
 
 	public Event save(final Event event) throws CheckDigitException {
@@ -137,4 +141,9 @@ public class EventService {
 
 		return result;
 	}
+
+	public Integer getExistChorbiInEvent(final int idEvent, final int idChorbi) {
+		return this.eventRepository.getExistChorbiInEvent(idEvent, idChorbi);
+	}
+
 }

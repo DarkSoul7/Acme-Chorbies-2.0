@@ -29,6 +29,9 @@
 		<bean class="converters.ChorbiToStringConverter" />
 		<bean class="converters.LikeToStringConverter" />
 		<bean class="converters.SearchTemplateToStringConverter" />
+		<bean class="converters.EventToStringConverter" />
+		<bean class="converters.FeeToStringConverter" />
+		<bean class="converters.ManagerToStringConverter" />
 		
 		<bean class="converters.StringToActorConverter" />
 		<bean class="converters.StringToAdministratorConverter" />
@@ -37,6 +40,10 @@
 		<bean class="converters.StringToChorbiConverter" />
 		<bean class="converters.StringToLikeConverter" />
 		<bean class="converters.StringToSearchTemplateConverter" />
+		<bean class="converters.StringToFeeConverter" />
+		<bean class="converters.StringToEventConverter" />
+		<bean class="converters.StringToManagerConverter" />
+		
 	</util:list>
 	
 </beans>

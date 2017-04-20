@@ -20,18 +20,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.CreditCard;
+import domain.Event;
 import domain.Like;
 import domain.SearchTemplate;
 import forms.ChorbiForm;
 import forms.ChorbiListForm;
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -48,6 +49,9 @@ public class ChorbiService {
 
 	@Autowired
 	private SearchTemplateService	searchTemplateService;
+
+	@Autowired
+	private EventService			eventService;
 
 	@Autowired
 	private Validator				validator;
@@ -477,6 +481,41 @@ public class ChorbiService {
 		chorbi.setPhone("***");
 
 		return chorbi;
+	}
+
+	public Collection<Event> getEventsRegister() {
+		return this.findByPrincipal().getEvents();
+	}
+
+	public void registerInEvent(final int idEvent) {
+		final Event event = this.eventService.findOne(idEvent);
+
+		final Chorbi chorbi = this.findByPrincipal();
+
+		Assert.notNull(event);
+		Assert.isTrue(event.getSeatsNumber() > 0);
+		Assert.isTrue(this.eventService.getExistChorbiInEvent(event.getId(), chorbi.getId()) == 0);
+
+		chorbi.getEvents().add(event);
+		event.setSeatsNumber(event.getSeatsNumber() - 1);
+
+		this.chorbiRepository.save(chorbi);
+		this.eventService.update(event);
+	}
+
+	public void unRegisterInEvent(final int idEvent) {
+		final Event event = this.eventService.findOne(idEvent);
+		final Actor actor = this.findByPrincipal();
+
+		Assert.notNull(event);
+		Assert.isTrue(this.eventService.getExistChorbiInEvent(event.getId(), actor.getId()) == 0);
+
+		final Chorbi chorbi = this.chorbiRepository.findByUserAccountId(actor.getUserAccount().getId());
+		chorbi.getEvents().remove(event);
+		event.setSeatsNumber(event.getSeatsNumber() + 1);
+
+		this.chorbiRepository.save(chorbi);
+		this.eventService.update(event);
 	}
 
 	// DashBoard
