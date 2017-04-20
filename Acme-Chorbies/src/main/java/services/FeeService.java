@@ -55,4 +55,8 @@ public class FeeService {
 		return result;
 	}
 
+	public Fee getFee() {
+		return this.feeRepository.getFee();
+	}
+
 }

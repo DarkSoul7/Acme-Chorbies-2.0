@@ -26,6 +26,7 @@ import domain.Chorbi;
 import domain.CreditCard;
 import domain.Event;
 import domain.Like;
+import domain.Manager;
 import domain.SearchTemplate;
 import forms.ChorbiForm;
 import forms.ChorbiListForm;
@@ -614,5 +615,9 @@ public class ChorbiService {
 
 	public Collection<Chorbi> getChorbiMoreGotChirp() {
 		return this.chorbiRepository.getChorbiMoreGotChirp();
+	}
+
+	public Collection<Manager> listOfChorbiesOrderByEvents() {
+		return this.chorbiRepository.listOfChorbiesOrderByEvents();
 	}
 }

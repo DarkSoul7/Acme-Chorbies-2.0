@@ -35,6 +35,9 @@ public class EventService {
 	@Autowired
 	private ChirpService	chirpService;
 
+	@Autowired
+	private FeeService		feeService;
+
 
 	//Constructor
 
@@ -138,6 +141,7 @@ public class EventService {
 		result.setPicture(eventForm.getPicture());
 		result.setSeatsNumber(eventForm.getSeatsNumber());
 		result.setTitle(eventForm.getTitle());
+		result.setAmount(this.feeService.getFee().getAmount());
 
 		return result;
 	}

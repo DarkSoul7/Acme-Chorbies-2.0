@@ -15,6 +15,8 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+
+	
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
@@ -654,6 +656,7 @@
 		<property name="description" value="Quedada en el parque del Retiro en el que conocer amigos o quién sabe si algo más. ¡¡No desaproveches la oportunidad!!" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3114/2498673283_655a3024a2_b.jpg" />
 		<property name="seatsNumber" value="60" />
+		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager1"/>
 		<property name="chorbies">
 			<list>
@@ -669,6 +672,7 @@
 		<property name="description" value="El evento se realizará en Paseo de Colón junto a los bares de copa. Ven y dispondrás de una consumición gratuita" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3707/8998612414_52bf87eed8_b.jpg" />
 		<property name="seatsNumber" value="20" />
+		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager1"/>
 		<property name="chorbies">
 			<list>
@@ -685,6 +689,7 @@
 		<property name="description" value="Disfruta de una noche inolvidable con nosotros en la que sin duda alguna repetiras... Y lo sabes!!" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3840/14649445351_305dd81632_b.jpg" />
 		<property name="seatsNumber" value="30" />
+		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager2"/>
 		<property name="chorbies">
 			<list>
@@ -693,5 +698,10 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!--  FEE --> 
+	<bean id="fee1" class="domain.Fee">
+  		<property name="amount" value="1.0" /> 
+  	</bean>
 	
 </beans>
