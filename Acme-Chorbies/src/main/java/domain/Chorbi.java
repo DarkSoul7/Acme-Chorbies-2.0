@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -146,7 +147,17 @@ public class Chorbi extends Actor {
 	private Collection<Chirp>	sentChirps;
 	private Collection<Chirp>	receivedChirps;
 	private SearchTemplate		searchTemplate;
+	private Collection<Event>	events;
 
+
+	@ManyToMany(mappedBy = "chorbies")
+	public Collection<Event> getEvents() {
+		return this.events;
+	}
+
+	public void setEvents(final Collection<Event> events) {
+		this.events = events;
+	}
 
 	@Valid
 	@OneToMany(mappedBy = "author")

@@ -81,6 +81,42 @@
 		</property>
 	</bean>
 	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="manager1" />
+		<property name="password" value="c240642ddef994358c96da82c0361a58" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="manager2" />
+		<property name="password" value="8df5127cd164b5bc2d2b78410a7eea0c" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="manager3" />
+		<property name="password" value="2d3a5db4a2a9717b43698520a8de57d0" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- Other domain beans come here -->	
 	
 	<!-- ADMINISTRATORS -->
@@ -248,6 +284,56 @@
 		</property>
 	</bean>
 	
+	<!-- MANAGERS -->
+	
+	<bean id="manager1" class="domain.Manager">
+		<property name="name" value="Manolo" />
+		<property name="surname" value="López Sierra" />
+		<property name="phone" value="655232149" />
+		<property name="email" value="manlopsie@acme.com" />
+		<property name="companyName" value="Mietic" />
+		<property name="vatNumber" value="21" />
+		<property name="userAccount" ref="userAccount6" />
+		<property name="creditCard" ref="creditCard4" />
+		<property name="events">
+			<list>
+				<ref bean="event1"/>
+				<ref bean="event2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="manager2" class="domain.Manager">
+		<property name="name" value="Juan" />
+		<property name="surname" value="Gálvez Montoro" />
+		<property name="phone" value="655213254" />
+		<property name="email" value="jugalmon@acme.com" />
+		<property name="companyName" value="uDarling" />
+		<property name="vatNumber" value="21" />
+		<property name="userAccount" ref="userAccount7" />
+		<property name="creditCard" ref="creditCard5" />
+		<property name="events">
+			<list>
+				<ref bean="event3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="manager3" class="domain.Manager">
+		<property name="name" value="Sandra" />
+		<property name="surname" value="Román Salido" />
+		<property name="phone" value="655232147" />
+		<property name="email" value="sanromsal@acme.com" />
+		<property name="companyName" value="FireLife" />
+		<property name="vatNumber" value="21" />
+		<property name="userAccount" ref="userAccount8" />
+		<property name="creditCard" ref="creditCard6" />
+		<property name="events">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- COORDINATES -->
 	
 	<bean id="coordinates1" class="domain.Coordinates">
@@ -312,6 +398,33 @@
 		<property name="expirationMonth" value="01" />
 		<property name="expirationYear" value="2018" />
 		<property name="cvv" value="195" />
+	</bean>
+	
+	<bean id="creditCard4" class="domain.CreditCard">
+		<property name="holderName" value="Manolo López Sierra" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4115478837075540" />
+		<property name="expirationMonth" value="05" />
+		<property name="expirationYear" value="2019" />
+		<property name="cvv" value="412" />
+	</bean>
+	
+	<bean id="creditCard5" class="domain.CreditCard">
+		<property name="holderName" value="Juan Gálvez Montoro" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4898629984922727" />
+		<property name="expirationMonth" value="01" />
+		<property name="expirationYear" value="2022" />
+		<property name="cvv" value="902" />
+	</bean>
+	
+	<bean id="creditCard6" class="domain.CreditCard">
+		<property name="holderName" value="Sandra Román Salido" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4879933036791624" />
+		<property name="expirationMonth" value="02" />
+		<property name="expirationYear" value="2019" />
+		<property name="cvv" value="202" />
 	</bean>
 	
 	<!-- CHIRPS -->
@@ -527,6 +640,54 @@
 		<property name="cachedHour" value="12" />
 		<property name="cachedMinute" value="0" />
 		<property name="cachedSecond" value="0" />
+	</bean>
+	
+	<!-- EVENTS -->
+	
+	<bean id="event1" class="domain.Event">
+		<property name="title" value="Actividades entre amigos y algo más" />
+		<property name="moment" value="07/09/2017 12:30" />
+		<property name="description" value="Quedada en el parque del Retiro en el que conocer amigos o quién sabe si algo más. ¡¡No desaproveches la oportunidad!!" />
+		<property name="picture" value="https://c1.staticflickr.com/4/3114/2498673283_655a3024a2_b.jpg" />
+		<property name="seatsNumber" value="60" />
+		<property name="manager" ref="manager1"/>
+		<property name="chorbies">
+			<list>
+				<ref bean="chorbi1"/>
+				<ref bean="chorbi2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="event2" class="domain.Event">
+		<property name="title" value="La mejor tarde de tu vida en la mejor compañía" />
+		<property name="moment" value="25/08/2017 19:30" />
+		<property name="description" value="El evento se realizará en Paseo de Colón junto a los bares de copa. Ven y dispondrás de una consumición gratuita" />
+		<property name="picture" value="https://c1.staticflickr.com/4/3707/8998612414_52bf87eed8_b.jpg" />
+		<property name="seatsNumber" value="20" />
+		<property name="manager" ref="manager1"/>
+		<property name="chorbies">
+			<list>
+				<ref bean="chorbi1"/>
+				<ref bean="chorbi3"/>
+				<ref bean="chorbi4"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="event3" class="domain.Event">
+		<property name="title" value="Cambia tus planes por nosotros y mejora tu noche" />
+		<property name="moment" value="25/07/2017 21:30" />
+		<property name="description" value="Disfruta de una noche inolvidable con nosotros en la que sin duda alguna repetiras... Y lo sabes!!" />
+		<property name="picture" value="https://c1.staticflickr.com/4/3840/14649445351_305dd81632_b.jpg" />
+		<property name="seatsNumber" value="30" />
+		<property name="manager" ref="manager2"/>
+		<property name="chorbies">
+			<list>
+				<ref bean="chorbi2"/>
+				<ref bean="chorbi3"/>
+			</list>
+		</property>
 	</bean>
 	
 </beans>
