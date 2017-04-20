@@ -554,6 +554,7 @@
 	<bean id="like1" class="domain.Like">
 		<property name="comment" value="Hola guapi, pues sí que quiero..." />
 		<property name="moment" value="03/30/2017 15:30" />
+		<property name="stars" value="2" />
 		<property name="author" ref="chorbi1" />
 		<property name="receiver" ref="chorbi3" />
 	</bean>
@@ -561,6 +562,7 @@
 	<bean id="like2" class="domain.Like">
 		<property name="comment" value="" />
 		<property name="moment" value="03/14/2017 21:47" />
+		<property name="stars" value="2" />
 		<property name="author" ref="chorbi1" />
 		<property name="receiver" ref="chorbi2" />
 	</bean>
@@ -568,6 +570,7 @@
 	<bean id="like3" class="domain.Like">
 		<property name="comment" value="Quiero jugar a un juego..." />
 		<property name="moment" value="03/25/2017 01:25" />
+		<property name="stars" value="3" />
 		<property name="author" ref="chorbi3" />
 		<property name="receiver" ref="chorbi2" />
 	</bean>
@@ -575,6 +578,7 @@
 	<bean id="like4" class="domain.Like">
 		<property name="comment" value="" />
 		<property name="moment" value="03/01/2017 07:39" />
+		<property name="stars" value="1" />
 		<property name="author" ref="chorbi2" />
 		<property name="receiver" ref="chorbi1" />
 	</bean>

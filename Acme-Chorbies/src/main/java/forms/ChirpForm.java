@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
-import domain.Chorbi;
+import domain.Actor;
 
 public class ChirpForm {
 
@@ -16,7 +16,7 @@ public class ChirpForm {
 	private String	subject;
 	private String	text;
 	private String	attachments;
-	private Chorbi	receiver;
+	private Actor	receiver;
 	private Integer	parentChirpId;
 
 
@@ -58,11 +58,11 @@ public class ChirpForm {
 
 	@Valid
 	@NotNull
-	public Chorbi getReceiver() {
+	public Actor getReceiver() {
 		return this.receiver;
 	}
 
-	public void setReceiver(final Chorbi receiver) {
+	public void setReceiver(final Actor receiver) {
 		this.receiver = receiver;
 	}
 

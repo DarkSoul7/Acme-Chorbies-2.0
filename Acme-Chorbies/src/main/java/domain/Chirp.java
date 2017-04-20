@@ -93,29 +93,29 @@ public class Chirp extends DomainEntity {
 
 	//RellationShips
 
-	private Chorbi	sender;
-	private Chorbi	receiver;
+	private Actor	sender;
+	private Actor	receiver;
 	private Chirp	childChirp;
 	private Chirp	parentChirp;
 
 
 	@Valid
 	@ManyToOne(optional = false)
-	public Chorbi getSender() {
+	public Actor getSender() {
 		return this.sender;
 	}
 
-	public void setSender(final Chorbi sender) {
+	public void setSender(final Actor sender) {
 		this.sender = sender;
 	}
 
 	@Valid
 	@ManyToOne(optional = false)
-	public Chorbi getReceiver() {
+	public Actor getReceiver() {
 		return this.receiver;
 	}
 
-	public void setReceiver(final Chorbi receiver) {
+	public void setReceiver(final Actor receiver) {
 		this.receiver = receiver;
 	}
 
