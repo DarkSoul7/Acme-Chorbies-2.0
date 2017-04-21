@@ -37,6 +37,7 @@ public class Event extends DomainEntity {
 	private String	description;
 	private String	picture;
 	private int		seatsNumber;
+	private double	amount;
 
 
 	//Constructor
@@ -98,6 +99,14 @@ public class Event extends DomainEntity {
 
 	public void setSeatsNumber(final int seatsNumber) {
 		this.seatsNumber = seatsNumber;
+	}
+
+	public double getAmount() {
+		return this.amount;
+	}
+
+	public void setAmount(final double amount) {
+		this.amount = amount;
 	}
 
 

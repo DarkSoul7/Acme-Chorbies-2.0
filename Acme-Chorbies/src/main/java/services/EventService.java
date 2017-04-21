@@ -37,11 +37,12 @@ public class EventService {
 	private ChirpService			chirpService;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private FeeService				feeService;
 
 	@Autowired
-	private FeeService		feeService;
-	
+	private AdministratorService	administratorService;
+
+
 	//Constructor
 
 	public EventService() {
@@ -65,7 +66,6 @@ public class EventService {
 
 		return result;
 	}
-	
 	public void update(final Event event) {
 		this.eventRepository.save(event);
 	}
@@ -145,10 +145,9 @@ public class EventService {
 		result.setSeatsNumber(eventForm.getSeatsNumber());
 		result.setTitle(eventForm.getTitle());
 		result.setAmount(this.feeService.getFee().getAmount());
-		
 		return result;
 	}
-	
+
 	public Integer getExistChorbiInEvent(final int idEvent, final int idChorbi) {
 		return this.eventRepository.getExistChorbiInEvent(idEvent, idChorbi);
 	}
@@ -158,4 +157,5 @@ public class EventService {
 		this.administratorService.findByPrincipal();
 		return 2.0;
 	}
+
 }

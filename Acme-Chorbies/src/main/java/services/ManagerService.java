@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Manager;
 import repositories.ManagerRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Manager;
 
 @Service
 @Transactional
@@ -20,10 +20,10 @@ public class ManagerService {
 
 	//Managed repository
 	@Autowired
-	private ManagerRepository	managerRepository;
-
+	private ManagerRepository managerRepository;
 
 	//Supported services
+
 
 	//Constructor
 	public ManagerService() {
@@ -75,5 +75,11 @@ public class ManagerService {
 		result = this.managerRepository.findByUserName(username);
 
 		return result;
+	}
+
+	//DASHBOARD
+
+	public Collection<Manager> listOfManagerOrderByEvents() {
+		return this.managerRepository.listOfManagerOrderByEvents();
 	}
 }
