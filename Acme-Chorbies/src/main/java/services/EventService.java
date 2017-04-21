@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -152,7 +153,20 @@ public class EventService {
 	public double getChorbiFeeMonthlyAmount(final Chorbi chorbi) {
 		Assert.notNull(chorbi);
 		this.administratorService.findByPrincipal();
-		final Collection<Event> events = this.eventRepository.getEventsNotFinishedByChorbi(chorbi.getId());
+		final DateTime now = new DateTime();
+		final Calendar limitDateMinusMonth = Calendar.getInstance();
+
+		//1-(month - 1)-year
+		if (now.getMonthOfYear() == 1)
+			limitDateMinusMonth.set(now.getYear() - 1, 12, 1);
+		else
+			limitDateMinusMonth.set(now.getYear(), now.getMonthOfYear() - 1, 1);
+
+		//1-month-year
+		final Calendar limitDate = Calendar.getInstance();
+		limitDate.set(now.getYear(), now.getMonthOfYear(), 1);
+
+		final Collection<Event> events = this.eventRepository.getEventsNotFinishedByChorbi(chorbi.getId(), limitDateMinusMonth.getTime(), limitDate.getTime());
 		double result = 0.0;
 
 		for (final Event event : events)

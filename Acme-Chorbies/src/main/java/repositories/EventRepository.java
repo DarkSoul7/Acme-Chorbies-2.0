@@ -25,6 +25,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 	@Query("select count(e) from Chorbi c join c.events e where e.id=?1 and c.id=?2")
 	public Integer getExistChorbiInEvent(int idEvent, int idChorbi);
 
-	@Query("select e from Event e join e.chorbies c where e.moment > current_date and c.id = ?1")
-	public Collection<Event> getEventsNotFinishedByChorbi(int chorbiId);
+	@Query("select e from Event e join e.chorbies c where e.moment between ?2 and ?3 and c.id = ?1")
+	public Collection<Event> getEventsNotFinishedByChorbi(int chorbiId, Date limitDateMinusMonth, Date limitDate);
 }
