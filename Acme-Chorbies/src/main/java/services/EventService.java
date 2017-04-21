@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.EventRepository;
+import domain.Chorbi;
 import domain.Event;
 import domain.Manager;
 import forms.EventForm;
@@ -22,20 +23,25 @@ public class EventService {
 
 	//Managed repository
 	@Autowired
-	private EventRepository	eventRepository;
+	private EventRepository			eventRepository;
 
 	//Supported services
 
 	@Autowired
-	private ManagerService	managerService;
+	private ManagerService			managerService;
 
 	@Autowired
-	private ChorbiService	chorbiService;
+	private ChorbiService			chorbiService;
 
 	@Autowired
-	private ChirpService	chirpService;
+	private ChirpService			chirpService;
 
+	@Autowired
+	private AdministratorService	administratorService;
 
+	@Autowired
+	private FeeService		feeService;
+	
 	//Constructor
 
 	public EventService() {
@@ -58,6 +64,10 @@ public class EventService {
 		final EventForm result = new EventForm();
 
 		return result;
+	}
+	
+	public void update(final Event event) {
+		this.eventRepository.save(event);
 	}
 
 	public Event save(final Event event) throws CheckDigitException {
@@ -134,7 +144,18 @@ public class EventService {
 		result.setPicture(eventForm.getPicture());
 		result.setSeatsNumber(eventForm.getSeatsNumber());
 		result.setTitle(eventForm.getTitle());
-
+		result.setAmount(this.feeService.getFee().getAmount());
+		
 		return result;
+	}
+	
+	public Integer getExistChorbiInEvent(final int idEvent, final int idChorbi) {
+		return this.eventRepository.getExistChorbiInEvent(idEvent, idChorbi);
+	}
+
+	public double getChorbiFeeMonthlyAmount(final Chorbi chorbi) {
+		Assert.notNull(chorbi);
+		this.administratorService.findByPrincipal();
+		return 2.0;
 	}
 }
