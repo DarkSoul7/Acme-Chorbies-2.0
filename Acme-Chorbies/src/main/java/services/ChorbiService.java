@@ -581,4 +581,8 @@ public class ChorbiService {
 	public Collection<Manager> listOfChorbiesOrderByEvents() {
 		return this.chorbiRepository.listOfChorbiesOrderByEvents();
 	}
+
+	public Collection<Object[]> listOfChorbiesAndFee() {
+		return this.chorbiRepository.listOfChorbiesAndFee();
+	}
 }

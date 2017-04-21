@@ -22,4 +22,8 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 	@Query("select m from Manager m order by m.events.size")
 	public Collection<Manager> listOfManagerOrderByEvents();
 
+	//C2
+	@Query("select e.manager,sum(e.amount) from Event e group by e.manager")
+	public Collection<Object[]> listOfManagerAndFee();
+
 }

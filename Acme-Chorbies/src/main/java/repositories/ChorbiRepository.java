@@ -153,4 +153,8 @@ public interface ChorbiRepository extends JpaRepository<Chorbi, Integer> {
 	//C3
 	@Query("select c from Chorbi c order by c.events.size")
 	public Collection<Manager> listOfChorbiesOrderByEvents();
+
+	//C4
+	@Query("select c,sum(e.amount) from Event e join e.chorbies c group by c")
+	public Collection<Object[]> listOfChorbiesAndFee();
 }

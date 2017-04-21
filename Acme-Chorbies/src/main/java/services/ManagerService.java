@@ -82,4 +82,8 @@ public class ManagerService {
 	public Collection<Manager> listOfManagerOrderByEvents() {
 		return this.managerRepository.listOfManagerOrderByEvents();
 	}
+
+	public Collection<Object[]> listOfManagerAndFee() {
+		return this.managerRepository.listOfManagerAndFee();
+	}
 }
