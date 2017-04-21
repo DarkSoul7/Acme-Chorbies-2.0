@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.EventRepository;
 import domain.Chorbi;
 import domain.Event;
 import domain.Manager;
 import forms.EventForm;
+import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -65,9 +65,6 @@ public class EventService {
 		final EventForm result = new EventForm();
 
 		return result;
-	}
-	public void update(final Event event) {
-		this.eventRepository.save(event);
 	}
 
 	public Event save(final Event event) throws CheckDigitException {
@@ -156,6 +153,34 @@ public class EventService {
 		Assert.notNull(chorbi);
 		this.administratorService.findByPrincipal();
 		return 2.0;
+	}
+
+	public Collection<Event> getEventsRegister() {
+		return this.chorbiService.findByPrincipal().getEvents();
+	}
+
+	public void registerInEvent(final Event event) {
+
+		final Chorbi chorbi = this.chorbiService.findByPrincipal();
+
+		Assert.notNull(event);
+		Assert.isTrue(event.getSeatsNumber() > event.getChorbies().size());
+		Assert.isTrue(this.getExistChorbiInEvent(event.getId(), chorbi.getId()) == 0);
+
+		event.getChorbies().add(chorbi);
+
+		this.eventRepository.save(event);
+	}
+
+	public void unRegisterInEvent(final Event event) {
+		final Chorbi chorbi = this.chorbiService.findByPrincipal();
+
+		Assert.notNull(event);
+		Assert.isTrue(this.getExistChorbiInEvent(event.getId(), chorbi.getId()) == 0);
+
+		event.getChorbies().remove(chorbi);
+
+		this.eventRepository.save(event);
 	}
 
 }
