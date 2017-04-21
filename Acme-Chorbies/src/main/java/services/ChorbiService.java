@@ -51,9 +51,6 @@ public class ChorbiService {
 	private SearchTemplateService	searchTemplateService;
 
 	@Autowired
-	private EventService			eventService;
-
-	@Autowired
 	private Validator				validator;
 
 

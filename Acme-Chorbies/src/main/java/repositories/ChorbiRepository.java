@@ -155,10 +155,9 @@ public interface ChorbiRepository extends JpaRepository<Chorbi, Integer> {
 	public Collection<Manager> listOfChorbiesOrderByEvents();
 
 	//C4
-		@Query("select c,sum(e.amount) from Event e join e.chorbies c group by c")
-		public Collection<Object[]> listOfChorbiesAndFee();
-	
-	
+	@Query("select c,sum(e.amount) from Event e join e.chorbies c group by c")
+	public Collection<Object[]> listOfChorbiesAndFee();
+
 	//B1
 	//a)
 	@Query("select sum(l.stars) from Like l group by l.receiver having sum(l.stars) <= all(select sum(l2.stars) from Like l2 group by l2.receiver)")

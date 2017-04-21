@@ -160,7 +160,7 @@ public class EventService {
 
 		return result;
 	}
-	
+
 	public Collection<Event> getEventsRegister() {
 		return this.chorbiService.findByPrincipal().getEvents();
 	}
