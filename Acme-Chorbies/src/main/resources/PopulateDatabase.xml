@@ -703,5 +703,38 @@
 	<bean id="fee1" class="domain.Fee">
   		<property name="amount" value="1.0" /> 
   	</bean>
+  	
+  	<!-- INVOICES -->
+	<bean id="invoice1" class="domain.Invoice">
+  		<property name="openPeriod" value="1/2/2017" />
+		<property name="endPeriod" value="1/3/2017" />
+  		<property name="amount" value="2.0" /> 
+  		<property name="paid" value="true"/>
+  		<property name="chorbi" ref="chorbi1"/> 
+  	</bean>
+  	
+  	<bean id="invoice2" class="domain.Invoice">
+  		<property name="openPeriod" value="1/2/2017" />
+		<property name="endPeriod" value="1/3/2017" />
+  		<property name="amount" value="2.0" /> 
+  		<property name="paid" value="true"/>
+  		<property name="chorbi" ref="chorbi2"/> 
+  	</bean>
+  	
+  	<bean id="invoice3" class="domain.Invoice">
+  		<property name="openPeriod" value="1/2/2017" />
+		<property name="endPeriod" value="1/3/2017" />
+  		<property name="amount" value="2.0" /> 
+  		<property name="paid" value="true"/>
+  		<property name="chorbi" ref="chorbi3"/> 
+  	</bean>
+  	
+  	<bean id="invoice4" class="domain.Invoice">
+  		<property name="openPeriod" value="1/2/2017" />
+		<property name="endPeriod" value="1/3/2017" />
+  		<property name="amount" value="1.0" /> 
+  		<property name="paid" value="false"/>
+  		<property name="chorbi" ref="chorbi4"/> 
+  	</bean>
 	
 </beans>

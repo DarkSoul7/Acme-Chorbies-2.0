@@ -148,7 +148,18 @@ public class Chorbi extends Actor {
 	private Collection<Chirp>	receivedChirps;
 	private SearchTemplate		searchTemplate;
 	private Collection<Event>	events;
+	private Collection<Invoice>	invoices;
 
+
+	@Valid
+	@OneToMany(mappedBy = "chorbi")
+	public Collection<Invoice> getInvoices() {
+		return this.invoices;
+	}
+
+	public void setInvoices(final Collection<Invoice> invoices) {
+		this.invoices = invoices;
+	}
 
 	@ManyToMany(mappedBy = "chorbies")
 	public Collection<Event> getEvents() {
