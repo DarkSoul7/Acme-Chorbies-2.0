@@ -64,4 +64,8 @@ public class EventChorbiService {
 
 		return result;
 	}
+
+	public double getMonhtlyFeeAmountByChorbiAndDate(final Date openPeriod, final Date endPeriod, final Chorbi chorbi) {
+		return this.eventChorbiRepository.getMonhtlyFeeAmountByChorbiAndDate(openPeriod, endPeriod, chorbi.getId());
+	}
 }
