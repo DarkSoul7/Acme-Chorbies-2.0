@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -142,13 +141,13 @@ public class Chorbi extends Actor {
 
 	//RelationShips
 
-	private Collection<Like>	authoredLikes;
-	private Collection<Like>	receivedLikes;
-	private Collection<Chirp>	sentChirps;
-	private Collection<Chirp>	receivedChirps;
-	private SearchTemplate		searchTemplate;
-	private Collection<Event>	events;
-	private Collection<Invoice>	invoices;
+	private Collection<Like>		authoredLikes;
+	private Collection<Like>		receivedLikes;
+	private Collection<Chirp>		sentChirps;
+	private Collection<Chirp>		receivedChirps;
+	private SearchTemplate			searchTemplate;
+	private Collection<EventChorbi>	eventChorbies;
+	private Collection<Invoice>		invoices;
 
 
 	@Valid
@@ -159,15 +158,6 @@ public class Chorbi extends Actor {
 
 	public void setInvoices(final Collection<Invoice> invoices) {
 		this.invoices = invoices;
-	}
-
-	@ManyToMany(mappedBy = "chorbies")
-	public Collection<Event> getEvents() {
-		return this.events;
-	}
-
-	public void setEvents(final Collection<Event> events) {
-		this.events = events;
 	}
 
 	@Valid
@@ -218,6 +208,16 @@ public class Chorbi extends Actor {
 
 	public void setSearchTemplate(final SearchTemplate searchTemplate) {
 		this.searchTemplate = searchTemplate;
+	}
+
+	@Valid
+	@OneToMany(mappedBy = "chorbi")
+	public Collection<EventChorbi> getEventChorbies() {
+		return this.eventChorbies;
+	}
+
+	public void setEventChorbies(final Collection<EventChorbi> eventChorbies) {
+		this.eventChorbies = eventChorbies;
 	}
 
 }

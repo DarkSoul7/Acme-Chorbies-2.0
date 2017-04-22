@@ -6,12 +6,9 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -112,8 +109,8 @@ public class Event extends DomainEntity {
 
 	//RelationShips
 
-	private Manager				manager;
-	private Collection<Chorbi>	chorbies;
+	private Manager					manager;
+	private Collection<EventChorbi>	eventChorbies;
 
 
 	@Valid
@@ -127,14 +124,13 @@ public class Event extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "event_chorbi", joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "chorbi_id", referencedColumnName = "id"))
-	public Collection<Chorbi> getChorbies() {
-		return this.chorbies;
+	@OneToMany(mappedBy = "event")
+	public Collection<EventChorbi> getEventChorbies() {
+		return this.eventChorbies;
 	}
 
-	public void setChorbies(final Collection<Chorbi> chorbies) {
-		this.chorbies = chorbies;
+	public void setEventChorbies(final Collection<EventChorbi> eventChorbies) {
+		this.eventChorbies = eventChorbies;
 	}
 
 }

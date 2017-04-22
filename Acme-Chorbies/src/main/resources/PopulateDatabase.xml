@@ -658,12 +658,6 @@
 		<property name="seatsNumber" value="60" />
 		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager1"/>
-		<property name="chorbies">
-			<list>
-				<ref bean="chorbi1"/>
-				<ref bean="chorbi2"/>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="event2" class="domain.Event">
@@ -674,13 +668,6 @@
 		<property name="seatsNumber" value="20" />
 		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager1"/>
-		<property name="chorbies">
-			<list>
-				<ref bean="chorbi1"/>
-				<ref bean="chorbi3"/>
-				<ref bean="chorbi4"/>
-			</list>
-		</property>
 	</bean>
 	
 	<bean id="event3" class="domain.Event">
@@ -691,12 +678,6 @@
 		<property name="seatsNumber" value="30" />
 		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager2"/>
-		<property name="chorbies">
-			<list>
-				<ref bean="chorbi2"/>
-				<ref bean="chorbi3"/>
-			</list>
-		</property>
 	</bean>
 	
 	<!--  FEE --> 
@@ -735,6 +716,50 @@
   		<property name="amount" value="1.0" /> 
   		<property name="paid" value="false"/>
   		<property name="chorbi" ref="chorbi4"/> 
+  	</bean>
+  	
+  	<!--  EventChorbi -->
+  	
+  	<bean id="eventChorbi1" class="domain.EventChorbi">
+  		<property name="momentSubscribed" value="1/2/2017" />
+		<property name="chorbi" ref="chorbi1" />
+  		<property name="event" ref="event1" /> 
+  	</bean>
+  	
+  	<bean id="eventChorbi2" class="domain.EventChorbi">
+  		<property name="momentSubscribed" value="1/2/2017" />
+		<property name="chorbi" ref="chorbi2" />
+  		<property name="event" ref="event1" /> 
+  	</bean>
+  	
+  	<bean id="eventChorbi3" class="domain.EventChorbi">
+  		<property name="momentSubscribed" value="1/2/2017" />
+		<property name="chorbi" ref="chorbi1" />
+  		<property name="event" ref="event2" /> 
+  	</bean>
+  	
+  	<bean id="eventChorbi4" class="domain.EventChorbi">
+  		<property name="momentSubscribed" value="1/2/2017" />
+		<property name="chorbi" ref="chorbi3" />
+  		<property name="event" ref="event2" /> 
+  	</bean>
+  	
+  	<bean id="eventChorbi5" class="domain.EventChorbi">
+  		<property name="momentSubscribed" value="1/2/2017" />
+		<property name="chorbi" ref="chorbi4" />
+  		<property name="event" ref="event2" /> 
+  	</bean>
+	
+	<bean id="eventChorbi6" class="domain.EventChorbi">
+  		<property name="momentSubscribed" value="1/2/2017" />
+		<property name="chorbi" ref="chorbi2" />
+  		<property name="event" ref="event3" /> 
+  	</bean>
+  	
+  	<bean id="eventChorbi7" class="domain.EventChorbi">
+  		<property name="momentSubscribed" value="1/2/2017" />
+		<property name="chorbi" ref="chorbi3" />
+  		<property name="event" ref="event3" /> 
   	</bean>
 	
 </beans>

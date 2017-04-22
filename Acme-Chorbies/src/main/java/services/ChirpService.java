@@ -26,15 +26,18 @@ public class ChirpService {
 	//Managed repository
 
 	@Autowired
-	private ChirpRepository	chirpRepository;
+	private ChirpRepository		chirpRepository;
 
 	//Supported services
 
 	@Autowired
-	private ChorbiService	chorbiService;
+	private ChorbiService		chorbiService;
 
 	@Autowired
-	private ManagerService	managerService;
+	private ManagerService		managerService;
+
+	@Autowired
+	private EventChorbiService	eventChorbiService;
 
 
 	//Constructor
@@ -266,7 +269,8 @@ public class ChirpService {
 		final String editMessage = "The event in which you were subscribed has been updated";
 		final String deleteMessage = "The event in which you were subscribed has been deleted";
 		final Manager manager = this.managerService.findByPrincipal();
-		for (final Chorbi chorbi : event.getChorbies()) {
+		final Collection<Chorbi> chorbies = this.eventChorbiService.findChorbiesInEvent(event);
+		for (final Chorbi chorbi : chorbies) {
 			if (edited == true) {
 				chirp.setSubject("The event: " + event.getTitle() + " was edited");
 				chirp.setText(editMessage);

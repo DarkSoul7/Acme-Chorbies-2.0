@@ -3,6 +3,7 @@ package services;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +16,7 @@ import org.springframework.util.Assert;
 import repositories.EventRepository;
 import domain.Chorbi;
 import domain.Event;
+import domain.EventChorbi;
 import domain.Manager;
 import forms.EventForm;
 
@@ -42,6 +44,9 @@ public class EventService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private EventChorbiService		eventChorbiService;
 
 
 	//Constructor
@@ -150,7 +155,7 @@ public class EventService {
 		return this.eventRepository.getExistChorbiInEvent(idEvent, idChorbi);
 	}
 
-	public double getChorbiFeeMonthlyAmount(final Chorbi chorbi) {
+	public double getChorbiFeeMonthlyAmount(final Chorbi chorbi, final Date openPeriod, final Date endPeriod) {
 		Assert.notNull(chorbi);
 		this.administratorService.findByPrincipal();
 		final DateTime now = new DateTime();
@@ -176,7 +181,8 @@ public class EventService {
 	}
 
 	public Collection<Event> getEventsRegister() {
-		return this.chorbiService.findByPrincipal().getEvents();
+		final Chorbi chorbi = this.chorbiService.findByPrincipal();
+		return this.eventRepository.getEventsRegister(chorbi.getId());
 	}
 
 	public void registerInEvent(final Event event) {
@@ -184,12 +190,14 @@ public class EventService {
 		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 
 		Assert.notNull(event);
-		Assert.isTrue(event.getSeatsNumber() > event.getChorbies().size());
+		Assert.isTrue(event.getSeatsNumber() > event.getEventChorbies().size());
 		Assert.isTrue(this.getExistChorbiInEvent(event.getId(), chorbi.getId()) == 0);
 
-		event.getChorbies().add(chorbi);
+		final EventChorbi eventChorbi = this.eventChorbiService.create();
+		eventChorbi.setChorbi(chorbi);
+		eventChorbi.setEvent(event);
 
-		this.eventRepository.save(event);
+		this.eventChorbiService.save(eventChorbi);
 	}
 
 	public void unRegisterInEvent(final Event event) {
@@ -198,9 +206,9 @@ public class EventService {
 		Assert.notNull(event);
 		Assert.isTrue(this.getExistChorbiInEvent(event.getId(), chorbi.getId()) == 0);
 
-		event.getChorbies().remove(chorbi);
+		final EventChorbi eventChorbi = this.eventChorbiService.findEventChorbiByParameters(chorbi, event);
 
-		this.eventRepository.save(event);
+		this.eventChorbiService.delete(eventChorbi);
 	}
 
 }
