@@ -149,4 +149,96 @@
 	</display:table>
 </fieldset>
 
+<br>
+
+<fieldset>
+	<legend>
+		<b><spring:message code="dashboard.listOfManagerOrderByEvents" /></b>
+	</legend>
+	
+	<display:table name="listOfManagerOrderByEvents" uid="listOfManagerOrderByEvents" requestURI="administrator/dashboardC"
+		pagesize="5">
+		<spring:message code="dashboard.name" var="name" />
+		<display:column property="name" title="${name}" />
+
+		<spring:message code="dashboard.surname" var="surname" />
+		<display:column property="surname" title="${surname}" />
+
+		<spring:message code="dashboard.phone" var="phone" />
+		<display:column property="phone" title="${phone}" />
+
+		<spring:message code="dashboard.email" var="email" />
+		<display:column property="email" title="${email}" />
+	</display:table>
+</fieldset>
+
+<br>
+
+<fieldset>
+	<legend>
+		<b><spring:message code="dashboard.listOfManagerAndFee" /></b>
+	</legend>
+
+	<jstl:set var="i" value="0"></jstl:set>
+	<display:table name="listOfManagerAndFee" uid="listOfManagerAndFee"
+		requestURI="administrator/dashboardC" class="displaytag" pagesize="5">
+		<spring:message code="dashboard.managers" var="managers" />
+		<display:column title="${managers}">
+			<jstl:out value="${listOfManagerAndFee[0].name}"></jstl:out>
+		</display:column>
+
+		<spring:message code="dashboard.amount" var="amount" />
+		<display:column title="${amount}">
+			<jstl:out value="${listOfManagerAndFee[1]}"></jstl:out>
+		</display:column>
+	</display:table>
+</fieldset>
+
+<br>
+
+<fieldset>
+	<legend>
+		<b><spring:message code="dashboard.listOfChorbiesOrderByEvents" /></b>
+	</legend>
+	
+	<display:table name="listOfChorbiesOrderByEvents" uid="listOfChorbiesOrderByEvents" requestURI="administrator/dashboardC"
+		pagesize="5">
+		<spring:message code="dashboard.name" var="name" />
+		<display:column property="name" title="${name}" />
+
+		<spring:message code="dashboard.surname" var="surname" />
+		<display:column property="surname" title="${surname}" />
+
+		<spring:message code="dashboard.phone" var="phone" />
+		<display:column property="phone" title="${phone}" />
+
+		<spring:message code="dashboard.email" var="email" />
+		<display:column property="email" title="${email}" />
+	</display:table>
+</fieldset>
+
+<br>
+
+<fieldset>
+	<legend>
+		<b><spring:message code="dashboard.listOfChorbiesAndFee" /></b>
+	</legend>
+
+	<jstl:set var="i" value="0"></jstl:set>
+	<display:table name="listOfChorbiesAndFee" uid="listOfChorbiesAndFee"
+		requestURI="administrator/dashboardC" class="displaytag" pagesize="5">
+		<spring:message code="dashboard.chorbies" var="chorbies" />
+		<display:column title="${chorbies}">
+			<jstl:out value="${listOfChorbiesAndFee[0].name}"></jstl:out>
+		</display:column>
+
+		<spring:message code="dashboard.amount" var="amount" />
+		<display:column title="${amount}">
+			<jstl:out value="${listOfChorbiesAndFee[1]}"></jstl:out>
+		</display:column>
+	</display:table>
+</fieldset>
+
+
+
 <acme:cancel url="" code="dasboard.back"/>

@@ -19,152 +19,169 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Chorbi;
+import domain.Manager;
 import services.AdministratorService;
 import services.ChorbiService;
-import domain.Chorbi;
+import services.ManagerService;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
-	
-	//Related services
+
+	// Related services
+
+	@Autowired
+	private ChorbiService chorbiService;
+
+	@Autowired
+	private AdministratorService administratorService;
 	
 	@Autowired
-	private ChorbiService			chorbiService;
-	
-	@Autowired
-	private AdministratorService	administratorService;
-	
-	
+	private ManagerService managerService;
+
 	// Constructors -----------------------------------------------------------
-	
+
 	public AdministratorController() {
 		super();
 	}
-	
-	//Ban a chorbi
-	
+
+	// Ban a chorbi
+
 	@RequestMapping(value = "/ban", method = RequestMethod.GET)
 	public ModelAndView ban(@RequestParam final int chorbiId) {
 		ModelAndView result;
 		final Chorbi chorbi = this.chorbiService.findOne(chorbiId);
 		this.administratorService.banChorbi(chorbi);
-		
+
 		result = new ModelAndView("redirect:/administrator/chorbi/list.do");
-		
+
 		return result;
 	}
-	
-	//Unban a chorbi
-	
+
+	// Unban a chorbi
+
 	@RequestMapping(value = "/unBan", method = RequestMethod.GET)
 	public ModelAndView unBan(@RequestParam final int chorbiId) {
 		ModelAndView result;
 		final Chorbi chorbi = this.chorbiService.findOne(chorbiId);
 		this.administratorService.unbanChorbi(chorbi);
-		
+
 		result = new ModelAndView("redirect:/administrator/chorbi/list.do");
-		
+
 		return result;
 	}
-	
-	//Dashboard C
-	
+
+	// Dashboard C
+
 	@RequestMapping(value = "/dashboardC", method = RequestMethod.GET)
 	public ModelAndView dashboardC() {
 		final ModelAndView result;
-		
+
 		final Collection<Object[]> chorbiesPerCountry = this.chorbiService.getChorbiesPerCountry();
 		final Collection<Object[]> chorbiesPerCity = this.chorbiService.getChorbiesPerCity();
-		
+
 		final Integer minChorbiesAge = this.chorbiService.minChorbiesAge();
 		final Integer maxChorbiesAge = this.chorbiService.maxChorbiesAge();
 		final Integer avgChorbiesAge = this.chorbiService.avgChorbiesAge();
-		final Object[] stadisticsChoribiesAge = {
-			minChorbiesAge, maxChorbiesAge, avgChorbiesAge
-		};
-		
+		final Object[] stadisticsChoribiesAge = { minChorbiesAge, maxChorbiesAge, avgChorbiesAge };
+
 		final Double ratioChorbiesWithoutCreditCard = this.chorbiService.ratioChorbiesWithoutCreditCard();
-		
+
 		final Double ratioChorbiesLookingForActivities = this.chorbiService.ratioChorbiesLookingForActivities();
 		final Double ratioChorbiesLookingForFriends = this.chorbiService.ratioChorbiesLookingForFriends();
 		final Double ratioChorbiesLookingForLove = this.chorbiService.ratioChorbiesLookingForLove();
+
+		final Object[] ratioChorbiesLooking = { ratioChorbiesLookingForActivities, ratioChorbiesLookingForFriends,
+				ratioChorbiesLookingForLove };
 		
-		final Object[] ratioChorbiesLooking = {
-			ratioChorbiesLookingForActivities, ratioChorbiesLookingForFriends, ratioChorbiesLookingForLove
-		};
-		
+		Collection<Manager>  listOfManagerOrderByEvents = managerService.listOfManagerOrderByEvents();
+		Collection<Object[]> listOfManagerAndFee = managerService.listOfManagerAndFee();
+		Collection<Manager> listOfChorbiesOrderByEvents = this.chorbiService.listOfChorbiesOrderByEvents();
+		Collection<Object[]> listOfChorbiesAndFee = this.chorbiService.listOfChorbiesAndFee();
+
 		result = new ModelAndView("administrator/dashboardC");
 		result.addObject("chorbiesPerCountry", chorbiesPerCountry);
 		result.addObject("chorbiesPerCity", chorbiesPerCity);
 		result.addObject("stadisticsChoribiesAge", stadisticsChoribiesAge);
 		result.addObject("ratioChorbiesWithoutCreditCard", ratioChorbiesWithoutCreditCard);
 		result.addObject("ratioChorbiesLooking", ratioChorbiesLooking);
-		return result;
+		result.addObject("listOfManagerOrderByEvents", listOfManagerOrderByEvents);
+		result.addObject("listOfManagerAndFee", listOfManagerAndFee);
+		result.addObject("listOfChorbiesOrderByEvents", listOfChorbiesOrderByEvents);
+		result.addObject("listOfChorbiesAndFee", listOfChorbiesAndFee);
 		
+		return result;
+
 	}
-	
-	//DashBoad B
-	
+
+	// DashBoad B
+
 	@RequestMapping(value = "/dashboardB", method = RequestMethod.GET)
 	public ModelAndView dashboardB() {
 		final ModelAndView result;
-		
-		final Collection<Chorbi> listChorbiesSortedByReceivedLikes = this.chorbiService.listChorbiesSortedByReceivedLikes();
-		
+
+		final Collection<Chorbi> listChorbiesSortedByReceivedLikes = this.chorbiService
+				.listChorbiesSortedByReceivedLikes();
+
 		final Integer minReceivedLikesPerChorbi = this.chorbiService.minReceivedLikesPerChorbi();
 		final Integer maxReceivedLikesPerChorbi = this.chorbiService.maxReceivedLikesPerChorbi();
 		final Double avgReceivedLikesPerChorbi = this.chorbiService.avgReceivedLikesPerChorbi();
-		final Object[] stadisticsReceivedLikesPerChorbi = {
-			minReceivedLikesPerChorbi, maxReceivedLikesPerChorbi, avgReceivedLikesPerChorbi
-		};
-		
+		final Object[] stadisticsReceivedLikesPerChorbi = { minReceivedLikesPerChorbi, maxReceivedLikesPerChorbi,
+				avgReceivedLikesPerChorbi };
+
 		final Integer minAuthoredLikesPerChorbi = this.chorbiService.minAuthoredLikesPerChorbi();
 		final Integer maxAuthoredLikesPerChorbi = this.chorbiService.maxAuthoredLikesPerChorbi();
 		final Double avgAuthoredLikesPerChorbi = this.chorbiService.avgAuthoredLikesPerChorbi();
-		final Object[] stadisticsAuthoredLikesPerChorbi = {
-			minAuthoredLikesPerChorbi, maxAuthoredLikesPerChorbi, avgAuthoredLikesPerChorbi
-		};
+		final Object[] stadisticsAuthoredLikesPerChorbi = { minAuthoredLikesPerChorbi, maxAuthoredLikesPerChorbi,
+				avgAuthoredLikesPerChorbi };
+
+		final Integer minimumStarsOnChorbi = this.chorbiService.getMinimumStarsOnChorbi();
+		final Integer maximumStarsOnChorbi = this.chorbiService.getMaximumStarsOnChorbi();
+		final Double avgStarsPerChorbi = this.chorbiService.getAvgStarsPerChorbi();
+		final Object[] stadisticsStarsPerChorbi = { minimumStarsOnChorbi, maximumStarsOnChorbi, avgStarsPerChorbi };
 		
+		final Collection<Object[]> chorbiesStarsAvg = this.chorbiService.getChorbiesStarsAvg();
+
 		result = new ModelAndView("administrator/dashboardB");
 		result.addObject("listChorbiesSortedByReceivedLikes", listChorbiesSortedByReceivedLikes);
 		result.addObject("stadisticsReceivedLikesPerChorbi", stadisticsReceivedLikesPerChorbi);
 		result.addObject("stadisticsAuthoredLikesPerChorbi", stadisticsAuthoredLikesPerChorbi);
+		result.addObject("stadisticsStarsPerChorbi", stadisticsStarsPerChorbi);
+		result.addObject("chorbiesStarsAvg", chorbiesStarsAvg);
 		return result;
-		
+
 	}
-	
-	//Dashboard A
-	
+
+	// Dashboard A
+
 	@RequestMapping(value = "/dashboardA", method = RequestMethod.GET)
 	public ModelAndView dashboardA() {
 		final ModelAndView result;
-		
+
 		final Integer minReceivedChirpsPerChorbi = this.chorbiService.minReceivedChirpsPerChorbi();
 		final Integer maxReceivedChirpsPerChorbi = this.chorbiService.maxReceivedChirpsPerChorbi();
 		final Double avgReceivedChirpsPerChorbi = this.chorbiService.avgReceivedChirpsPerChorbi();
-		final Object[] stadisticsreceivedChirpsPerChorbi = {
-			minReceivedChirpsPerChorbi, maxReceivedChirpsPerChorbi, avgReceivedChirpsPerChorbi
-		};
-		
+		final Object[] stadisticsreceivedChirpsPerChorbi = { minReceivedChirpsPerChorbi, maxReceivedChirpsPerChorbi,
+				avgReceivedChirpsPerChorbi };
+
 		final Integer minSentChirpsPerChorbi = this.chorbiService.minSentChirpsPerChorbi();
 		final Integer maxSentChirpsPerChorbi = this.chorbiService.maxSentChirpsPerChorbi();
 		final Double avgSentChirpsPerChorbi = this.chorbiService.avgSentChirpsPerChorbi();
-		final Object[] stadisticsSentChirpsPerChorbi = {
-			minSentChirpsPerChorbi, maxSentChirpsPerChorbi, avgSentChirpsPerChorbi
-		};
-		
+		final Object[] stadisticsSentChirpsPerChorbi = { minSentChirpsPerChorbi, maxSentChirpsPerChorbi,
+				avgSentChirpsPerChorbi };
+
 		final Collection<Chorbi> chorbiMoreGotChirp = this.chorbiService.getChorbiMoreGotChirp();
-		
+
 		final Collection<Chorbi> chorbiMoreSentChirp = this.chorbiService.getChorbiMoreSentChirp();
-		
+
 		result = new ModelAndView("administrator/dashboardA");
 		result.addObject("stadisticsreceivedChirpsPerChorbi", stadisticsreceivedChirpsPerChorbi);
 		result.addObject("stadisticsSentChirpsPerChorbi", stadisticsSentChirpsPerChorbi);
 		result.addObject("chorbiMoreGotChirp", chorbiMoreGotChirp);
 		result.addObject("chorbiMoreSentChirp", chorbiMoreSentChirp);
 		return result;
-		
+
 	}
-	
+
 }

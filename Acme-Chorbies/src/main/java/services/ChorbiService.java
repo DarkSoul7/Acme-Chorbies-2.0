@@ -592,15 +592,15 @@ public class ChorbiService {
 
 	//B1
 
-	public int getMinimumStarsOnChorbi() {
+	public Integer getMinimumStarsOnChorbi() {
 		return this.chorbiRepository.getMinimumStarsOnChorbi();
 	}
 
-	public int getMaximumStarsOnChorbi() {
+	public Integer getMaximumStarsOnChorbi() {
 		return this.chorbiRepository.getMaximumStarsOnChorbi();
 	}
 
-	public double getAvgStarsPerChorbi() {
+	public Double getAvgStarsPerChorbi() {
 		return this.chorbiRepository.getAvgStarsPerChorbi();
 	}
 

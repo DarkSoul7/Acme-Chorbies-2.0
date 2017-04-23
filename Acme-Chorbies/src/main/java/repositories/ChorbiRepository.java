@@ -151,25 +151,25 @@ public interface ChorbiRepository extends JpaRepository<Chorbi, Integer> {
 	//----------------------- ACME-CHORBIES 2.0 -------------------------------------
 
 	//C3
-	@Query("select c from Chorbi c order by c.events.size")
+	@Query("select c from Chorbi c order by c.eventChorbies.size")
 	public Collection<Manager> listOfChorbiesOrderByEvents();
 
 	//C4
-	@Query("select c,sum(e.amount) from Event e join e.chorbies c group by c")
+	@Query("select c, sum(ec.event.amount) from Chorbi c join c.eventChorbies ec group by c")
 	public Collection<Object[]> listOfChorbiesAndFee();
 
 	//B1
 	//a)
 	@Query("select sum(l.stars) from Like l group by l.receiver having sum(l.stars) <= all(select sum(l2.stars) from Like l2 group by l2.receiver)")
-	public int getMinimumStarsOnChorbi();
+	public Integer getMinimumStarsOnChorbi();
 
 	//b)
 	@Query("select sum(l.stars) from Like l group by l.receiver having sum(l.stars) >= all(select sum(l2.stars) from Like l2 group by l2.receiver)")
-	public int getMaximumStarsOnChorbi();
+	public Integer getMaximumStarsOnChorbi();
 
 	//c)
 	@Query("select sum(l.stars)*1.0/(select count(c) from Chorbi c) from Like l")
-	public double getAvgStarsPerChorbi();
+	public Double getAvgStarsPerChorbi();
 
 	//B2
 	@Query("select l.receiver,sum(l.stars)*1.0/(select count(l2) from Like l2 where l2.receiver = l.receiver) as average from Like l group by l.receiver order by average desc")

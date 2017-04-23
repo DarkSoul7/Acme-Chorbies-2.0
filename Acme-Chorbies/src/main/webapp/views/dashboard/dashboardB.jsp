@@ -113,4 +113,60 @@
 	</display:table>
 </fieldset>
 
+<br>
+
+<fieldset>
+	<legend>
+		<b><spring:message code="dashboard.stadisticsStarsPerChorbi" /></b>
+	</legend>
+
+	<jstl:set var="i" value="0"></jstl:set>
+	<display:table name="stadisticsStarsPerChorbi" id="row"
+		requestURI="administrator/dashboardB" class="displaytag">
+		<spring:message code="dashboard.statistics" var="statistics" />
+		<display:column title="${statistics}">
+			<jstl:choose>
+				<jstl:when test="${i == 0}">
+					<spring:message code="dashboard.min" var="title" />
+					<jstl:set var="i" value="1"></jstl:set>
+				</jstl:when>
+				<jstl:when test="${i == 1}">
+					<spring:message code="dashboard.max" var="title" />
+					<jstl:set var="i" value="2"></jstl:set>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code="dashboard.avg" var="title" />
+					<jstl:set var="i" value="3"></jstl:set>
+				</jstl:otherwise>
+			</jstl:choose>
+
+			<fmt:formatNumber var="value" value="${row}" maxFractionDigits="2"></fmt:formatNumber>
+			<b><jstl:out value="${title}:"></jstl:out></b>
+			<jstl:out value="${value} ${likes}"></jstl:out>
+		</display:column>
+	</display:table>
+</fieldset>
+
+<br>
+
+<fieldset>
+	<legend>
+		<b><spring:message code="dashboard.chorbiesStarsAvg" /></b>
+	</legend>
+
+	<jstl:set var="i" value="0"></jstl:set>
+	<display:table name="chorbiesStarsAvg" uid="chorbiesStarsAvg"
+		requestURI="administrator/dashboardB" class="displaytag" pagesize="5">
+		<spring:message code="dashboard.chorbies" var="chorbies" />
+		<display:column title="${chorbies}">
+			<jstl:out value="${chorbiesStarsAvg[0].name}"></jstl:out>
+		</display:column>
+
+		<spring:message code="dashboard.avg" var="avg" />
+		<display:column title="${avg}">
+			<jstl:out value="${chorbiesStarsAvg[1]}"></jstl:out>
+		</display:column>
+	</display:table>
+</fieldset>
+
 <acme:cancel url="" code="dasboard.back"/>
