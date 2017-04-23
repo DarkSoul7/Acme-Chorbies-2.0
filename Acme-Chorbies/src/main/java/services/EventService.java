@@ -204,7 +204,7 @@ public class EventService {
 		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 
 		Assert.notNull(event);
-		Assert.isTrue(this.getExistChorbiInEvent(event.getId(), chorbi.getId()) == 0);
+		Assert.isTrue(this.getExistChorbiInEvent(event.getId(), chorbi.getId()) == 1);
 
 		final EventChorbi eventChorbi = this.eventChorbiService.findEventChorbiByParameters(chorbi, event);
 

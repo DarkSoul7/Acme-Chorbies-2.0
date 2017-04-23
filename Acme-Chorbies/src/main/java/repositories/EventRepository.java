@@ -25,7 +25,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 	@Query("select e from Event e where e.moment > ?2 or e.moment between ?1 and ?2 and (e.seatsNumber - e.eventChorbies.size) = 0")
 	public Collection<Event> getFutureEvents(Date currentDate, Date currentDatePlusMonth);
 
-	@Query("select count(e) from Chorbi c join c.eventChorbies ec where ec.event.id=?1 and c.id=?2")
+	@Query("select count(ec) from Chorbi c join c.eventChorbies ec where ec.event.id=?1 and c.id=?2")
 	public Integer getExistChorbiInEvent(int idEvent, int idChorbi);
 
 	@Query("select e from Event e join e.eventChorbies ec where e.moment between ?2 and ?3 and ec.chorbi.id = ?1")

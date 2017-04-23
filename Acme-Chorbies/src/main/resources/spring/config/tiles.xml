@@ -29,6 +29,7 @@
 		<value>/views/dashboard/tiles.xml</value>
 		<value>/views/like/tiles.xml</value>
 		<value>/views/searchTemplate/tiles.xml</value>
+		<value>/views/event/tiles.xml</value>
 	</util:list>
 
 </beans>

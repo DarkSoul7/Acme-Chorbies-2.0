@@ -29,6 +29,7 @@
 		<value>/views/dashboard/messages</value>
 		<value>/views/like/messages</value>
 		<value>/views/searchTemplate/messages</value>
+		<value>/views/event/messages</value>
 	</util:list>
 
 </beans>
