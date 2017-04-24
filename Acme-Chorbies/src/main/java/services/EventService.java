@@ -120,7 +120,7 @@ public class EventService {
 		return result;
 	}
 
-	public Collection<Event> getFinishedEvents() {
+	public Collection<EventForm> getFinishedEvents() {
 		return this.eventRepository.getFinishedEvents();
 	}
 
@@ -209,6 +209,14 @@ public class EventService {
 		final EventChorbi eventChorbi = this.eventChorbiService.findEventChorbiByParameters(chorbi, event);
 
 		this.eventChorbiService.delete(eventChorbi);
+	}
+
+	public Collection<EventForm> getFutureHighlighted(final Date currentDate, final Date currentDatePlusMonth) {
+		return this.eventRepository.getFutureHighlighted(currentDate, currentDatePlusMonth);
+	}
+
+	public Collection<EventForm> nonHighlighted(final Date currentDate, final Date currentDatePlusMonth) {
+		return this.eventRepository.nonHighlighted(currentDate, currentDatePlusMonth);
 	}
 
 }

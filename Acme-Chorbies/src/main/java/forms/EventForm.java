@@ -3,6 +3,8 @@ package forms;
 
 import java.util.Date;
 
+import domain.Event;
+
 public class EventForm {
 
 	//Attributes
@@ -13,11 +15,36 @@ public class EventForm {
 	private String	description;
 	private String	picture;
 	private int		seatsNumber;
+	private Boolean	highlighted;
 
 
 	//Constructor
 	public EventForm() {
 		super();
+	}
+
+	public EventForm(final Event event, final Boolean highlighted) {
+		super();
+
+		this.setId(event.getId());
+		this.description = event.getDescription();
+		this.moment = event.getMoment();
+		this.picture = event.getPicture();
+		this.seatsNumber = event.getSeatsNumber();
+		this.title = event.getTitle();
+		this.highlighted = highlighted;
+	}
+
+	public EventForm(final Event event) {
+		super();
+
+		this.setId(event.getId());
+		this.description = event.getDescription();
+		this.moment = event.getMoment();
+		this.picture = event.getPicture();
+		this.seatsNumber = event.getSeatsNumber();
+		this.title = event.getTitle();
+		this.highlighted = null;
 	}
 
 	//Getter & setter
@@ -68,6 +95,14 @@ public class EventForm {
 
 	public void setSeatsNumber(final int seatsNumber) {
 		this.seatsNumber = seatsNumber;
+	}
+
+	public Boolean getHighlighted() {
+		return this.highlighted;
+	}
+
+	public void setHighlighted(final Boolean highlighted) {
+		this.highlighted = highlighted;
 	}
 
 }
