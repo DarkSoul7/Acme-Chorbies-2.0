@@ -26,4 +26,14 @@
 		<put-attribute name="body" value="/views/event/list2.jsp" />
 	</definition>
 	
+	<definition name="event/register" extends="master.page">
+		<put-attribute name="title" value="Register an event" />
+		<put-attribute name="body" value="/views/event/register.jsp" />
+	</definition>
+	
+	<definition name="event/edit" extends="master.page">
+		<put-attribute name="title" value="Edit an event" />
+		<put-attribute name="body" value="/views/event/register.jsp" />
+	</definition>
+	
 </tiles-definitions>

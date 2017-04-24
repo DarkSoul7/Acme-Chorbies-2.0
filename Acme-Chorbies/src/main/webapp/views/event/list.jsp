@@ -56,5 +56,12 @@
 			<acme:cancel code="event.unregister" url="event/unregister.do?eventId=${row.id}" />
 		</jstl:if>
 	</display:column>
-	
+	<security:authorize access="hasRole('MANAGER')">
+	<display:column>
+		<acme:cancel code="event.edit" url="event/edit.do?eventId=${row.id}" />
+	</display:column>
+	<display:column>
+		<acme:cancel code="event.delete" url="event/delete.do?eventId=${row.id}" />
+	</display:column>
+	</security:authorize>
 </display:table>

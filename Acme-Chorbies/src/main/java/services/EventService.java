@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -13,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.EventRepository;
 import domain.Chorbi;
 import domain.Event;
 import domain.EventChorbi;
 import domain.Manager;
 import forms.EventForm;
+import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -140,14 +141,28 @@ public class EventService {
 		if (eventForm.getId() != 0) {
 			result = this.findOne(eventForm.getId());
 			Assert.isTrue(result.getManager().equals(manager));
-		} else
+		} else {
+			final Collection<EventChorbi> eventsChorbi = new ArrayList<EventChorbi>();
 			result.setManager(manager);
+			result.setEventChorbies(eventsChorbi);
+		}
 		result.setDescription(eventForm.getDescription());
 		result.setMoment(eventForm.getMoment());
 		result.setPicture(eventForm.getPicture());
 		result.setSeatsNumber(eventForm.getSeatsNumber());
 		result.setTitle(eventForm.getTitle());
 		result.setAmount(this.feeService.getFee().getAmount());
+		return result;
+	}
+
+	public EventForm toFormObject(final Event event) {
+		final EventForm result = this.create();
+		result.setSeatsNumber(event.getSeatsNumber());
+		result.setDescription(event.getDescription());
+		result.setTitle(event.getTitle());
+		result.setMoment(event.getMoment());
+		result.setId(event.getId());
+		result.setPicture(event.getPicture());
 		return result;
 	}
 

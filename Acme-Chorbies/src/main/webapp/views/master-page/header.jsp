@@ -38,6 +38,11 @@
 				</li>
 			</security:authorize>
 			
+			<security:authorize access="hasRole('MANAGER')">
+				<li><a href="event/listOfManager.do"><spring:message code="master.page.list.event.manager" /></a></li>
+				<li><a href="event/register.do"><spring:message code="master.page.create.event.manager" /></a></li>
+			</security:authorize>
+			
 			<security:authorize access="hasRole('CHORBI')">
 				<li><a href="chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
 				<li><a href="searchTemplate/list.do"><spring:message code="master.page.searchTemplate" /></a></li>

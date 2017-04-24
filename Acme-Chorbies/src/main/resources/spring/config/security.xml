@@ -96,6 +96,10 @@
 		<security:intercept-url pattern="/event/listAll.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/event/listRegister.do" access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/event/unregister.do" access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/event/listOfManager.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/event/register.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/event/delete.do" access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/event/edit.do" access="hasRole('MANAGER')" />
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
