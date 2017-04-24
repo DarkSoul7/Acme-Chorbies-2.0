@@ -74,6 +74,7 @@
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="chorbi4" />
 		<property name="password" value="a09dd233386632e297a7f4f461989563" />
+		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -86,6 +87,7 @@
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="manager1" />
 		<property name="password" value="c240642ddef994358c96da82c0361a58" />
+		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -98,6 +100,7 @@
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="manager2" />
 		<property name="password" value="8df5127cd164b5bc2d2b78410a7eea0c" />
+		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -110,6 +113,7 @@
 	<bean id="userAccount8" class="security.UserAccount">
 		<property name="username" value="manager3" />
 		<property name="password" value="2d3a5db4a2a9717b43698520a8de57d0" />
+		<property name="enabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
