@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
@@ -25,7 +24,7 @@ import forms.EventForm;
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@TransactionConfiguration(defaultRollback = false)
+//@TransactionConfiguration(defaultRollback = false)
 public class EventServiceTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
@@ -127,19 +126,6 @@ public class EventServiceTest extends AbstractTest {
 	}
 
 	/***
-	 * Manage events
-	 * Testing cases:
-	 * 3º Good test -> expected: edit manager's events
-	 * 4º Good test -> expected: delete manager's events
-	 * 5º Bad test; A manager cannot edit an event that is not his -> expected: IllegalArgumentException
-	 * 6º Bad test; A manager cannot delete an event that is not his -> expected: IllegalArgumentException
-	 * 7º Bad test; An unauthenticated actor cannot register an event -> expected: IllegalArgumentException
-	 * 8º Bad test; An unauthenticated actor cannot delete an event -> expected: IllegalArgumentException
-	 * 9º Bad test; A chorbi cannot register an event -> expected: IllegalArgumentException
-	 * 10º Bad test; A chorbi cannot delete an event -> expected: IllegalArgumentException
-	 */
-
-	/***
 	 * List events
 	 * Testing cases:
 	 * 1º Good test -> expected: list manager's events
@@ -147,7 +133,6 @@ public class EventServiceTest extends AbstractTest {
 	 * 3º Bad test; a chorbi have no events -> expected: IllegalArgumentException
 	 */
 
-	//TODO: test de los 10 casos de prueba
 	@Test
 	public void listEventDriver() {
 		final Object[][] testingData = {
@@ -245,10 +230,10 @@ public class EventServiceTest extends AbstractTest {
 			//manager, event id, expected exception
 			{
 				"manager1", 92, null
-			//			}, {
-			//				"chorbi1", 93, IllegalArgumentException.class
-			//			}, {
-			//				"manager3", 94, IllegalArgumentException.class
+			}, {
+				"chorbi1", 93, IllegalArgumentException.class
+			}, {
+				"manager3", 94, IllegalArgumentException.class
 			}
 		};
 
@@ -265,6 +250,48 @@ public class EventServiceTest extends AbstractTest {
 			final Event event = this.eventService.findOne(eventId);
 			event.setTitle("The event has been edited");
 			this.eventService.save(event);
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expectedException, caught);
+	}
+
+	/***
+	 * Delete events
+	 * Testing cases:
+	 * 1º Good test -> expected: event deleted
+	 * 2º Bad test; an actor who is not a manager cannot delete events -> expected: IllegalArgumentException
+	 * 3º Bad test; a manager cannot delete an event that not his -> expected: IllegalArgumentException
+	 */
+
+	@Test
+	public void deleteEventDriver() {
+		final Object[][] testingData = {
+			//manager, event id, expected exception
+			{
+				"manager1", 92, null
+			}, {
+				"chorbi1", 93, IllegalArgumentException.class
+			}, {
+				"manager3", 94, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.deleteEventTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	protected void deleteEventTemplate(final String principal, final int eventId, final Class<?> expectedException) {
+		Class<?> caught = null;
+
+		try {
+			this.authenticate(principal);
+
+			final Event event = this.eventService.findOne(eventId);
+			this.eventService.delete(event);
 
 			this.unauthenticate();
 		} catch (final Throwable oops) {

@@ -50,6 +50,11 @@ public class EventChorbiService {
 		this.eventChorbiRepository.delete(eventChorbi);
 	}
 
+	public void deleteAll(final Collection<EventChorbi> eventChorbies) {
+		Assert.notNull(eventChorbies);
+		this.eventChorbiRepository.delete(eventChorbies);
+	}
+
 	//Other business methods
 
 	public EventChorbi findEventChorbiByParameters(final Chorbi chorbi, final Event event) {

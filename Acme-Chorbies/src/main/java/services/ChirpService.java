@@ -284,7 +284,7 @@ public class ChirpService {
 				chirp.setText(deleteMessage);
 			}
 
-			chirp.setMoment(new Date());
+			chirp.setMoment(new Date(System.currentTimeMillis() - 1000));
 			chirp.setOriginal(true);
 			chirp.setSender(manager);
 			chirp.setReceiver(chorbi);

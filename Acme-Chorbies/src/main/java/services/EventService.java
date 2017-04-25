@@ -14,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.EventRepository;
 import domain.Chorbi;
 import domain.Event;
 import domain.EventChorbi;
 import domain.Manager;
 import forms.EventForm;
-import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -104,6 +104,8 @@ public class EventService {
 
 		try {
 			this.chirpService.createDefaultEventChirp(false, event);
+			final Collection<EventChorbi> eventChorbies = event.getEventChorbies();
+			this.eventChorbiService.deleteAll(eventChorbies);
 			this.eventRepository.delete(event);
 		} catch (final Throwable e) {
 			System.err.println(e);

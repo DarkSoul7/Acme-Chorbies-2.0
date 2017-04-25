@@ -10,9 +10,9 @@ import domain.Chirper;
 @Repository
 public interface ChirperRepository extends JpaRepository<Chirper, Integer> {
 
-	@Query("select c from Chirper a where c.userAccount.id = ?1")
+	@Query("select c from Chirper c where c.userAccount.id = ?1")
 	Chirper findByUserAccountId(int id);
 
-	@Query("select c from Chirper a where c.userAccount.username = ?1")
+	@Query("select c from Chirper c where c.userAccount.username = ?1")
 	Chirper findByUserName(String username);
 }
