@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 import repositories.ChirpRepository;
 import domain.Actor;
 import domain.Chirp;
+import domain.Chirper;
 import domain.Chorbi;
 import domain.Event;
 import domain.Manager;
@@ -38,6 +39,9 @@ public class ChirpService {
 
 	@Autowired
 	private EventChorbiService	eventChorbiService;
+
+	@Autowired
+	private ChirperService		chirperService;
 
 
 	//Constructor
@@ -76,7 +80,7 @@ public class ChirpService {
 	}
 
 	public Chirp save(final Chirp chirp) {
-		final Actor principal = this.chorbiService.findByPrincipal();
+		final Chirper principal = this.chirperService.findByPrincipal();
 		Assert.isTrue(principal.getId() == chirp.getSender().getId());
 		Assert.notNull(chirp);
 		Chirp result;
@@ -93,6 +97,7 @@ public class ChirpService {
 		result = this.chirpRepository.save(chirp);
 		this.chirpRepository.save(copiedChirp);
 
+		this.chirpRepository.flush();
 		return result;
 	}
 

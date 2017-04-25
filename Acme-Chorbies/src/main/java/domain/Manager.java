@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Manager extends Actor {
+public class Manager extends Chirper {
 
 	//Attributes
 
