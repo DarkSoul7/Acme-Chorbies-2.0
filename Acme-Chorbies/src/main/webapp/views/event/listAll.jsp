@@ -18,15 +18,25 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<display:table name="events" id="row" requestURI="${requestURI}" pagesize="5">
+<display:table name="events" id="row" requestURI="${requestURI}"
+	pagesize="5">
+	
+	<jstl:choose>
+		<jstl:when test="${not empty row.highlighted && row.highlighted}">
+			<jstl:set var="style" value="background-color:gray" />
+		</jstl:when>
+		<jstl:otherwise>
+			<jstl:set var="style" value="background-color:white" />
+		</jstl:otherwise>
+	</jstl:choose>
 
 	<spring:message code="event.title" var="title" />
-	<display:column property="title" title="${title}" />
-	
+	<display:column style="${style}" property="title" title="${title}" />
+
 	<spring:message code="event.moment" var="moment" />
-	<display:column title="${moment}" >
+	<display:column style="${style}" title="${moment}">
 		<jstl:choose>
 			<jstl:when test="${cookie.language.value == 'en'}">
 				<fmt:formatDate value="${row.moment}" pattern="MM/dd/yyyy HH:mm" />
@@ -36,19 +46,17 @@
 			</jstl:otherwise>
 		</jstl:choose>
 	</display:column>
-	
+
 	<spring:message code="event.description" var="description" />
-	<display:column property="description" title="${description}" />
-	
+	<display:column style="${style}" property="description"
+		title="${description}" />
+
 	<spring:message code="event.picture" var="picture" />
-	<display:column title="${picture}">
+	<display:column style="${style}" title="${picture}">
 		<img src="${row.picture}" alt="picture" width="70" height="70">
 	</display:column>
-	
+
 	<spring:message code="event.seatsNumber" var="seatsNumber" />
-	<display:column property="seatsNumber" title="${seatsNumber}" />
-	
-	<spring:message code="event.amount" var="amount" />
-	<display:column property="amount" title="${amount}" />
-	
+	<display:column style="${style}" property="seatsNumber"
+		title="${seatsNumber}" />
 </display:table>

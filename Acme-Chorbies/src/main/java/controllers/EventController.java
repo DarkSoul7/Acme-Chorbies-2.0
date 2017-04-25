@@ -1,10 +1,12 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -47,12 +49,19 @@ public class EventController extends AbstractController {
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
 	public ModelAndView listAll() {
 		ModelAndView result;
-		Collection<Event> events;
+		final DateTime now = new DateTime();
+		final DateTime aMonthLater = now.plusMonths(1);
+		final Collection<EventForm> eventsGreyList = this.eventService.getFinishedEvents();
+		final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(now.toDate(), aMonthLater.toDate());
+		final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(now.toDate(), aMonthLater.toDate());
+		
+		Collection<EventForm> allEvents = new ArrayList<EventForm>();
+		allEvents.addAll(eventsGreyList);
+		allEvents.addAll(eventsHighlightedList);
+		allEvents.addAll(eventsNonHighlightedList);
 
-		events = this.eventService.findAll();
-
-		result = new ModelAndView("event/list2");
-		result.addObject("events", events);
+		result = new ModelAndView("event/listAll");
+		result.addObject("events", allEvents);
 		result.addObject("requestURI", "event/listAll.do");
 
 		return result;
