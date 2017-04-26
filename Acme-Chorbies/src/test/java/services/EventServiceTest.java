@@ -1,12 +1,11 @@
 
 package services;
 
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,37 +82,35 @@ public class EventServiceTest extends AbstractTest {
 	 * Testing cases:
 	 * 1º Good test -> expected: lists return expected sizes
 	 * 2º Bad test; the method not returns a null list -> expected: IllegalArgumentException
-	 * 3º Bad test; the expected list size is not correct -> expected: IllegalArgumentException
+	 * 3º Bad test; dates are too old -> expected: IllegalArgumentException
 	 */
 
 	@Test
 	public void browseHighlightedEventDriver() {
 		final Object[][] testingData = {
-			//size greyList, size highlightedList, size non highlightedList, expected exception
+			//size greyList, size highlightedList, size non highlightedList, date1, date2, expected exception
 			{
-				0, 1, 2, null
+				1, 1, 3, "2017-01-01", "2018-01-01", null
 			}, {
-				null, null, null, NullPointerException.class
+				null, null, null, "2017-01-01", "2017-01-01", NullPointerException.class
 			}, {
-				4, 2, 0, IllegalArgumentException.class
+				4, 2, 0, "2001-01-01", "2004-01-01", IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.browseHighlightedEventTemplate((Integer) testingData[i][0], (Integer) testingData[i][1], (Integer) testingData[i][2], (Class<?>) testingData[i][3]);
+			this.browseHighlightedEventTemplate((Integer) testingData[i][0], (Integer) testingData[i][1], (Integer) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (Class<?>) testingData[i][5]);
 	}
 
-	protected void browseHighlightedEventTemplate(final Integer greyList, final Integer highlightedList, final Integer nonHighlightedList, final Class<?> expectedException) {
+	protected void browseHighlightedEventTemplate(final Integer greyList, final Integer highlightedList, final Integer nonHighlightedList, final String date1, final String date2, final Class<?> expectedException) {
 		Class<?> caught = null;
 
 		try {
-			final Calendar date1 = Calendar.getInstance();
-			final Calendar date2 = Calendar.getInstance();
-			date1.set(2017, 1, 01);
-			date2.set(2018, 01, 01);
+			final DateTime time1 = DateTime.parse(date1);
+			final DateTime time2 = DateTime.parse(date2);
 			final Collection<EventForm> eventsGreyList = this.eventService.getFinishedEvents();
-			final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(date1.getTime(), date2.getTime());
-			final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(date1.getTime(), date2.getTime());
+			final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(time1.toDate(), time2.toDate());
+			final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(time1.toDate(), time2.toDate());
 
 			Assert.isTrue(eventsGreyList.size() == greyList);
 			Assert.isTrue(eventsHighlightedList.size() == highlightedList);
@@ -202,7 +199,9 @@ public class EventServiceTest extends AbstractTest {
 			eventForm.setPicture("http://testing.com");
 			eventForm.setSeatsNumber(80);
 			eventForm.setTitle("This is a Test title");
-			eventForm.setMoment(new Date());
+
+			final DateTime time = new DateTime();
+			eventForm.setMoment(time.plusDays(1).toDate());
 
 			final Event event = this.eventService.reconstruct(eventForm, null);
 
@@ -229,11 +228,11 @@ public class EventServiceTest extends AbstractTest {
 		final Object[][] testingData = {
 			//manager, event id, expected exception
 			{
-				"manager1", 92, null
+				"manager1", 94, null
 			}, {
-				"chorbi1", 93, IllegalArgumentException.class
+				"chorbi1", 95, IllegalArgumentException.class
 			}, {
-				"manager3", 94, IllegalArgumentException.class
+				"manager3", 96, IllegalArgumentException.class
 			}
 		};
 
@@ -272,11 +271,11 @@ public class EventServiceTest extends AbstractTest {
 		final Object[][] testingData = {
 			//manager, event id, expected exception
 			{
-				"manager1", 92, null
+				"manager1", 94, null
 			}, {
-				"chorbi1", 93, IllegalArgumentException.class
+				"chorbi1", 95, IllegalArgumentException.class
 			}, {
-				"manager3", 94, IllegalArgumentException.class
+				"manager3", 96, IllegalArgumentException.class
 			}
 		};
 

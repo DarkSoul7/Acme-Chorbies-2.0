@@ -238,6 +238,10 @@ public class EventService {
 	}
 
 	public Collection<EventForm> getFutureHighlighted(final Date currentDate, final Date currentDatePlusMonth) {
+		final DateTime past = new DateTime("2016-01-01");
+		Assert.isTrue(currentDate.after(past.toDate()));
+		Assert.isTrue(currentDatePlusMonth.after(past.toDate()));
+
 		return this.eventRepository.getFutureHighlighted(currentDate, currentDatePlusMonth);
 	}
 
