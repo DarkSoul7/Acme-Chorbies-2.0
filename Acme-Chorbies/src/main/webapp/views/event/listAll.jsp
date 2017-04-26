@@ -23,14 +23,23 @@
 <display:table name="events" id="row" requestURI="${requestURI}"
 	pagesize="5">
 	
-	<jstl:choose>
-		<jstl:when test="${not empty row.highlighted && row.highlighted}">
+<%-- 	<jstl:choose> --%>
+		<jstl:if test="${row.highlighted == false }">
 			<jstl:set var="style" value="background-color:gray" />
-		</jstl:when>
-		<jstl:otherwise>
+		</jstl:if>
+		<jstl:if test="${row.highlighted == true}">
+			<jstl:set var="style" value="background-color:yellow" />
+		</jstl:if>
+		<jstl:if test="${row.highlighted == null}">
 			<jstl:set var="style" value="background-color:white" />
-		</jstl:otherwise>
-	</jstl:choose>
+		</jstl:if>
+<%-- 		<jstl:when test="${not empty row.highlighted && row.highlighted}"> --%>
+<%-- 			<jstl:set var="style" value="background-color:gray" /> --%>
+<%-- 		</jstl:when> --%>
+<%-- 		<jstl:otherwise> --%>
+<%-- 			<jstl:set var="style" value="background-color:white" /> --%>
+<%-- 		</jstl:otherwise> --%>
+<%-- 	</jstl:choose> --%>
 
 	<spring:message code="event.title" var="title" />
 	<display:column style="${style}" property="title" title="${title}" />

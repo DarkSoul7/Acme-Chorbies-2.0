@@ -676,10 +676,30 @@
 	
 	<bean id="event3" class="domain.Event">
 		<property name="title" value="Cambia tus planes por nosotros y mejora tu noche" />
-		<property name="moment" value="25/07/2017 21:30" />
+		<property name="moment" value="15/05/2017 21:30" />
 		<property name="description" value="Disfruta de una noche inolvidable con nosotros en la que sin duda alguna repetiras... Y lo sabes!!" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3840/14649445351_305dd81632_b.jpg" />
 		<property name="seatsNumber" value="30" />
+		<property name="amount" value="1.0" />
+		<property name="manager" ref="manager2"/>
+	</bean>
+	
+	<bean id="event4" class="domain.Event">
+		<property name="title" value="Feria de Sevilla 2016..." />
+		<property name="moment" value="1/05/2016 21:30" />
+		<property name="description" value="No dejes escapar la oportunidad de festejar con nosotros la Feria 2016!!" />
+		<property name="picture" value="https://c1.staticflickr.com/3/2935/14189825003_c73d241e99_b.jpg" />
+		<property name="seatsNumber" value="20" />
+		<property name="amount" value="1.0" />
+		<property name="manager" ref="manager2"/>
+	</bean>
+	
+	<bean id="event5" class="domain.Event">
+		<property name="title" value="Congreso muy importante..." />
+		<property name="moment" value="20/05/2017 12:30" />
+		<property name="description" value="Ven a conocer los avances tecnológicos en el gran congreso de..." />
+		<property name="picture" value="https://c1.staticflickr.com/5/4058/4549131161_e2545036c6_z.jpg" />
+		<property name="seatsNumber" value="20" />
 		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager2"/>
 	</bean>

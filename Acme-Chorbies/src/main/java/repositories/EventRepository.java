@@ -21,13 +21,13 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 	public Collection<Event> getEarlyEvents(Date currentDate, Date currentDatePlusMonth);
 
 	// Req C2 --------
-	@Query("select new forms.EventForm(e, case when exists(select 1 from Event e2 where e2.moment < current_date) then true else false end) from Event e where e.moment < current_date")
+	@Query("select new forms.EventForm(e, case when exists(select 1 from Event e2 where e2.moment < current_date) then false end) from Event e where e.moment < current_date")
 	public Collection<EventForm> getFinishedEvents();
 
-	@Query("select new forms.EventForm(e, case when exists(select 1 from Event e2 where e2.moment between ?1 and ?2 and (e2.seatsNumber - e2.eventChorbies.size) > 0) then true else false end) from Event e where e.moment between ?1 and ?2 and (e.seatsNumber - e.eventChorbies.size) > 0")
+	@Query("select new forms.EventForm(e, case when exists(select 1 from Event e2 where e2.moment between ?1 and ?2 and (e2.seatsNumber - e2.eventChorbies.size) > 0) then true end) from Event e where e.moment between ?1 and ?2 and (e.seatsNumber - e.eventChorbies.size) > 0")
 	public Collection<EventForm> getFutureHighlighted(Date currentDate, Date currentDatePlusMonth);
 
-	@Query("select new forms.EventForm(e, false) from Event e where e.moment > ?2 or e.moment between ?1 and ?2 and (e.seatsNumber - e.eventChorbies.size) = 0")
+	@Query("select new forms.EventForm(e) from Event e where e.moment > ?2 or e.moment between ?1 and ?2 and (e.seatsNumber - e.eventChorbies.size) = 0")
 	public Collection<EventForm> nonHighlighted(Date currentDate, Date currentDatePlusMonth);
 	//----------------
 
