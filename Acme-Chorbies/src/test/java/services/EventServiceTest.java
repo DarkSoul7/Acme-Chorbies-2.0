@@ -299,4 +299,136 @@ public class EventServiceTest extends AbstractTest {
 
 		this.checkExceptions(expectedException, caught);
 	}
+
+	/***
+	 * Register to an event
+	 * Testing cases:
+	 * 1º Good test -> expected: chorbi registered in event
+	 * 2º Bad test; an actor who is not chorbi cannot register to an event -> expected: IllegalArgumentException
+	 * 3º Bad test; an event whose seats available is 0 cannot permit subscriptions -> expected: IllegalArgumentException
+	 */
+
+	@Test
+	public void subscribeEventDriver() {
+		final Object[][] testingData = {
+			//chorbi, event id, expected exception
+			{
+				"chorbi1", 98, null
+			}, {
+				"admin", 95, IllegalArgumentException.class
+			}, {
+				"chorbi2", 98, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.subscribeEventTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	protected void subscribeEventTemplate(final String principal, final int eventId, final Class<?> expectedException) {
+		Class<?> caught = null;
+
+		try {
+			this.authenticate(principal);
+
+			final Event event = this.eventService.findOne(eventId);
+
+			if (principal.equals("chorbi2"))
+				event.setSeatsNumber(event.getSeatsNumber() - 1);
+
+			this.eventService.registerInEvent(event);
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expectedException, caught);
+	}
+
+	/***
+	 * Unregister to an event
+	 * Testing cases:
+	 * 1º Good test -> expected: chorbi unregistered
+	 * 2º Bad test; an actor who is not chorbi cannot unregister from an event -> expected: IllegalArgumentException
+	 * 3º Bad test; a chorbi who has not been registered to the event in question cannot unregister from it -> expected: IllegalArgumentException
+	 */
+
+	@Test
+	public void unsubscribeEventDriver() {
+		final Object[][] testingData = {
+			//chorbi, event id, expected exception
+			{
+				"chorbi1", 94, null
+			}, {
+				"admin", 95, IllegalArgumentException.class
+			}, {
+				"chorbi2", 98, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.unsubscribeEventTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	protected void unsubscribeEventTemplate(final String principal, final int eventId, final Class<?> expectedException) {
+		Class<?> caught = null;
+
+		try {
+			this.authenticate(principal);
+
+			final Event event = this.eventService.findOne(eventId);
+
+			this.eventService.unRegisterInEvent(event);
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expectedException, caught);
+	}
+
+	/***
+	 * Browse the list of events a chorbi has been registered
+	 * Testing cases:
+	 * 1º Good test -> expected: list returned
+	 * 2º Bad test; an authenticated actor who is not have no event list -> expected: IllegalArgumentException
+	 * 3º Bad test; an unauthenticated actor have no event list -> expected: IllegalArgumentException
+	 */
+
+	@Test
+	public void browseEventListDriver() {
+		final Object[][] testingData = {
+			//chorbi, event id, expected exception
+			{
+				"chorbi1", null
+			}, {
+				"admin", IllegalArgumentException.class
+			}, {
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.browseEventListTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	protected void browseEventListTemplate(final String principal, final Class<?> expectedException) {
+		Class<?> caught = null;
+
+		try {
+			this.authenticate(principal);
+
+			final Collection<Event> events = this.eventService.getEventsRegister();
+
+			Assert.notNull(events);
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expectedException, caught);
+	}
 }

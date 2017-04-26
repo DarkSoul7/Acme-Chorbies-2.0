@@ -9,22 +9,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import repositories.FeeRepository;
 import domain.Fee;
 import forms.FeeForm;
-import repositories.FeeRepository;
 
 @Service
 @Transactional
 public class FeeService {
 
+	//Managed repository
+
 	@Autowired
-	private FeeRepository feeRepository;
+	private FeeRepository			feeRepository;
+
+	//Supported services
+	@Autowired
+	private AdministratorService	administratorService;
 
 
+	//Constructor
 	public FeeService() {
 		super();
 	}
 
+	//Simple CRUD methods
+	@Deprecated
 	public Fee create() {
 		return new Fee();
 	}
@@ -39,9 +48,12 @@ public class FeeService {
 	}
 
 	public void save(final Fee fee) {
+		this.administratorService.findByPrincipal();
+
 		this.feeRepository.save(fee);
 	}
 
+	@Deprecated
 	public void delete(final Fee fee) {
 		this.feeRepository.delete(fee);
 	}

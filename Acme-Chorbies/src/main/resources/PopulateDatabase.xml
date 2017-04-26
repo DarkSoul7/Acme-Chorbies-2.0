@@ -699,7 +699,7 @@
 		<property name="moment" value="20/05/2017 12:30" />
 		<property name="description" value="Ven a conocer los avances tecnológicos en el gran congreso de..." />
 		<property name="picture" value="https://c1.staticflickr.com/5/4058/4549131161_e2545036c6_z.jpg" />
-		<property name="seatsNumber" value="20" />
+		<property name="seatsNumber" value="1" />
 		<property name="amount" value="1.0" />
 		<property name="manager" ref="manager2"/>
 	</bean>

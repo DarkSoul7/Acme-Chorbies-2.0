@@ -186,10 +186,11 @@ public class EventService {
 
 	public double getChorbiFeeMonthlyAmount(final Chorbi chorbi, final Date openPeriod, final Date endPeriod) {
 		Assert.notNull(chorbi);
+		Assert.isTrue(openPeriod.before(endPeriod));
 		this.administratorService.findByPrincipal();
 		final DateTime now = new DateTime();
 		final Calendar limitDateMinusMonth = Calendar.getInstance();
-		Double result = 0.;
+		Double result;
 
 		//1-(month - 1)-year
 		if (now.getMonthOfYear() == 1)
@@ -202,6 +203,9 @@ public class EventService {
 		limitDate.set(now.getYear(), now.getMonthOfYear(), 1);
 
 		result = this.eventRepository.getChorbisFeeAmountFromEventsBetweenDates(chorbi.getId(), limitDateMinusMonth.getTime(), limitDate.getTime());
+
+		if (result == null)
+			result = 0.0;
 
 		return result;
 	}
