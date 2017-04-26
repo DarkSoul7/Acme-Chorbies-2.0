@@ -1,9 +1,11 @@
 
 package forms;
 
+import java.util.Collection;
 import java.util.Date;
 
 import domain.Event;
+import domain.EventChorbi;
 
 public class EventForm {
 
@@ -16,6 +18,7 @@ public class EventForm {
 	private String	picture;
 	private int		seatsNumber;
 	private Boolean	highlighted;
+	private Collection<EventChorbi>	eventChorbies;
 
 
 	//Constructor
@@ -33,6 +36,7 @@ public class EventForm {
 		this.seatsNumber = event.getSeatsNumber();
 		this.title = event.getTitle();
 		this.highlighted = highlighted;
+		this.eventChorbies = event.getEventChorbies();
 	}
 
 	public EventForm(final Event event) {
@@ -105,4 +109,13 @@ public class EventForm {
 		this.highlighted = highlighted;
 	}
 
+	public Collection<EventChorbi> getEventChorbies() {
+		return eventChorbies;
+	}
+
+	public void setEventChorbies(Collection<EventChorbi> eventChorbies) {
+		this.eventChorbies = eventChorbies;
+	}
+
+	
 }

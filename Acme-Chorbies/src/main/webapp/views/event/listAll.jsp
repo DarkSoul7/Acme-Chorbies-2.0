@@ -22,24 +22,24 @@
 
 <display:table name="events" id="row" requestURI="${requestURI}"
 	pagesize="5">
-	
-<%-- 	<jstl:choose> --%>
-		<jstl:if test="${row.highlighted == false }">
-			<jstl:set var="style" value="background-color:gray" />
-		</jstl:if>
-		<jstl:if test="${row.highlighted == true}">
-			<jstl:set var="style" value="background-color:yellow" />
-		</jstl:if>
-		<jstl:if test="${row.highlighted == null}">
-			<jstl:set var="style" value="background-color:white" />
-		</jstl:if>
-<%-- 		<jstl:when test="${not empty row.highlighted && row.highlighted}"> --%>
-<%-- 			<jstl:set var="style" value="background-color:gray" /> --%>
-<%-- 		</jstl:when> --%>
-<%-- 		<jstl:otherwise> --%>
-<%-- 			<jstl:set var="style" value="background-color:white" /> --%>
-<%-- 		</jstl:otherwise> --%>
-<%-- 	</jstl:choose> --%>
+
+	<%-- 	<jstl:choose> --%>
+	<jstl:if test="${row.highlighted == false }">
+		<jstl:set var="style" value="background-color:gray" />
+	</jstl:if>
+	<jstl:if test="${row.highlighted == true}">
+		<jstl:set var="style" value="background-color:yellow" />
+	</jstl:if>
+	<jstl:if test="${row.highlighted == null}">
+		<jstl:set var="style" value="background-color:white" />
+	</jstl:if>
+	<%-- 		<jstl:when test="${not empty row.highlighted && row.highlighted}"> --%>
+	<%-- 			<jstl:set var="style" value="background-color:gray" /> --%>
+	<%-- 		</jstl:when> --%>
+	<%-- 		<jstl:otherwise> --%>
+	<%-- 			<jstl:set var="style" value="background-color:white" /> --%>
+	<%-- 		</jstl:otherwise> --%>
+	<%-- 	</jstl:choose> --%>
 
 	<spring:message code="event.title" var="title" />
 	<display:column style="${style}" property="title" title="${title}" />
@@ -68,4 +68,22 @@
 	<spring:message code="event.seatsNumber" var="seatsNumber" />
 	<display:column style="${style}" property="seatsNumber"
 		title="${seatsNumber}" />
+
+	<security:authorize access="hasRole('CHORBI')">
+		<display:column>
+			<jstl:if test="${!listChorbiJoinEventYet.contains(row.id)}">
+				<jstl:if test="${row.highlighted == true}">
+					<acme:cancel url="event/join.do?eventId=${row.id}"
+						code="event.join" />
+				</jstl:if>
+				<jstl:if
+					test="${(row.highlighted == null) && (row.seatsNumber - row.eventChorbies.size > 0)}">
+					<acme:cancel url="event/join.do?eventId=${row.id}"
+						code="event.join" />
+				</jstl:if>
+			</jstl:if>
+		</display:column>
+	</security:authorize>
+
+
 </display:table>
