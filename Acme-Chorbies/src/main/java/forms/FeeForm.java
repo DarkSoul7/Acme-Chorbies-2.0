@@ -7,7 +7,8 @@ public class FeeForm {
 
 	//Attributes
 	private int		id;
-	private double	amount;
+	private double	amountManager;
+	private double	amountChorbi;
 
 
 	//Constructor
@@ -16,12 +17,21 @@ public class FeeForm {
 	}
 
 	@Min(1)
-	public double getAmount() {
-		return this.amount;
+	public double getAmountManager() {
+		return this.amountManager;
 	}
 
-	public void setAmount(final double amount) {
-		this.amount = amount;
+	public void setAmountManager(final double amountManager) {
+		this.amountManager = amountManager;
+	}
+
+	@Min(1)
+	public double getAmountChorbi() {
+		return this.amountChorbi;
+	}
+
+	public void setAmountChorbi(final double amountChorbi) {
+		this.amountChorbi = amountChorbi;
 	}
 
 	public int getId() {

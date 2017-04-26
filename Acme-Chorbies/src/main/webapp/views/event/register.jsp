@@ -23,7 +23,7 @@
 	<acme:textbox code="event.title" path="title" mandatory="true" />
 	<br/>
 	
-	<acme:datepicker code="event.moment" path="moment" mandatory="true" />
+	<acme:textbox code="event.moment" path="moment" mandatory="true" />
 	<br/>
 	
 	<acme:textbox code="event.picture" path="picture" mandatory="true" />

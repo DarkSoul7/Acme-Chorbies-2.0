@@ -16,12 +16,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.EventRepository;
 import domain.Chorbi;
 import domain.Event;
 import domain.EventChorbi;
 import domain.Manager;
 import forms.EventForm;
+import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -139,7 +139,7 @@ public class EventService {
 
 
 	@Autowired
-	private Validator	validator;
+	private Validator validator;
 
 
 	public Event reconstruct(final EventForm eventForm, final BindingResult binding) throws CheckDigitException {
@@ -160,7 +160,7 @@ public class EventService {
 		result.setPicture(eventForm.getPicture());
 		result.setSeatsNumber(eventForm.getSeatsNumber());
 		result.setTitle(eventForm.getTitle());
-		result.setAmount(this.feeService.getFee().getAmount());
+		result.setAmount(this.feeService.getFee().getAmountManager());
 
 		this.validator.validate(result, binding);
 

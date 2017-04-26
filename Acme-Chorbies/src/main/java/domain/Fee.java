@@ -11,7 +11,8 @@ public class Fee extends DomainEntity {
 
 	//Attributes
 
-	private double amount;
+	private double	amountManager;
+	private double	amountChorbi;
 
 
 	//Constructor
@@ -20,14 +21,22 @@ public class Fee extends DomainEntity {
 		super();
 	}
 
+	public double getAmountManager() {
+		return this.amountManager;
+	}
+
+	public void setAmountManager(final double amountManager) {
+		this.amountManager = amountManager;
+	}
+
+	public double getAmountChorbi() {
+		return this.amountChorbi;
+	}
+
+	public void setAmountChorbi(final double amountChorbi) {
+		this.amountChorbi = amountChorbi;
+	}
+
 	//Getter & setter
-
-	public double getAmount() {
-		return this.amount;
-	}
-
-	public void setAmount(final double amount) {
-		this.amount = amount;
-	}
 
 }

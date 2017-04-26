@@ -21,9 +21,10 @@ public class EventChorbi extends DomainEntity {
 
 	//Attributes
 	private Date	momentSubscribed;
+	private double	amount;
 
 
-	//Constructor 
+	//Constructor
 	public EventChorbi() {
 		super();
 	}
@@ -40,6 +41,14 @@ public class EventChorbi extends DomainEntity {
 
 	public void setMomentSubscribed(final Date momentSubscribed) {
 		this.momentSubscribed = momentSubscribed;
+	}
+
+	public double getAmount() {
+		return this.amount;
+	}
+
+	public void setAmount(final double amount) {
+		this.amount = amount;
 	}
 
 

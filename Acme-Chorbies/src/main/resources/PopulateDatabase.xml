@@ -706,7 +706,8 @@
 	
 	<!--  FEE --> 
 	<bean id="fee1" class="domain.Fee">
-  		<property name="amount" value="1.0" /> 
+  		<property name="amountChorbi" value="1.0" />
+  		<property name="amountManager" value="1.0" /> 
   	</bean>
   	
   	<!-- INVOICES -->
@@ -746,42 +747,49 @@
   	
   	<bean id="eventChorbi1" class="domain.EventChorbi">
   		<property name="momentSubscribed" value="1/2/2017" />
+  		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi1" />
   		<property name="event" ref="event1" /> 
   	</bean>
   	
   	<bean id="eventChorbi2" class="domain.EventChorbi">
   		<property name="momentSubscribed" value="1/2/2017" />
+  		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi2" />
   		<property name="event" ref="event1" /> 
   	</bean>
   	
   	<bean id="eventChorbi3" class="domain.EventChorbi">
   		<property name="momentSubscribed" value="1/2/2017" />
+  		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi1" />
   		<property name="event" ref="event2" /> 
   	</bean>
   	
   	<bean id="eventChorbi4" class="domain.EventChorbi">
   		<property name="momentSubscribed" value="1/2/2017" />
+  		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi3" />
   		<property name="event" ref="event2" /> 
   	</bean>
   	
   	<bean id="eventChorbi5" class="domain.EventChorbi">
   		<property name="momentSubscribed" value="1/2/2017" />
+  		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi4" />
   		<property name="event" ref="event2" /> 
   	</bean>
 	
 	<bean id="eventChorbi6" class="domain.EventChorbi">
   		<property name="momentSubscribed" value="1/2/2017" />
+  		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi2" />
   		<property name="event" ref="event3" /> 
   	</bean>
   	
   	<bean id="eventChorbi7" class="domain.EventChorbi">
   		<property name="momentSubscribed" value="1/2/2017" />
+  		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi3" />
   		<property name="event" ref="event3" /> 
   	</bean>

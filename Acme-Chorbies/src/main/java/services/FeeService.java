@@ -50,7 +50,8 @@ public class FeeService {
 	public Fee reconstruct(final FeeForm feeForm, final BindingResult binding) {
 
 		final Fee result = this.findOne(feeForm.getId());
-		result.setAmount(feeForm.getAmount());
+		result.setAmountManager(feeForm.getAmountManager());
+		result.setAmountChorbi(feeForm.getAmountChorbi());
 
 		return result;
 	}
