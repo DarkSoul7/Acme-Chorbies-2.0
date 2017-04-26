@@ -13,6 +13,8 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.EventRepository;
 import domain.Chorbi;
@@ -135,7 +137,12 @@ public class EventService {
 		return result;
 	}
 
-	public Event reconstruct(final EventForm eventForm) throws CheckDigitException {
+
+	@Autowired
+	private Validator	validator;
+
+
+	public Event reconstruct(final EventForm eventForm, final BindingResult binding) throws CheckDigitException {
 		Assert.notNull(eventForm);
 		final Manager manager = this.managerService.findByPrincipal();
 
@@ -154,6 +161,11 @@ public class EventService {
 		result.setSeatsNumber(eventForm.getSeatsNumber());
 		result.setTitle(eventForm.getTitle());
 		result.setAmount(this.feeService.getFee().getAmount());
+
+		this.validator.validate(result, binding);
+
+		Assert.isTrue(result.getMoment().after(new Date()));
+
 		return result;
 	}
 

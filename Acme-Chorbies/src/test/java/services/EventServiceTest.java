@@ -204,7 +204,7 @@ public class EventServiceTest extends AbstractTest {
 			eventForm.setTitle("This is a Test title");
 			eventForm.setMoment(new Date());
 
-			final Event event = this.eventService.reconstruct(eventForm);
+			final Event event = this.eventService.reconstruct(eventForm, null);
 
 			this.eventService.save(event);
 

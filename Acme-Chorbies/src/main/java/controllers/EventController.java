@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Event;
-import forms.EventForm;
 import services.EventService;
 import services.ManagerService;
+import domain.Event;
+import forms.EventForm;
 
 @Controller
 @RequestMapping("/event")
@@ -54,8 +54,8 @@ public class EventController extends AbstractController {
 		final Collection<EventForm> eventsGreyList = this.eventService.getFinishedEvents();
 		final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(now.toDate(), aMonthLater.toDate());
 		final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(now.toDate(), aMonthLater.toDate());
-		
-		Collection<EventForm> allEvents = new ArrayList<EventForm>();
+
+		final Collection<EventForm> allEvents = new ArrayList<EventForm>();
 		allEvents.addAll(eventsGreyList);
 		allEvents.addAll(eventsHighlightedList);
 		allEvents.addAll(eventsNonHighlightedList);
@@ -101,7 +101,7 @@ public class EventController extends AbstractController {
 
 		result = new ModelAndView("event/list");
 		result.addObject("events", events);
-		result.addObject("requestURI", "event/manager/listOfManager.do");
+		result.addObject("requestURI", "event/listOfManager.do");
 		return result;
 	}
 
@@ -121,7 +121,7 @@ public class EventController extends AbstractController {
 		Event event = new Event();
 
 		try {
-			event = this.eventService.reconstruct(eventForm);
+			event = this.eventService.reconstruct(eventForm, binding);
 		} catch (final Exception e) {
 			result = this.createModelAndView(eventForm, "event.commit.error");
 		}
@@ -144,7 +144,7 @@ public class EventController extends AbstractController {
 		Event event = new Event();
 
 		try {
-			event = this.eventService.reconstruct(eventForm);
+			event = this.eventService.reconstruct(eventForm, binding);
 		} catch (final Exception e) {
 			result = this.createEditModelAndView(eventForm, "event.commit.error");
 		}
