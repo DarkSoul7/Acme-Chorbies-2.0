@@ -3,6 +3,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,21 +16,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Chorbi;
+import domain.Event;
+import domain.EventChorbi;
+import forms.EventForm;
+import security.LoginService;
+import services.ChorbiService;
 import services.EventService;
 import services.ManagerService;
-import domain.Event;
-import forms.EventForm;
 
 @Controller
 @RequestMapping("/event")
 public class EventController extends AbstractController {
 
 	@Autowired
-	private EventService	eventService;
+	private EventService eventService;
 
 	@Autowired
-	private ManagerService	managerService;
+	private ManagerService managerService;
 
+	@Autowired
+	private ChorbiService chorbiService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -52,16 +59,32 @@ public class EventController extends AbstractController {
 		final DateTime now = new DateTime();
 		final DateTime aMonthLater = now.plusMonths(1);
 		final Collection<EventForm> eventsGreyList = this.eventService.getFinishedEvents();
-		final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(now.toDate(), aMonthLater.toDate());
-		final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(now.toDate(), aMonthLater.toDate());
+		final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(now.toDate(),
+				aMonthLater.toDate());
+		final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(now.toDate(),
+				aMonthLater.toDate());
 
 		final Collection<EventForm> allEvents = new ArrayList<EventForm>();
 		allEvents.addAll(eventsGreyList);
 		allEvents.addAll(eventsHighlightedList);
 		allEvents.addAll(eventsNonHighlightedList);
 
+		List<Integer> listChorbiJoinEventYet = new ArrayList<Integer>();
+		if (LoginService.isAuthenticated()) {
+			Chorbi chorbi = chorbiService.findByPrincipal();
+			for(EventChorbi eventChorbi : chorbi.getEventChorbies()){
+				for (EventForm eventForm : allEvents) {
+					if (eventChorbi.getEvent().getId() == eventForm.getId()) {
+						listChorbiJoinEventYet.add(eventForm.getId());
+					}
+					
+				}
+			}
+		}
+
 		result = new ModelAndView("event/listAll");
 		result.addObject("events", allEvents);
+		result.addObject("listChorbiJoinEventYet", listChorbiJoinEventYet);
 		result.addObject("requestURI", "event/listAll.do");
 
 		return result;
@@ -93,7 +116,18 @@ public class EventController extends AbstractController {
 		return result;
 	}
 
-	//MANAGER
+	@RequestMapping(value = "/join", method = RequestMethod.GET)
+	public ModelAndView join(@RequestParam(required = true) final int eventId) {
+		ModelAndView result;
+		final Event event = this.eventService.findOne(eventId);
+
+		this.eventService.registerInEvent(event);
+		result = new ModelAndView("redirect:/event/listAll.do");
+
+		return result;
+	}
+
+	// MANAGER
 	@RequestMapping(value = "/listOfManager", method = RequestMethod.GET)
 	public ModelAndView listEventOfManager() {
 		final ModelAndView result;

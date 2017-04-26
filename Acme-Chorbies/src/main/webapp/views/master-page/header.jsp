@@ -57,6 +57,7 @@
 				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message	code="master.page.event" /><span class="caret"></span></a>
 						<ul class="dropdown-menu inverse-dropdown">
 							<li><a href="event/listRegister.do"><spring:message code="master.page.event.listRegister" /></a></li>
+							<li><a href="event/listAll.do"><spring:message code="master.page.event.listAll" /></a></li>
 						</ul>
 					</li>
 			</security:authorize>
