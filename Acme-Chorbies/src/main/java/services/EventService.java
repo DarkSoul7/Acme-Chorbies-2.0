@@ -16,12 +16,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.EventRepository;
 import domain.Chorbi;
 import domain.Event;
 import domain.EventChorbi;
 import domain.Manager;
 import forms.EventForm;
-import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -139,7 +139,7 @@ public class EventService {
 
 
 	@Autowired
-	private Validator validator;
+	private Validator	validator;
 
 
 	public Event reconstruct(final EventForm eventForm, final BindingResult binding) throws CheckDigitException {
@@ -189,6 +189,7 @@ public class EventService {
 		this.administratorService.findByPrincipal();
 		final DateTime now = new DateTime();
 		final Calendar limitDateMinusMonth = Calendar.getInstance();
+		Double result = 0.;
 
 		//1-(month - 1)-year
 		if (now.getMonthOfYear() == 1)
@@ -200,11 +201,7 @@ public class EventService {
 		final Calendar limitDate = Calendar.getInstance();
 		limitDate.set(now.getYear(), now.getMonthOfYear(), 1);
 
-		final Collection<Event> events = this.eventRepository.getEventsNotFinishedByChorbi(chorbi.getId(), limitDateMinusMonth.getTime(), limitDate.getTime());
-		double result = 0.0;
-
-		for (final Event event : events)
-			result += event.getAmount();
+		result = this.eventRepository.getChorbisFeeAmountFromEventsBetweenDates(chorbi.getId(), limitDateMinusMonth.getTime(), limitDate.getTime());
 
 		return result;
 	}

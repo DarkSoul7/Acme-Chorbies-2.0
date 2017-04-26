@@ -39,4 +39,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
 	@Query("select e from Event e join e.eventChorbies ec where e.moment between ?2 and ?3 and ec.chorbi.id = ?1")
 	public Collection<Event> getEventsNotFinishedByChorbi(int chorbiId, Date openPeriod, Date endPerior);
+
+	@Query("select sum(ec.amount) from Event e join e.eventChorbies ec where e.moment between ?2 and ?3 and ec.chorbi.id = ?1")
+	public Double getChorbisFeeAmountFromEventsBetweenDates(int chorbiId, Date openPeriod, Date endPerior);
 }
