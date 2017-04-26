@@ -29,6 +29,7 @@
 				<li><a href="banner/list.do"><spring:message code="master.page.banner.list" /></a></li>
 				<li><a href="searchTemplate/listCachedTime.do"><spring:message code="master.page.cachedTime.list" /></a></li>
 				<li><a href="administrator/chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
+				<li><a href="fee/edit.do"><spring:message code="master.page.fee" /></a></li>
 				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message	code="master.page.administrator.dashboard" /><span class="caret"></span></a>
 					<ul class="dropdown-menu inverse-dropdown">
 						<li><a href="administrator/dashboardC.do"><spring:message code="master.page.administrator.dashboradC" /></a></li>

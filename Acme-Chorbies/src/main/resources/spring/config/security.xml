@@ -100,6 +100,11 @@
 		<security:intercept-url pattern="/event/register.do" access="hasRole('MANAGER')" />
 		<security:intercept-url pattern="/event/delete.do" access="hasRole('MANAGER')" />
 		<security:intercept-url pattern="/event/edit.do" access="hasRole('MANAGER')" />
+		
+		<!--  FEE --> 
+	    <security:intercept-url pattern="/fee/edit.do" access="hasRole('ADMINISTRATOR')" /> 
+	    <security:intercept-url pattern="/fee/save.do" access="hasRole('ADMINISTRATOR')" /> 
+		
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
