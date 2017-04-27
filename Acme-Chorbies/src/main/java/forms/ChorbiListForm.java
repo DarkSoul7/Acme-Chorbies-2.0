@@ -30,6 +30,22 @@ public class ChorbiListForm {
 		super();
 	}
 	
+	public ChorbiListForm(Chorbi chorbi) {
+		super();
+		
+		this.setId(chorbi.getId());
+		this.name = chorbi.getName();
+		this.surname = chorbi.getSurname();
+		this.phone = chorbi.getPhone();
+		this.email = chorbi.getEmail();
+		this.birthDate = chorbi.getBirthDate();
+		this.coordinates = chorbi.getCoordinates();
+		this.genre = chorbi.getGenre();
+		this.picture = chorbi.getPicture();
+		this.relationship = chorbi.getRelationship();
+		this.description = chorbi.getDescription();
+	}
+	
 	public ChorbiListForm(Chorbi chorbi, Boolean liked) {
 		super();
 		

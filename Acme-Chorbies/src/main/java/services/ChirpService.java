@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ChirpRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 import domain.Chirp;
 import domain.Chirper;
@@ -51,7 +53,7 @@ public class ChirpService {
 	}
 
 	public ChirpForm create() {
-		this.chorbiService.findByPrincipal();
+		this.chirperService.findByPrincipal();
 		final ChirpForm chirpForm = new ChirpForm();
 
 		return chirpForm;
@@ -171,14 +173,15 @@ public class ChirpService {
 
 		return result;
 	}
+	
 
 	public Chirp reconstruct(final ChirpForm chirpForm) {
 		Chirp result;
-		Chorbi principal;
+		Chirper principal;
 		String attachments;
 		Chirp parentChirp;
 
-		principal = this.chorbiService.findByPrincipal();
+		principal = this.chirperService.findByPrincipal();
 		result = new Chirp();
 		if (StringUtils.isNotBlank(chirpForm.getAttachments()))
 			attachments = this.compruebaEnlaces(chirpForm.getAttachments());

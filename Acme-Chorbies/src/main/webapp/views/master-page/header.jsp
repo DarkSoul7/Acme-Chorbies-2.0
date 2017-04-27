@@ -46,7 +46,12 @@
 			</security:authorize>
 			
 			<security:authorize access="hasRole('CHORBI')">
-				<li><a href="chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
+				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.chorbi" /><span class="caret"></span></a>
+					<ul class="dropdown-menu inverse-dropdown">
+						<li><a href="chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
+						<li><a href="chorbi/listLikeHim.do"><spring:message code="master.page.listLikeHim.chorbi" /></a></li>
+					</ul>
+				</li>
 				<li><a href="searchTemplate/list.do"><spring:message code="master.page.searchTemplate" /></a></li>
 				<li><a href="invoice/list.do"><spring:message code="master.page.invoice" /></a></li>
 				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.messagingSystem" /><span class="caret"></span></a>

@@ -25,13 +25,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ChorbiService;
 import domain.Brand;
 import domain.Chorbi;
+import domain.Event;
 import domain.Genre;
 import domain.Relationship;
 import forms.ChorbiForm;
 import forms.ChorbiListForm;
+import services.ChorbiService;
+import services.EventService;
 
 @Controller
 @RequestMapping("/chorbi")
@@ -41,6 +43,9 @@ public class ChorbiController extends AbstractController {
 
 	@Autowired
 	private ChorbiService	chorbiService;
+	
+	@Autowired
+	private EventService eventService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -60,6 +65,39 @@ public class ChorbiController extends AbstractController {
 		result.addObject("chorbies", chorbies);
 		result.addObject("listForm", true);
 		result.addObject("requestURI", "chorbi/list.do");
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/listByEvent", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam final int eventId) {
+		ModelAndView result;
+		
+		Collection<ChorbiListForm> chorbies = chorbiService.findChorbiesByEvent(eventId);
+
+		result = new ModelAndView("chorbi/list");
+		result.addObject("chorbies", chorbies);
+		result.addObject("requestURI", "chorbi/list.do");
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/listLikeHim", method = RequestMethod.GET)
+	public ModelAndView listLikeHim() {
+		ModelAndView result;
+		Chorbi chorbi = chorbiService.findByPrincipal();
+		Boolean haveCreditCard = false;
+		Collection<Chorbi> chorbies;
+
+		chorbies = chorbiService.findChorbisFromAuthor(chorbi.getId());
+		if(chorbi.getCreditCard() != null){
+			haveCreditCard = true;
+		}
+
+		result = new ModelAndView("chorbi/listLikeHim");
+		result.addObject("chorbies", chorbies);
+		result.addObject("haveCreditCard", haveCreditCard);
+		result.addObject("requestURI", "chorbi/listLikeHim.do");
 
 		return result;
 	}

@@ -54,6 +54,8 @@
 		<security:intercept-url pattern="/administrator/chorbi/showDetails.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/administrator/chorbi/givenLikesReceivers.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/administrator/chorbi/receivedLikesAuthors.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/chorbi/listLikeHim.do" access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/chorbi/listByEvent.do" access="hasRole('MANAGER')" />
 		
 		<!-- CHIRP -->
 		<security:intercept-url pattern="/chirp/send.do" access="hasRole('CHORBI')" />
@@ -63,6 +65,7 @@
 		<security:intercept-url pattern="/chirp/sentChirps.do" access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/chirp/receivedChirps.do" access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/chirp/showChirp.do" access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/chirp/sendByManager.do" access=" hasRole('MANAGER')" />
 		
 		<!-- INVOICE -->
 		

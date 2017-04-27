@@ -150,6 +150,9 @@ public interface ChorbiRepository extends JpaRepository<Chorbi, Integer> {
 
 	//----------------------- ACME-CHORBIES 2.0 -------------------------------------
 
+	@Query("select new forms.ChorbiListForm(c) from Chorbi c join c.eventChorbies ec where ec.event.id = ?1")
+	public Collection<ChorbiListForm> findChorbiesByEvent(int eventId);
+	
 	//C3
 	@Query("select c from Chorbi c order by c.eventChorbies.size")
 	public Collection<Manager> listOfChorbiesOrderByEvents();

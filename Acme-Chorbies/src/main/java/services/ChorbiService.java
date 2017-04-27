@@ -20,10 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 import domain.Chirp;
 import domain.Chorbi;
@@ -33,6 +29,11 @@ import domain.Manager;
 import domain.SearchTemplate;
 import forms.ChorbiForm;
 import forms.ChorbiListForm;
+import forms.EventForm;
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -580,6 +581,10 @@ public class ChorbiService {
 
 	public Collection<Manager> listOfChorbiesOrderByEvents() {
 		return this.chorbiRepository.listOfChorbiesOrderByEvents();
+	}
+	
+	public Collection<ChorbiListForm> findChorbiesByEvent(int eventId){
+		return this.chorbiRepository.findChorbiesByEvent(eventId);
 	}
 
 	//Dashboard ACME-CHORBIES 2.0

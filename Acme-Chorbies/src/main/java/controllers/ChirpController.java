@@ -35,11 +35,10 @@ public class ChirpController extends AbstractController {
 	// Related services
 
 	@Autowired
-	private ChirpService	chirpService;
+	private ChirpService chirpService;
 
 	@Autowired
-	private ChorbiService	chorbiService;
-
+	private ChorbiService chorbiService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -57,7 +56,7 @@ public class ChirpController extends AbstractController {
 		try {
 			chirp = this.chirpService.findOne(chirpId);
 
-			//Hidding email & phone
+			// Hidding email & phone
 			this.chirpService.applyPrivacity(chirp);
 
 			errorMessage = null;
@@ -80,7 +79,7 @@ public class ChirpController extends AbstractController {
 		ModelAndView result;
 		final Collection<Chirp> chirps = this.chirpService.findAllSentByPrincipal();
 
-		//Hiding email & phone
+		// Hiding email & phone
 		this.chirpService.applyPrivacity(chirps);
 
 		result = new ModelAndView("chirp/sentChirps");
@@ -116,6 +115,21 @@ public class ChirpController extends AbstractController {
 		return result;
 	}
 
+	// Create
+	@RequestMapping(value = "/sendByManager", method = RequestMethod.GET)
+	public ModelAndView sendByManager(@RequestParam(required = true) final int chorbiId) {
+		ModelAndView result;
+		final ChirpForm chirpForm = this.chirpService.create();
+		Chorbi chorbi = chorbiService.findOne(chorbiId);
+		chirpForm.setReceiver(chorbi);
+
+		result = new ModelAndView("chirp/sendByManager");
+		result.addObject("chirpForm", chirpForm);
+		result.addObject("requestURI", "chirp/sendByManager.do");
+
+		return result;
+	}
+
 	// Reply
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
 	public ModelAndView reply(@RequestParam(required = true) final int chirpId) {
@@ -142,6 +156,7 @@ public class ChirpController extends AbstractController {
 
 		return result;
 	}
+
 	// Forward
 	@RequestMapping(value = "/forward", method = RequestMethod.GET)
 	public ModelAndView forward(@RequestParam(required = true) final int chirpId) {
@@ -190,10 +205,32 @@ public class ChirpController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/sendByManager", method = RequestMethod.POST, params = "save")
+	public ModelAndView sendByManager(@Valid final ChirpForm chirpForm, final BindingResult binding) {
+		ModelAndView result = new ModelAndView();
+		Chirp chirp;
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(chirpForm);
+		else
+			try {
+				chirp = this.chirpService.reconstruct(chirpForm);
+				this.chirpService.save(chirp);
+				result = new ModelAndView("redirect:/event/listOfManager.do");
+			} catch (final IllegalArgumentException e) {
+				result = this.createEditModelAndView(chirpForm, "chirp.attachments.error");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(chirpForm, "chirp.send.error");
+			}
+
+		return result;
+	}
 
 	// Delete
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam(required = true) final int chirpId, @RequestParam(required = true) final String url) {
+	public ModelAndView delete(@RequestParam(required = true) final int chirpId,
+			@RequestParam(required = true) final String url) {
 		ModelAndView result = new ModelAndView();
 		String errorChirp = null;
 
