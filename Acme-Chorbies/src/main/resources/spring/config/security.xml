@@ -64,6 +64,13 @@
 		<security:intercept-url pattern="/chirp/receivedChirps.do" access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/chirp/showChirp.do" access="hasRole('CHORBI')" />
 		
+		<!-- INVOICE -->
+		
+		<security:intercept-url pattern="/invoice/list.do" access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/invoice/listSave.do" access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/invoice/listAll.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/invoice/listAllSave.do" access="hasRole('ADMINISTRATOR')" />
+		
 		<!-- LIKE -->
 		<security:intercept-url pattern="/like/register.do" access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/like/see.do" access="hasRole('CHORBI')" />

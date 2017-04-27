@@ -30,6 +30,7 @@
 				<li><a href="searchTemplate/listCachedTime.do"><spring:message code="master.page.cachedTime.list" /></a></li>
 				<li><a href="administrator/chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
 				<li><a href="fee/edit.do"><spring:message code="master.page.fee" /></a></li>
+				<li><a href="invoice/listAll.do"><spring:message code="master.page.invoice" /></a></li>
 				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message	code="master.page.administrator.dashboard" /><span class="caret"></span></a>
 					<ul class="dropdown-menu inverse-dropdown">
 						<li><a href="administrator/dashboardC.do"><spring:message code="master.page.administrator.dashboradC" /></a></li>
@@ -47,6 +48,7 @@
 			<security:authorize access="hasRole('CHORBI')">
 				<li><a href="chorbi/list.do"><spring:message code="master.page.list.chorbi" /></a></li>
 				<li><a href="searchTemplate/list.do"><spring:message code="master.page.searchTemplate" /></a></li>
+				<li><a href="invoice/list.do"><spring:message code="master.page.invoice" /></a></li>
 				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message code="master.page.messagingSystem" /><span class="caret"></span></a>
 					<ul class="dropdown-menu inverse-dropdown">
 						<li><a href="chirp/send.do"><spring:message code="master.page.messagingSystem.send" /></a></li>

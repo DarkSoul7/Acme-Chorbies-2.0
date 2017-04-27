@@ -27,6 +27,7 @@
 		<value>/views/chirp/messages</value>
 		<value>/views/chorbi/messages</value>
 		<value>/views/dashboard/messages</value>
+		<value>/views/invoice/messages</value>
 		<value>/views/like/messages</value>
 		<value>/views/searchTemplate/messages</value>
 		<value>/views/event/messages</value>

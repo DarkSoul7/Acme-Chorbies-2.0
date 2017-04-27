@@ -38,6 +38,10 @@ public class InvoiceService {
 
 	//Simple CRUD methods
 
+	public Collection<Invoice> findAll() {
+		return this.invoiceRepository.findAll();
+	}
+
 	public Invoice create() {
 		final Invoice result = new Invoice();
 
@@ -120,5 +124,13 @@ public class InvoiceService {
 			months--;
 		}
 		return result;
+	}
+
+	public Collection<Invoice> getInvoiceByParamsAdmin(final Date openPeriod, final Date endPeriod) {
+		return this.invoiceRepository.getInvoiceByParamsAdmin(openPeriod, endPeriod);
+	}
+
+	public Collection<Invoice> getInvoiceByParamsChorbi(final Date openPeriod, final Date endPeriod, final Chorbi chorbi) {
+		return this.invoiceRepository.getInvoiceByParamsChorbi(openPeriod, endPeriod, chorbi.getId());
 	}
 }
