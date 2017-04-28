@@ -18,6 +18,7 @@ public class ChirpForm {
 	private String	attachments;
 	private Actor	receiver;
 	private Integer	parentChirpId;
+	private Integer eventId;
 
 
 	//Constructor
@@ -74,5 +75,15 @@ public class ChirpForm {
 	public void setParentChirpId(final Integer parentChirpId) {
 		this.parentChirpId = parentChirpId;
 	}
+
+	public Integer getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(Integer eventId) {
+		this.eventId = eventId;
+	}
+	
+	
 
 }

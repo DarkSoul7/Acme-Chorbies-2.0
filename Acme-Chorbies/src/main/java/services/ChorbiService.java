@@ -592,6 +592,10 @@ public class ChorbiService {
 	public Collection<ChorbiListForm> findChorbiesByEvent(final int eventId) {
 		return this.chorbiRepository.findChorbiesByEvent(eventId);
 	}
+	
+	public Collection<Chorbi> getChorbiesByEvent(int eventId){
+		return this.chorbiRepository.getChorbiesByEvent(eventId);
+	}
 
 	//Dashboard ACME-CHORBIES 2.0
 

@@ -26,27 +26,26 @@ import forms.ChirpForm;
 @Transactional
 public class ChirpService {
 
-	//Managed repository
+	// Managed repository
 
 	@Autowired
-	private ChirpRepository		chirpRepository;
+	private ChirpRepository chirpRepository;
 
-	//Supported services
-
-	@Autowired
-	private ChorbiService		chorbiService;
+	// Supported services
 
 	@Autowired
-	private ManagerService		managerService;
+	private ChorbiService chorbiService;
 
 	@Autowired
-	private EventChorbiService	eventChorbiService;
+	private ManagerService managerService;
 
 	@Autowired
-	private ChirperService		chirperService;
+	private EventChorbiService eventChorbiService;
 
+	@Autowired
+	private ChirperService chirperService;
 
-	//Constructor
+	// Constructor
 
 	public ChirpService() {
 		super();
@@ -59,7 +58,7 @@ public class ChirpService {
 		return chirpForm;
 	}
 
-	// Este método no debe usarse nunca 
+	// Este método no debe usarse nunca
 	@Deprecated
 	public Collection<Chirp> findAll() {
 		throw new IllegalArgumentException();
@@ -120,7 +119,7 @@ public class ChirpService {
 		this.delete(chirp);
 	}
 
-	//Other business methods
+	// Other business methods
 
 	public Collection<Chirp> findAllSentByPrincipal() {
 		final Actor principal = this.chorbiService.findByPrincipal();
@@ -173,7 +172,6 @@ public class ChirpService {
 
 		return result;
 	}
-	
 
 	public Chirp reconstruct(final ChirpForm chirpForm) {
 		Chirp result;
@@ -206,14 +204,22 @@ public class ChirpService {
 
 		return result;
 	}
+	
+	public void broadcastChirp(ChirpForm chirpForm){
+		Chirp chirp;
+		Collection<Chorbi> listChorbi = chorbiService.getChorbiesByEvent(chirpForm.getEventId());
+		for(Chorbi chorbi: listChorbi){
+			chirpForm.setReceiver(chorbi);
+			chirp = this.reconstruct(chirpForm);
+			this.save(chirp);
+		}
+	}
 
 	private String compruebaEnlaces(final String attachments) {
 		String result;
 		final String delimiter = System.getProperty("line.separator");
 		final String[] aattachments = StringUtils.split(attachments, delimiter);
-		final String[] schemes = {
-			"http", "https"
-		};
+		final String[] schemes = { "http", "https" };
 		final UrlValidator urlValidator = new UrlValidator(schemes);
 
 		for (final String attachment : aattachments)
@@ -234,12 +240,14 @@ public class ChirpService {
 			chirp.setText(text);
 		}
 		if (!chirp.getSubject().isEmpty() && chirp.getSubject() != null) {
-			String subject = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getSubject()).replaceAll("***");
+			String subject = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getSubject())
+					.replaceAll("***");
 			subject = java.util.regex.Pattern.compile(emailPattern).matcher(subject).replaceAll("***");
 			chirp.setSubject(subject);
 		}
 		if (!chirp.getAttachments().isEmpty() && chirp.getAttachments() != null) {
-			String attachments = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getAttachments()).replaceAll("***");
+			String attachments = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getAttachments())
+					.replaceAll("***");
 			attachments = java.util.regex.Pattern.compile(emailPattern).matcher(attachments).replaceAll("***");
 			chirp.setAttachments(attachments);
 		}
@@ -258,12 +266,14 @@ public class ChirpService {
 				chirp.setText(text);
 			}
 			if (!chirp.getSubject().isEmpty() && chirp.getSubject() != null) {
-				String subject = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getSubject()).replaceAll("***");
+				String subject = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getSubject())
+						.replaceAll("***");
 				subject = java.util.regex.Pattern.compile(emailPattern).matcher(subject).replaceAll("***");
 				chirp.setSubject(subject);
 			}
 			if (!chirp.getAttachments().isEmpty() && chirp.getAttachments() != null) {
-				String attachments = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getAttachments()).replaceAll("***");
+				String attachments = java.util.regex.Pattern.compile(phonePattern).matcher(chirp.getAttachments())
+						.replaceAll("***");
 				attachments = java.util.regex.Pattern.compile(emailPattern).matcher(attachments).replaceAll("***");
 				chirp.setAttachments(attachments);
 			}
