@@ -45,8 +45,8 @@
 		<img src="${row.picture}" alt="picture" width="70" height="70">
 	</display:column>
 	
-	<spring:message code="event.seatsNumber" var="seatsNumber" />
-	<display:column property="seatsNumber" title="${seatsNumber}" />
+	<spring:message code="event.seatsNumber" var="seatsNumber"/>
+	<display:column property="seatsNumber" title="${seatsNumber}" sortable="true"/>
 	
 	<spring:message code="event.amount" var="amount" />
 	<display:column property="amount" title="${amount}" />

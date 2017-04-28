@@ -67,7 +67,7 @@
 
 	<spring:message code="event.seatsNumber" var="seatsNumber" />
 	<display:column style="${style}" property="seatsNumber"
-		title="${seatsNumber}" />
+		title="${seatsNumber}"  sortable="true"/>
 
 	<security:authorize access="hasRole('CHORBI')">
 		<display:column style="${style}">
