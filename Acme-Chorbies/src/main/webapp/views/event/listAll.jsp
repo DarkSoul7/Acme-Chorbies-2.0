@@ -70,7 +70,7 @@
 		title="${seatsNumber}" />
 
 	<security:authorize access="hasRole('CHORBI')">
-		<display:column>
+		<display:column style="${style}">
 			<jstl:if test="${!listChorbiJoinEventYet.contains(row.id)}">
 				<jstl:if test="${row.highlighted == true}">
 					<acme:cancel url="event/join.do?eventId=${row.id}"

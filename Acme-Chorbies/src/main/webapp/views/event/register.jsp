@@ -31,6 +31,11 @@
 	<acme:textarea code="event.description" path="description" mandatory="true" />
 
 	<acme:submit code="event.save" name="save"/>
-	<acme:cancel code="event.back" url="/event/listOfManager.do"/>
+	<jstl:if test="${eventForm.id == 0}">
+		<acme:cancel code="event.cancel" url=""/>
+	</jstl:if>
+	<jstl:if test="${eventForm.id != 0}">
+		<acme:cancel code="event.back" url="/event/listOfManager.do"/>
+	</jstl:if>
 		
 </form:form>
