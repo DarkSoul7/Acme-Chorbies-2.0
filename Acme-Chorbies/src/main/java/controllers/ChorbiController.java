@@ -25,15 +25,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChorbiService;
+import services.EventService;
 import domain.Brand;
 import domain.Chorbi;
-import domain.Event;
 import domain.Genre;
 import domain.Relationship;
 import forms.ChorbiForm;
 import forms.ChorbiListForm;
-import services.ChorbiService;
-import services.EventService;
 
 @Controller
 @RequestMapping("/chorbi")
@@ -43,9 +42,9 @@ public class ChorbiController extends AbstractController {
 
 	@Autowired
 	private ChorbiService	chorbiService;
-	
+
 	@Autowired
-	private EventService eventService;
+	private EventService	eventService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -68,12 +67,12 @@ public class ChorbiController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/listByEvent", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int eventId) {
 		ModelAndView result;
-		
-		Collection<ChorbiListForm> chorbies = chorbiService.findChorbiesByEvent(eventId);
+
+		final Collection<ChorbiListForm> chorbies = this.chorbiService.findChorbiesByEvent(eventId);
 
 		result = new ModelAndView("chorbi/list");
 		result.addObject("chorbies", chorbies);
@@ -81,16 +80,16 @@ public class ChorbiController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/listLikeHim", method = RequestMethod.GET)
 	public ModelAndView listLikeHim() {
 		ModelAndView result;
-		Chorbi chorbi = chorbiService.findByPrincipal();
+		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 		Boolean haveCreditCard = false;
 		Collection<Chorbi> chorbies;
 
-		chorbies = chorbiService.findChorbisFromAuthor(chorbi.getId());
-		if(chorbi.getCreditCard() != null){
+		chorbies = this.chorbiService.findChorbisFromAuthor(chorbi);
+		if (chorbi.getCreditCard() != null) {
 			haveCreditCard = true;
 		}
 
@@ -188,9 +187,9 @@ public class ChorbiController extends AbstractController {
 
 		chorbi = this.chorbiService.reconstruct(chorbiForm, binding);
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.editModelAndView(chorbiForm, "chorbi.creditCard.error");
-		else
+		} else {
 			try {
 				this.chorbiService.save(chorbi);
 				result = new ModelAndView("redirect:/chorbi/edit.do");
@@ -198,6 +197,7 @@ public class ChorbiController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = this.editModelAndView(chorbiForm, "chorbi.commit.error");
 			}
+		}
 
 		return result;
 	}
@@ -218,18 +218,20 @@ public class ChorbiController extends AbstractController {
 		chorbi = this.chorbiService.reconstruct(chorbiForm, binding);
 		this.chorbiService.checkRestrictions(chorbiForm, binding);
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.createModelAndView(chorbiForm, "chorbi.creditCard.error");
-		else
+		} else {
 			try {
 				this.chorbiService.save(chorbi);
 				result = new ModelAndView("redirect:/security/login.do");
 			} catch (final Throwable oops) {
-				if (oops.getClass() == org.springframework.dao.DataIntegrityViolationException.class)
+				if (oops.getClass() == org.springframework.dao.DataIntegrityViolationException.class) {
 					result = this.createModelAndView(chorbiForm, "chorbi.commit.integrityError");
-				else
+				} else {
 					result = this.createModelAndView(chorbiForm, "chorbi.commit.error");
+				}
 			}
+		}
 
 		return result;
 	}

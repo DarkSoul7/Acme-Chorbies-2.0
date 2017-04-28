@@ -20,6 +20,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 import domain.Chirp;
 import domain.Chorbi;
@@ -29,11 +33,6 @@ import domain.Manager;
 import domain.SearchTemplate;
 import forms.ChorbiForm;
 import forms.ChorbiListForm;
-import forms.EventForm;
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -202,10 +201,11 @@ public class ChorbiService {
 		if (chorbiForm.getId() == 0) {
 			result = this.create();
 
-			if (chorbiForm.getUserAccount().getPassword().equals(chorbiForm.getRepeatPassword()) && !chorbiForm.getUserAccount().getPassword().isEmpty())
+			if (chorbiForm.getUserAccount().getPassword().equals(chorbiForm.getRepeatPassword()) && !chorbiForm.getUserAccount().getPassword().isEmpty()) {
 				password = this.hashPassword(chorbiForm.getUserAccount().getPassword());
-			else
+			} else {
 				password = "";
+			}
 
 			final Collection<Like> receivedLikes = new ArrayList<>();
 			final Collection<Like> authoredLikes = new ArrayList<>();
@@ -220,8 +220,9 @@ public class ChorbiService {
 
 			result.getUserAccount().setUsername(chorbiForm.getUserAccount().getUsername());
 			result.getUserAccount().setPassword(password);
-		} else
+		} else {
 			result = this.findOne(chorbiForm.getId());
+		}
 
 		// Registering or editing chorbi
 		result.setPicture(chorbiForm.getPicture());
@@ -239,10 +240,11 @@ public class ChorbiService {
 
 		// Check chorbi is over age
 		final int chorbiYears = this.getChorbiAge(result);
-		if (chorbiYears < 18)
+		if (chorbiYears < 18) {
 			result.setOverAge(false);
-		else
+		} else {
 			result.setOverAge(true);
+		}
 
 		// Check creditCard if any
 		if (this.analyzeCreditCard(chorbiForm.getCreditCard())) {
@@ -269,8 +271,9 @@ public class ChorbiService {
 				fieldError = new FieldError("chorbiForm", "userAccount.password", result.getUserAccount().getPassword(), false, codes, null, "");
 				binding.addError(fieldError);
 			}
-		} else
+		} else {
 			this.validator.validate(result, binding);
+		}
 
 		return result;
 	}
@@ -307,9 +310,11 @@ public class ChorbiService {
 	private boolean analyzeCreditCard(final CreditCard creditCard) {
 		boolean result = false;
 
-		if (creditCard != null)
-			if (creditCard.getBrandName() != null || !creditCard.getHolderName().isEmpty() || creditCard.getCvv() != null || creditCard.getExpirationMonth() != null || creditCard.getExpirationYear() != null || !creditCard.getNumber().isEmpty())
+		if (creditCard != null) {
+			if (creditCard.getBrandName() != null || !creditCard.getHolderName().isEmpty() || creditCard.getCvv() != null || creditCard.getExpirationMonth() != null || creditCard.getExpirationYear() != null || !creditCard.getNumber().isEmpty()) {
 				result = true;
+			}
+		}
 		return result;
 	}
 
@@ -323,17 +328,18 @@ public class ChorbiService {
 
 		final int days = Days.daysBetween(localDate, expirationDate).getDays();
 
-		if (luhn && (days > 1))
+		if (luhn && (days > 1)) {
 			result = true;
+		}
 
 		return result;
 	}
 
-	public Collection<Chorbi> findChorbisFromAuthor(final int authorId) {
+	public Collection<Chorbi> findChorbisFromAuthor(final Chorbi chorbi) {
 		Collection<Chorbi> result;
 		this.actorService.findByPrincipal();
 
-		result = this.chorbiRepository.findChorbisFromAuthor(authorId);
+		result = this.chorbiRepository.findChorbisFromAuthor(chorbi.getId());
 
 		return result;
 	}
@@ -582,8 +588,8 @@ public class ChorbiService {
 	public Collection<Manager> listOfChorbiesOrderByEvents() {
 		return this.chorbiRepository.listOfChorbiesOrderByEvents();
 	}
-	
-	public Collection<ChorbiListForm> findChorbiesByEvent(int eventId){
+
+	public Collection<ChorbiListForm> findChorbiesByEvent(final int eventId) {
 		return this.chorbiRepository.findChorbiesByEvent(eventId);
 	}
 

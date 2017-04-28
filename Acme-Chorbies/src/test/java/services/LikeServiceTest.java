@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Chorbi;
@@ -56,8 +59,9 @@ public class LikeServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.likeChorbiTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void likeChorbiTemplate(final String principal, final int chorbiId, final Class<?> expectedException) {
@@ -105,8 +109,9 @@ public class LikeServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.cancelLikeChorbiTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void cancelLikeChorbiTemplate(final String principal, final int chorbiId, final Class<?> expectedException) {
@@ -120,6 +125,55 @@ public class LikeServiceTest extends AbstractTest {
 
 			final Like like = this.likeService.findLikeFromChorbies(sender, receiver);
 			this.likeService.delete(like);
+
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expectedException, caught);
+	}
+
+	/***
+	 * Browse the catalogue of chorbies who have liked him or her as long as he or she has registered a valid credit card
+	 * 
+	 * Testing cases:
+	 * 1º Good test -> expected: chorbi list returned
+	 * 2º Bad test; To get the chorbi list the chorbi in question must have a valid credit card registered -> expected: IllegalArgumentException
+	 * 3º Bad test; an unauthenticated have no like list-> expected: IllegalArgumentException
+	 */
+
+	@Test
+	public void listChorbiesYouLikeDriver() {
+
+		final Object testingData[][] = {
+			//principal, expected exception
+			{
+				"chorbi1", null
+			}, {
+				"chorbi4", IllegalArgumentException.class
+			}, {
+				null, IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+			this.listChorbiesYouLikeTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
+	}
+
+	protected void listChorbiesYouLikeTemplate(final String principal, final Class<?> expectedException) {
+
+		Class<?> caught = null;
+
+		try {
+			this.authenticate(principal);
+
+			final Chorbi chorbi = this.chorbiService.findByPrincipal();
+
+			final Collection<Chorbi> chorbies = this.chorbiService.findChorbisFromAuthor(chorbi);
+			Assert.notNull(chorbies);
+			Assert.notNull(chorbi.getCreditCard());
 
 			this.unauthenticate();
 		} catch (final Throwable oops) {

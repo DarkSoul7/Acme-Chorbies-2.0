@@ -26,83 +26,85 @@ import domain.Chorbi;
 @Controller
 @RequestMapping("/administrator/chorbi")
 public class AdministratorChorbiController extends AbstractController {
-	
+
 	// Related services
-	
+
 	@Autowired
 	private ChorbiService	chorbiService;
-	
-	
+
+
 	// Constructors -----------------------------------------------------------
-	
+
 	public AdministratorChorbiController() {
 		super();
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Chorbi> chorbies;
-		
+
 		chorbies = this.chorbiService.findAll();
-		
+
 		result = new ModelAndView("chorbi/list");
 		result.addObject("chorbies", chorbies);
 		result.addObject("listForm", false);
 		result.addObject("requestURI", "administrator/chorbi/list.do");
-		
+
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/showDetails", method = RequestMethod.GET)
-	public ModelAndView showDetails(@RequestParam int chorbiId) {
+	public ModelAndView showDetails(@RequestParam final int chorbiId) {
 		ModelAndView result;
 		Chorbi chorbi;
 		Collection<Chorbi> chorbiesFromReceiver;
 		Collection<Chorbi> chorbiesFromAuthor;
-		
+
 		chorbi = this.chorbiService.findOne(chorbiId);
 		chorbiesFromReceiver = this.chorbiService.findChorbisFromReceiver(chorbiId);
-		chorbiesFromAuthor = this.chorbiService.findChorbisFromAuthor(chorbiId);
-		
+		chorbiesFromAuthor = this.chorbiService.findChorbisFromAuthor(chorbi);
+
 		result = new ModelAndView("chorbi/showDetails");
 		result.addObject("chorbi", chorbi);
 		result.addObject("chorbiesFromReceiver", chorbiesFromReceiver);
 		result.addObject("chorbiesFromAuthor", chorbiesFromAuthor);
 		result.addObject("listForm", false);
 		result.addObject("requestURI", "administrator/chorbi/showDetails.do");
-		
+
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/receivedLikesAuthors", method = RequestMethod.GET)
-	public ModelAndView receivedLikesAuthors(@RequestParam int authorId) {
+	public ModelAndView receivedLikesAuthors(@RequestParam final int authorId) {
 		ModelAndView result;
 		Collection<Chorbi> chorbies;
-		
+
 		chorbies = this.chorbiService.findChorbisFromReceiver(authorId);
-		
+
 		result = new ModelAndView("chorbi/receivedLikesAuthors");
 		result.addObject("chorbies", chorbies);
 		result.addObject("listForm", false);
 		result.addObject("requestURI", "administrator/chorbi/receivedLikesAuthors.do");
-		
+
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/givenLikesReceivers", method = RequestMethod.GET)
-	public ModelAndView givenLikesReceivers(@RequestParam int receiverId) {
+	public ModelAndView givenLikesReceivers(@RequestParam final int receiverId) {
 		ModelAndView result;
 		Collection<Chorbi> chorbies;
-		
-		chorbies = this.chorbiService.findChorbisFromAuthor(receiverId);
-		
+
+		final Chorbi chorbi = this.chorbiService.findOne(receiverId);
+
+		chorbies = this.chorbiService.findChorbisFromAuthor(chorbi);
+
 		result = new ModelAndView("chorbi/givenLikesReceivers");
 		result.addObject("chorbies", chorbies);
 		result.addObject("listForm", false);
 		result.addObject("requestURI", "administrator/chorbi/givenLikesReceivers.do");
-		
+
 		return result;
 	}
-	
+
 }
