@@ -42,12 +42,12 @@
 	
 	<spring:message code="invoice.openPeriod" var="openPeriod" />
 	<display:column title="${openPeriod}">
-		<fmt:formatDate value="${row.openPeriod}" pattern="MM/dd/yyyy" />	
+		<fmt:formatDate value="${row.openPeriod}" pattern="dd/MM/yyyy" />	
 	</display:column>
 	
 	<spring:message code="invoice.endPeriod" var="endPeriod" />
 	<display:column title="${endPeriod}">
-		<fmt:formatDate value="${row.endPeriod}" pattern="MM/dd/yyyy" />	
+		<fmt:formatDate value="${row.endPeriod}" pattern="dd/MM/yyyy" />	
 	</display:column>	
 	<spring:message code="invoice.amount" var="amount" />
 	<display:column property="amount" title="${amount}" />
@@ -56,7 +56,7 @@
 	<display:column title="${paid}">
 		<jstl:if test="${row.paid == true}">
 			<spring:message code="invoice.paidTrue" var="paidTrue" />
-			<jstl:out value="${paidTrue}"></jstl:out>
+			<jstl:out value="${paidTrue}"></jstl:out>(<fmt:formatDate value="${row.momentPaid}" pattern="dd/MM/yyyy" />)
 		</jstl:if>
 		<security:authorize access="hasRole('CHORBI')">
 			<jstl:if test="${row.paid != true}">
@@ -81,3 +81,8 @@
 	<spring:message code="invoice.list.error" var="error" />
 	<font size="4" color="red"><jstl:out value="${error}"></jstl:out></font>
 </jstl:if>
+
+<security:authorize access="hasRole('ADMINISTRATOR')">
+		<br/>
+		<acme:cancel code="invoice.generateInvoices" url="invoice/generate.do" />
+	</security:authorize>

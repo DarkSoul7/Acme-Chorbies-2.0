@@ -24,6 +24,7 @@ public class Invoice extends DomainEntity {
 	private Date	endPeriod;
 	private double	amount;
 	private boolean	paid;
+	private Date	momentPaid;
 
 
 	//Constructor
@@ -70,6 +71,16 @@ public class Invoice extends DomainEntity {
 
 	public void setPaid(final boolean paid) {
 		this.paid = paid;
+	}
+
+	@Temporal(value = TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	public Date getMomentPaid() {
+		return this.momentPaid;
+	}
+
+	public void setMomentPaid(final Date momentPaid) {
+		this.momentPaid = momentPaid;
 	}
 
 

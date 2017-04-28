@@ -20,6 +20,6 @@ public interface EventChorbiRepository extends JpaRepository<EventChorbi, Intege
 	@Query("select ec.chorbi from EventChorbi ec where ec.event.id = ?1")
 	public Collection<Chorbi> findChorbiesInEvent(int eventId);
 
-	@Query("select sum(ec.event.amount) from EventChorbi ec where ec.momentSubscribed between ?1 and ?2 and ec.chorbi.id = ?3")
+	@Query("select sum(ec.event.amount) from EventChorbi ec where ec.momentSubscribed between ?1 and ?2 and ec.chorbi.id = ?3 and ec.event.eventMoment > current_date or ec.momentSubscribed < ?1 and ec.chorbi.id = ?3 and ec.event.eventMoment > current_date")
 	public double getMonhtlyFeeAmountByChorbiAndDate(Date openPeriod, Date endPeriod, int chorbiId);
 }

@@ -25,205 +25,221 @@ import forms.PeriodForm;
 @Controller
 @RequestMapping("/invoice")
 public class InvoiceController extends AbstractController {
-	
+
 	//Related services
-	
+
 	@Autowired
 	private InvoiceService	invoiceService;
-	
+
 	@Autowired
 	private ChorbiService	chorbiService;
-	
-	
+
+
 	//Constructor
-	
+
 	public InvoiceController() {
 		super();
 	}
-	
+
 	//List invoices
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) String errorMessage, @RequestParam(required = false) String openPeriod,
-		@RequestParam(required = false) String endPeriod) {
+	public ModelAndView list(@RequestParam(required = false) final String errorMessage, @RequestParam(required = false) final String openPeriod, @RequestParam(required = false) final String endPeriod) {
 		PeriodForm periodForm;
 		ModelAndView result;
 		Date openPeriodDate = null;
 		Date endPeriodDate = null;
-		
-		if (openPeriod != null) {
-			if (openPeriod.equals("-1")) {
+
+		if (openPeriod != null)
+			if (openPeriod.equals("-1"))
 				openPeriodDate = new Date(0L);
-			} else {
+			else
 				openPeriodDate = new Date(Long.valueOf(openPeriod));
-			}
-		}
-		
-		if (endPeriod != null) {
-			if (endPeriod.equals("-1")) {
+
+		if (endPeriod != null)
+			if (endPeriod.equals("-1"))
 				endPeriodDate = new Date();
-			} else {
+			else
 				endPeriodDate = new Date(Long.valueOf(endPeriod));
-			}
-		}
-		
+
 		periodForm = this.invoiceService.createForm(openPeriodDate, endPeriodDate);
 		result = this.listInvoiceChorbi(periodForm);
-		
+
 		return result;
 	}
 	@RequestMapping(value = "/listSave", method = RequestMethod.POST, params = "save")
-	public ModelAndView listFind(@Valid PeriodForm periodForm, BindingResult binding) {
+	public ModelAndView listFind(@Valid final PeriodForm periodForm, final BindingResult binding) {
 		ModelAndView result;
 		String openPeriod = "-1";
 		String endPeriod = "-1";
-		
+
 		if (binding.hasErrors())
 			result = this.listInvoiceChorbi(periodForm, "invoice.list.error");
 		else {
 			try {
-				if (periodForm.getOpenPeriod() != null) {
+				if (periodForm.getOpenPeriod() != null)
 					openPeriod = String.valueOf(periodForm.getOpenPeriod().getTime());
-				}
-				
-				if (periodForm.getEndPeriod() != null) {
+
+				if (periodForm.getEndPeriod() != null)
 					endPeriod = String.valueOf(periodForm.getEndPeriod().getTime());
-				}
-				
+
 				result = new ModelAndView(String.format("redirect:/invoice/list.do?openPeriod=%s&endPeriod=%s", openPeriod, endPeriod));
-				
-			} catch (Throwable oops) {
+
+			} catch (final Throwable oops) {
 				result = this.listInvoiceChorbi(periodForm, "invoice.list.error");
 			}
 			return result;
 		}
-		
+
 		return result;
 	}
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
-	public ModelAndView listAll(@RequestParam(required = false) String errorMessage, @RequestParam(required = false) String openPeriod,
-		@RequestParam(required = false) String endPeriod) {
+	public ModelAndView listAll(@RequestParam(required = false) final String errorMessage, @RequestParam(required = false) final String openPeriod, @RequestParam(required = false) final String endPeriod) {
 		PeriodForm periodForm;
 		ModelAndView result;
 		Date openPeriodDate = null;
 		Date endPeriodDate = null;
-		
-		if (openPeriod != null) {
-			if (openPeriod.equals("-1")) {
+
+		if (openPeriod != null)
+			if (openPeriod.equals("-1"))
 				openPeriodDate = new Date(0L);
-			} else {
+			else
 				openPeriodDate = new Date(Long.valueOf(openPeriod));
-			}
-		}
-		
-		if (endPeriod != null) {
-			if (endPeriod.equals("-1")) {
+
+		if (endPeriod != null)
+			if (endPeriod.equals("-1"))
 				endPeriodDate = new Date();
-			} else {
+			else
 				endPeriodDate = new Date(Long.valueOf(endPeriod));
-			}
-		}
-		
+
 		periodForm = this.invoiceService.createForm(openPeriodDate, endPeriodDate);
 		result = this.listInvoiceAdmin(periodForm);
-		
+
 		return result;
 	}
 	@RequestMapping(value = "/listAllSave", method = RequestMethod.POST, params = "save")
-	public ModelAndView listAllFind(@Valid PeriodForm periodForm, BindingResult binding) {
+	public ModelAndView listAllFind(@Valid final PeriodForm periodForm, final BindingResult binding) {
 		ModelAndView result;
 		String openPeriod = "-1";
 		String endPeriod = "-1";
-		
+
 		if (binding.hasErrors())
 			result = this.listInvoiceAdmin(periodForm, "invoice.list.error");
 		else
 			try {
-				if (periodForm.getOpenPeriod() != null) {
+				if (periodForm.getOpenPeriod() != null)
 					openPeriod = String.valueOf(periodForm.getOpenPeriod().getTime());
-				}
-				
-				if (periodForm.getEndPeriod() != null) {
+
+				if (periodForm.getEndPeriod() != null)
 					endPeriod = String.valueOf(periodForm.getEndPeriod().getTime());
-				}
-				
+
 				result = new ModelAndView(String.format("redirect:/invoice/listAll.do?openPeriod=%s&endPeriod=%s", openPeriod, endPeriod));
-				
-			} catch (Throwable oops) {
+
+			} catch (final Throwable oops) {
 				result = this.listInvoiceAdmin(periodForm, "invoice.list.error");
 			}
 		return result;
 	}
+
+	@RequestMapping(value = "/pay", method = RequestMethod.GET)
+	public ModelAndView pay(@RequestParam final int invoiceId) {
+		ModelAndView result;
+
+		try {
+			final Invoice invoice = this.invoiceService.findOne(invoiceId);
+			this.invoiceService.payInvoice(invoice);
+
+			result = new ModelAndView("redirect:/invoice/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/invoice/list.do");
+			result.addObject("errorMessage", "invoice.pay.error");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/generate", method = RequestMethod.GET)
+	public ModelAndView generateInvoices() {
+		ModelAndView result;
+
+		try {
+			this.invoiceService.generateAllInvoices();
+
+			result = new ModelAndView("redirect:/invoice/listAll.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/invoice/listAll.do");
+			result.addObject("errorMessage", "invoice.generate.error");
+		}
+		return result;
+	}
+
 	//Ancillary methods
-	
-	protected ModelAndView listInvoiceChorbi(PeriodForm periodForm) {
+
+	protected ModelAndView listInvoiceChorbi(final PeriodForm periodForm) {
 		return this.listInvoiceChorbi(periodForm, null);
 	}
-	
-	protected ModelAndView listInvoiceChorbi(PeriodForm periodForm, String message) {
+
+	protected ModelAndView listInvoiceChorbi(final PeriodForm periodForm, final String message) {
 		ModelAndView result;
 		Chorbi chorbi;
 		Collection<Invoice> invoices = null;
-		
+
 		try {
 			chorbi = this.chorbiService.findByPrincipal();
-			
+
 			// El único caso en el que alguna de las fechas pueda venir a null es cuando hay un error. En ese caso no se muestra ninguna factura
-			if (StringUtils.isBlank(message)) {
-				if (periodForm.getEndPeriod() == null && periodForm.getOpenPeriod() == null) {
+			if (StringUtils.isBlank(message))
+				if (periodForm.getEndPeriod() == null && periodForm.getOpenPeriod() == null)
 					invoices = chorbi.getInvoices();
-				} else {
+				else {
 					Assert.isTrue(periodForm.getEndPeriod().after(periodForm.getOpenPeriod()));
 					invoices = this.invoiceService.getInvoiceByParamsChorbi(periodForm.getOpenPeriod(), periodForm.getEndPeriod(), chorbi);
 				}
-			}
-			
+
 			result = new ModelAndView("invoice/list");
 			result.addObject("periodForm", periodForm);
 			result.addObject("invoices", invoices);
 			result.addObject("errorMessage", message);
 			result.addObject("RequestURI", "invoice/listSave.do");
-		} catch (Throwable oops) {
+		} catch (final Throwable oops) {
 			result = new ModelAndView("invoice/list");
 			result.addObject("periodForm", periodForm);
 			result.addObject("errorMessage", "invoice.list.error");
 			result.addObject("RequestURI", "invoice/listSave.do");
 		}
-		
+
 		return result;
 	}
-	
-	protected ModelAndView listInvoiceAdmin(PeriodForm periodForm) {
+
+	protected ModelAndView listInvoiceAdmin(final PeriodForm periodForm) {
 		return this.listInvoiceAdmin(periodForm, null);
 	}
-	
-	protected ModelAndView listInvoiceAdmin(PeriodForm periodForm, String message) {
+
+	protected ModelAndView listInvoiceAdmin(final PeriodForm periodForm, final String message) {
 		ModelAndView result;
 		Collection<Invoice> invoices = null;
-		
+
 		try {
 			// El único caso en el que alguna de las fechas pueda venir a null es cuando hay un error. En ese caso no se muestra ninguna factura
-			if (StringUtils.isBlank(message)) {
-				if (periodForm.getEndPeriod() == null && periodForm.getOpenPeriod() == null) {
+			if (StringUtils.isBlank(message))
+				if (periodForm.getEndPeriod() == null && periodForm.getOpenPeriod() == null)
 					invoices = this.invoiceService.findAll();
-				} else {
+				else {
 					Assert.isTrue(periodForm.getEndPeriod().after(periodForm.getOpenPeriod()));
 					invoices = this.invoiceService.getInvoiceByParamsAdmin(periodForm.getOpenPeriod(), periodForm.getEndPeriod());
 				}
-			}
-			
+
 			result = new ModelAndView("invoice/listAll");
 			result.addObject("periodForm", periodForm);
 			result.addObject("invoices", invoices);
 			result.addObject("errorMessage", message);
 			result.addObject("RequestURI", "invoice/listAllSave.do");
-		} catch (Throwable oops) {
+		} catch (final Throwable oops) {
 			result = new ModelAndView("invoice/listAll");
 			result.addObject("periodForm", periodForm);
 			result.addObject("errorMessage", "invoice.list.error");
 			result.addObject("RequestURI", "invoice/listAllSave.do");
 		}
-		
+
 		return result;
 	}
 }
