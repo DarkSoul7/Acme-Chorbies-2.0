@@ -24,6 +24,10 @@
 	
 	<br/>
 	
+	<acme:textbox code="like.stars" path="stars" />
+	
+	<br/>
+	
 	<acme:submit code="like.save" name="save"/>
 	<acme:cancel code="like.cancel" url="chorbi/showDetails.do?chorbiId=${likeForm.idReceiver}"/>
 		

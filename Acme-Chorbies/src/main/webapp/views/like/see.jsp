@@ -24,6 +24,9 @@
 <b><spring:message code="like.comment" />: </b>
 <jstl:out value="${like.comment}"></jstl:out>
 <br/>
+<b><spring:message code="like.stars" />: </b>
+<jstl:out value="${like.stars}"></jstl:out>
+<br/>
 <b><spring:message code="like.moment" />: </b>
 <jstl:choose>
 	<jstl:when test="${pageContext.response.locale.language=='en'}">

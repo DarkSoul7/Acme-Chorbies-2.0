@@ -8,6 +8,7 @@ public class LikeForm {
 	int				id;
 	private String	comment;
 	private int		idReceiver;
+	private int		stars;
 
 
 	public LikeForm() {
@@ -37,6 +38,14 @@ public class LikeForm {
 
 	public void setIdReceiver(final int idReceiver) {
 		this.idReceiver = idReceiver;
+	}
+
+	public int getStars() {
+		return this.stars;
+	}
+
+	public void setStars(final int stars) {
+		this.stars = stars;
 	}
 
 }
