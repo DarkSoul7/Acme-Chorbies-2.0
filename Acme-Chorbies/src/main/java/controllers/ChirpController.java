@@ -22,11 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ChirpService;
-import services.ChorbiService;
 import domain.Chirp;
 import domain.Chorbi;
 import forms.ChirpForm;
+import services.ChirpService;
+import services.ChorbiService;
+import services.ManagerService;
 
 @Controller
 @RequestMapping("/chirp")
@@ -39,6 +40,9 @@ public class ChirpController extends AbstractController {
 
 	@Autowired
 	private ChorbiService chorbiService;
+	
+	@Autowired
+	private ManagerService managerService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -117,12 +121,11 @@ public class ChirpController extends AbstractController {
 
 	// Create
 	@RequestMapping(value = "/sendByManager", method = RequestMethod.GET)
-	public ModelAndView sendByManager(@RequestParam(required = true) final int chorbiId) {
+	public ModelAndView sendByManager(@RequestParam(required = true) final int eventId) {
 		ModelAndView result;
 		final ChirpForm chirpForm = this.chirpService.create();
-		Chorbi chorbi = chorbiService.findOne(chorbiId);
-		chirpForm.setReceiver(chorbi);
-
+		chirpForm.setReceiver(managerService.findByPrincipal());
+		chirpForm.setEventId(eventId);
 		result = new ModelAndView("chirp/sendByManager");
 		result.addObject("chirpForm", chirpForm);
 		result.addObject("requestURI", "chirp/sendByManager.do");
@@ -209,14 +212,12 @@ public class ChirpController extends AbstractController {
 	@RequestMapping(value = "/sendByManager", method = RequestMethod.POST, params = "save")
 	public ModelAndView sendByManager(@Valid final ChirpForm chirpForm, final BindingResult binding) {
 		ModelAndView result = new ModelAndView();
-		Chirp chirp;
 
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(chirpForm);
 		else
 			try {
-				chirp = this.chirpService.reconstruct(chirpForm);
-				this.chirpService.save(chirp);
+				chirpService.broadcastChirp(chirpForm);
 				result = new ModelAndView("redirect:/event/listOfManager.do");
 			} catch (final IllegalArgumentException e) {
 				result = this.createEditModelAndView(chirpForm, "chirp.attachments.error");

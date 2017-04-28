@@ -55,7 +55,6 @@
 		<security:intercept-url pattern="/administrator/chorbi/givenLikesReceivers.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/administrator/chorbi/receivedLikesAuthors.do" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/chorbi/listLikeHim.do" access="hasRole('CHORBI')" />
-		<security:intercept-url pattern="/chorbi/listByEvent.do" access="hasRole('MANAGER')" />
 		
 		<!-- CHIRP -->
 		<security:intercept-url pattern="/chirp/send.do" access="hasRole('CHORBI')" />

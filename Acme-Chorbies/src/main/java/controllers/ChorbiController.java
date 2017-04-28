@@ -68,18 +68,6 @@ public class ChorbiController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/listByEvent", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int eventId) {
-		ModelAndView result;
-
-		final Collection<ChorbiListForm> chorbies = this.chorbiService.findChorbiesByEvent(eventId);
-
-		result = new ModelAndView("chorbi/list");
-		result.addObject("chorbies", chorbies);
-		result.addObject("requestURI", "chorbi/list.do");
-
-		return result;
-	}
 
 	@RequestMapping(value = "/listLikeHim", method = RequestMethod.GET)
 	public ModelAndView listLikeHim() {

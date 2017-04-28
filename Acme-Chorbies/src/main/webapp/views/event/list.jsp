@@ -58,7 +58,7 @@
 	</display:column>
 	<security:authorize access="hasRole('MANAGER')">
 		<display:column>
-			<acme:cancel code="event.chorbies" url="chorbi/listByEvent.do?eventId=${row.id}" />
+			<acme:cancel code="event.sendChirbi" url="chirp/sendByManager.do?eventId=${row.id}" />
 		</display:column>
 		<display:column>
 			<acme:cancel code="event.edit" url="event/edit.do?eventId=${row.id}" />

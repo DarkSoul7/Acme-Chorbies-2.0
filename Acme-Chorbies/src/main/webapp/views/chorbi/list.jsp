@@ -119,9 +119,4 @@
 			</jstl:if>
 			</display:column>
 	</security:authorize>
-	<security:authorize access="hasRole('MANAGER')">
-		<display:column>
-			<acme:cancel url="chirp/sendByManager.do?chorbiId=${row.id}" code="chorbi.sentChirps"/>
-		</display:column>
-	</security:authorize>	
 </display:table>

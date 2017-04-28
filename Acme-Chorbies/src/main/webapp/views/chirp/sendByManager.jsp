@@ -20,6 +20,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <form:form action="${requestURI}" modelAttribute="chirpForm">
+	<form:hidden path="eventId" />
 	<form:hidden path="receiver" />
 
 	<acme:textbox code="chirp.subject" path="subject" mandatory="true" />
