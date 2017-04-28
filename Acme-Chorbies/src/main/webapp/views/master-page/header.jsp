@@ -68,6 +68,15 @@
 						</ul>
 					</li>
 			</security:authorize>
+			
+			<security:authorize access="isAnonymous()">
+				<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message	code="master.page.event" /><span class="caret"></span></a>
+					<ul class="dropdown-menu inverse-dropdown">
+						<li><a href="event/list.do"><spring:message code="master.page.event.list" /></a></li>
+						<li><a href="event/listAll.do"><spring:message code="master.page.event.listAll" /></a></li>
+					</ul>
+				</li>
+			</security:authorize>
 		</ul>
 		
 		<div>
@@ -80,12 +89,6 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="chorbi/register.do"><span class="glyphicon glyphicon-user"></span> <spring:message code="master.page.chorbi.register" /></a></li>
 					<li><a href="security/login.do"><span class="glyphicon glyphicon-log-in"></span> <spring:message code="master.page.login" /></a></li>
-					<li class="dropdown"><a class="handCursor dropdown-toggle" data-toggle="dropdown"><spring:message	code="master.page.event" /><span class="caret"></span></a>
-						<ul class="dropdown-menu inverse-dropdown">
-							<li><a href="event/list.do"><spring:message code="master.page.event.list" /></a></li>
-							<li><a href="event/listAll.do"><spring:message code="master.page.event.listAll" /></a></li>
-						</ul>
-					</li>
 				</ul>
 			</security:authorize>
 			<security:authorize access="isAuthenticated()">

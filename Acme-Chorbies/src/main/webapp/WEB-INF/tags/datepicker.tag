@@ -61,7 +61,7 @@
 		<script type="text/javascript">
             $(function () {
             	$.fn.datepicker.defaults.language = '${pageContext.response.locale.language}';
-            	$.fn.datepicker.defaults.format = 'yyyy/MM/dd';
+            	$.fn.datepicker.defaults.format = 'dd/mm/yyyy';
                 $('#${path}_datepicker').datepicker({
                     autoclose: true,
                 });
