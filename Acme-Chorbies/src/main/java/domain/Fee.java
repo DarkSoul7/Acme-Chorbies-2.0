@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -21,6 +22,7 @@ public class Fee extends DomainEntity {
 		super();
 	}
 
+	@Min(1)
 	public double getAmountManager() {
 		return this.amountManager;
 	}
@@ -29,6 +31,7 @@ public class Fee extends DomainEntity {
 		this.amountManager = amountManager;
 	}
 
+	@Min(1)
 	public double getAmountChorbi() {
 		return this.amountChorbi;
 	}
@@ -36,7 +39,5 @@ public class Fee extends DomainEntity {
 	public void setAmountChorbi(final double amountChorbi) {
 		this.amountChorbi = amountChorbi;
 	}
-
-	//Getter & setter
 
 }

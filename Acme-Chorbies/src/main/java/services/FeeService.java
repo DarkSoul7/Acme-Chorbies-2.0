@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.FeeRepository;
 import domain.Fee;
@@ -58,12 +59,20 @@ public class FeeService {
 		this.feeRepository.delete(fee);
 	}
 
+
 	//Other business methods
+
+	@Autowired
+	private Validator	validator;
+
+
 	public Fee reconstruct(final FeeForm feeForm, final BindingResult binding) {
 
 		final Fee result = this.findOne(feeForm.getId());
 		result.setAmountManager(feeForm.getAmountManager());
 		result.setAmountChorbi(feeForm.getAmountChorbi());
+
+		this.validator.validate(result, binding);
 
 		return result;
 	}

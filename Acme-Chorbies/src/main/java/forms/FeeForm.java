@@ -1,7 +1,6 @@
 
 package forms;
 
-import javax.validation.constraints.Min;
 
 public class FeeForm {
 
@@ -16,7 +15,6 @@ public class FeeForm {
 		super();
 	}
 
-	@Min(1)
 	public double getAmountManager() {
 		return this.amountManager;
 	}
@@ -25,7 +23,6 @@ public class FeeForm {
 		this.amountManager = amountManager;
 	}
 
-	@Min(1)
 	public double getAmountChorbi() {
 		return this.amountChorbi;
 	}
