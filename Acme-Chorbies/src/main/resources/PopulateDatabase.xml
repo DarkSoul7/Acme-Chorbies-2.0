@@ -438,7 +438,7 @@
 	<bean id="chirp1" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="03/13/2017 18:00" />
+		<property name="moment" value="2017/03/13 18:00" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment1" />
 		<property name="original" value="true" />
 		<property name="sender" ref="chorbi1" />
@@ -450,7 +450,7 @@
 	<bean id="copiedChirp1" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="03/13/2017 18:00" />
+		<property name="moment" value="2017/03/13 18:00" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment1" />
 		<property name="original" value="false" />
 		<property name="sender" ref="chorbi1" />
@@ -462,7 +462,7 @@
 	<bean id="chirp2" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="03/12/2017 15:20" />
+		<property name="moment" value="2017/03/12 15:20" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment2,http://www.acme.com/attachments/attachment3" />
 		<property name="original" value="true" />
 		<property name="sender" ref="chorbi1" />
@@ -474,7 +474,7 @@
 	<bean id="copiedChirp2" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="03/12/2017 15:20" />
+		<property name="moment" value="2017/03/12 15:20" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment2,http://www.acme.com/attachments/attachment3" />
 		<property name="original" value="false" />
 		<property name="sender" ref="chorbi1" />
@@ -486,7 +486,7 @@
 	<bean id="chirp3" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="02/28/2017 02:48" />
+		<property name="moment" value="2017/02/28 02:48" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment4" />
 		<property name="original" value="true" />
 		<property name="sender" ref="chorbi2" />
@@ -498,7 +498,7 @@
 	<bean id="copiedChirp3" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="02/28/2017 02:48" />
+		<property name="moment" value="2017/02/28 02:48" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment4" />
 		<property name="original" value="false" />
 		<property name="sender" ref="chorbi2" />
@@ -510,7 +510,7 @@
 	<bean id="chirp4" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="01/01/2017 00:00" />
+		<property name="moment" value="2017/01/01 00:00" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment5,http://www.acme.com/attachments/attachment6" />
 		<property name="original" value="true" />
 		<property name="sender" ref="chorbi3" />
@@ -522,7 +522,7 @@
 	<bean id="copiedChirp4" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="01/01/2017 00:00" />
+		<property name="moment" value="2017/01/01 00:00" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment5,http://www.acme.com/attachments/attachment6" />
 		<property name="original" value="false" />
 		<property name="sender" ref="chorbi3" />
@@ -534,7 +534,7 @@
 	<bean id="chirp5" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="02/14/2017 14:00" />
+		<property name="moment" value="2017/02/14 14:00" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment7,http://www.acme.com/attachments/attachment8" />
 		<property name="original" value="true" />
 		<property name="sender" ref="chorbi3" />
@@ -546,7 +546,7 @@
 	<bean id="copiedChirp5" class="domain.Chirp">
 		<property name="subject" value="Muy importante" />
 		<property name="text" value="En primer lugar quiero comunicarle..." />
-		<property name="moment" value="02/14/2017 14:00" />
+		<property name="moment" value="2017/02/14 14:00" />
 		<property name="attachments" value="http://www.acme.com/attachments/attachment7,http://www.acme.com/attachments/attachment8" />
 		<property name="original" value="false" />
 		<property name="sender" ref="chorbi3" />
@@ -559,7 +559,7 @@
 	
 	<bean id="like1" class="domain.Like">
 		<property name="comment" value="Hola guapi, pues sí que quiero..." />
-		<property name="moment" value="03/30/2017 15:30" />
+		<property name="moment" value="2017/03/30 15:30" />
 		<property name="stars" value="2" />
 		<property name="author" ref="chorbi1" />
 		<property name="receiver" ref="chorbi3" />
@@ -567,7 +567,7 @@
 	
 	<bean id="like2" class="domain.Like">
 		<property name="comment" value="" />
-		<property name="moment" value="03/14/2017 21:47" />
+		<property name="moment" value="2017/03/14 21:47" />
 		<property name="stars" value="2" />
 		<property name="author" ref="chorbi1" />
 		<property name="receiver" ref="chorbi2" />
@@ -575,7 +575,7 @@
 	
 	<bean id="like3" class="domain.Like">
 		<property name="comment" value="Quiero jugar a un juego..." />
-		<property name="moment" value="03/25/2017 01:25" />
+		<property name="moment" value="2017/03/25 01:25" />
 		<property name="stars" value="3" />
 		<property name="author" ref="chorbi3" />
 		<property name="receiver" ref="chorbi2" />
@@ -583,7 +583,7 @@
 	
 	<bean id="like4" class="domain.Like">
 		<property name="comment" value="" />
-		<property name="moment" value="03/01/2017 07:39" />
+		<property name="moment" value="2017/01/30 07:39" />
 		<property name="stars" value="1" />
 		<property name="author" ref="chorbi2" />
 		<property name="receiver" ref="chorbi1" />
@@ -614,7 +614,7 @@
 		<property name="age" value="20" />
 		<property name="genre" value="WOMAN" />
 		<property name="keyword" value="activities" />
-		<property name="cachedMoment" value="03/30/2017 05:59" />
+		<property name="cachedMoment" value="2016/03/30 05:59" />
 		<property name="coordinates" ref="coordinates5" />
 		<property name="chorbi" ref="chorbi1" />
 	</bean>
@@ -624,7 +624,7 @@
 		<property name="age" value="23" />
 		<property name="genre" value="" />
 		<property name="keyword" value="friendship" />
-		<property name="cachedMoment" value="04/05/2017 13:41" />
+		<property name="cachedMoment" value="2016/05/04 13:41" />
 		<property name="coordinates"><null/></property>
 		<property name="chorbi" ref="chorbi2" />
 		<property name="listChorbi">
@@ -639,7 +639,7 @@
 		<property name="age" value="23" />
 		<property name="genre" value="MAN" />
 		<property name="keyword" value="" />
-		<property name="cachedMoment" value="03/01/2017 22:17" />
+		<property name="cachedMoment" value="2016/01/03 22:17" />
 		<property name="coordinates"><null/></property>
 		<property name="chorbi" ref="chorbi3" />
 	</bean>
@@ -656,7 +656,7 @@
 	
 	<bean id="event1" class="domain.Event">
 		<property name="title" value="Actividades entre amigos y algo más" />
-		<property name="eventMoment" value="07/09/2017 12:30" />
+		<property name="eventMoment" value="2017/09/07 12:30" />
 		<property name="description" value="Quedada en el parque del Retiro en el que conocer amigos o quién sabe si algo más. ¡¡No desaproveches la oportunidad!!" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3114/2498673283_655a3024a2_b.jpg" />
 		<property name="seatsNumber" value="60" />
@@ -666,7 +666,7 @@
 	
 	<bean id="event2" class="domain.Event">
 		<property name="title" value="La mejor tarde de tu vida en la mejor compañía" />
-		<property name="eventMoment" value="25/08/2017 19:30" />
+		<property name="eventMoment" value="2017/07/28 19:30" />
 		<property name="description" value="El evento se realizará en Paseo de Colón junto a los bares de copa. Ven y dispondrás de una consumición gratuita" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3707/8998612414_52bf87eed8_b.jpg" />
 		<property name="seatsNumber" value="20" />
@@ -676,7 +676,7 @@
 	
 	<bean id="event3" class="domain.Event">
 		<property name="title" value="Cambia tus planes por nosotros y mejora tu noche" />
-		<property name="eventMoment" value="15/05/2017 21:30" />
+		<property name="eventMoment" value="2017/05/15 21:30" />
 		<property name="description" value="Disfruta de una noche inolvidable con nosotros en la que sin duda alguna repetiras... Y lo sabes!!" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3840/14649445351_305dd81632_b.jpg" />
 		<property name="seatsNumber" value="30" />
@@ -686,7 +686,7 @@
 	
 	<bean id="event4" class="domain.Event">
 		<property name="title" value="Feria de Sevilla 2016..." />
-		<property name="eventMoment" value="1/05/2016 21:30" />
+		<property name="eventMoment" value="2016/05/01 21:30" />
 		<property name="description" value="No dejes escapar la oportunidad de festejar con nosotros la Feria 2016!!" />
 		<property name="picture" value="https://c1.staticflickr.com/3/2935/14189825003_c73d241e99_b.jpg" />
 		<property name="seatsNumber" value="20" />
@@ -696,7 +696,7 @@
 	
 	<bean id="event5" class="domain.Event">
 		<property name="title" value="Congreso muy importante..." />
-		<property name="eventMoment" value="20/05/2017 12:30" />
+		<property name="eventMoment" value="2017/05/20 12:30" />
 		<property name="description" value="Ven a conocer los avances tecnológicos en el gran congreso de..." />
 		<property name="picture" value="https://c1.staticflickr.com/5/4058/4549131161_e2545036c6_z.jpg" />
 		<property name="seatsNumber" value="1" />
@@ -712,35 +712,35 @@
   	
   	<!-- INVOICES -->
 	<bean id="invoice1" class="domain.Invoice">
-  		<property name="openPeriod" value="01/02/2017" />
-		<property name="endPeriod" value="01/03/2017" />
+  		<property name="openPeriod" value="2017/02/01" />
+		<property name="endPeriod" value="2017/03/01" />
   		<property name="amount" value="2.0" /> 
   		<property name="paid" value="true"/>
-  		<property name="momentPaid" value="15/2/2017"/>
+  		<property name="momentPaid" value="2017/02/15"/>
   		<property name="chorbi" ref="chorbi1"/> 
   	</bean>
   	
   	<bean id="invoice2" class="domain.Invoice">
-  		<property name="openPeriod" value="01/02/2017" />
-		<property name="endPeriod" value="01/03/2017" />
+  		<property name="openPeriod" value="2017/02/01" />
+		<property name="endPeriod" value="2017/03/01" />
   		<property name="amount" value="2.0" /> 
   		<property name="paid" value="true"/>
-  		<property name="momentPaid" value="15/3/2017"/>
+  		<property name="momentPaid" value="2017/02/15"/>
   		<property name="chorbi" ref="chorbi2"/> 
   	</bean>
   	
   	<bean id="invoice3" class="domain.Invoice">
-  		<property name="openPeriod" value="01/02/2017" />
-		<property name="endPeriod" value="01/03/2017" />
+  		<property name="openPeriod" value="2017/02/01" />
+		<property name="endPeriod" value="2017/03/01" />
   		<property name="amount" value="2.0" /> 
   		<property name="paid" value="true"/>
-  		<property name="momentPaid" value="13/4/2017"/>
+  		<property name="momentPaid" value="2017/03/14"/>
   		<property name="chorbi" ref="chorbi3"/> 
   	</bean>
   	
   	<bean id="invoice4" class="domain.Invoice">
-  		<property name="openPeriod" value="01/02/2017" />
-		<property name="endPeriod" value="01/03/2017" />
+  		<property name="openPeriod" value="2017/02/01" />
+		<property name="endPeriod" value="2017/03/01" />
   		<property name="amount" value="1.0" /> 
   		<property name="paid" value="false"/>
   		<property name="momentPaid"><null/></property>
@@ -750,49 +750,49 @@
   	<!--  EventChorbi -->
   	
   	<bean id="eventChorbi1" class="domain.EventChorbi">
-  		<property name="momentSubscribed" value="01/02/2017" />
+  		<property name="momentSubscribed" value="2017/02/01" />
   		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi1" />
   		<property name="event" ref="event1" /> 
   	</bean>
   	
   	<bean id="eventChorbi2" class="domain.EventChorbi">
-  		<property name="momentSubscribed" value="01/02/2017" />
+  		<property name="momentSubscribed" value="2017/02/01" />
   		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi2" />
   		<property name="event" ref="event1" /> 
   	</bean>
   	
   	<bean id="eventChorbi3" class="domain.EventChorbi">
-  		<property name="momentSubscribed" value="01/02/2017" />
+  		<property name="momentSubscribed" value="2017/02/01" />
   		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi1" />
   		<property name="event" ref="event2" /> 
   	</bean>
   	
   	<bean id="eventChorbi4" class="domain.EventChorbi">
-  		<property name="momentSubscribed" value="01/02/2017" />
+  		<property name="momentSubscribed" value="2017/02/03" />
   		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi3" />
   		<property name="event" ref="event2" /> 
   	</bean>
   	
   	<bean id="eventChorbi5" class="domain.EventChorbi">
-  		<property name="momentSubscribed" value="01/02/2017" />
+  		<property name="momentSubscribed" value="2017/02/01" />
   		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi4" />
   		<property name="event" ref="event2" /> 
   	</bean>
 	
 	<bean id="eventChorbi6" class="domain.EventChorbi">
-  		<property name="momentSubscribed" value="01/02/2017" />
+  		<property name="momentSubscribed" value="2017/02/05" />
   		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi2" />
   		<property name="event" ref="event3" /> 
   	</bean>
   	
   	<bean id="eventChorbi7" class="domain.EventChorbi">
-  		<property name="momentSubscribed" value="01/02/2017" />
+  		<property name="momentSubscribed" value="2017/02/01" />
   		<property name="amount" value="1.0" /> 
 		<property name="chorbi" ref="chorbi3" />
   		<property name="event" ref="event3" /> 
