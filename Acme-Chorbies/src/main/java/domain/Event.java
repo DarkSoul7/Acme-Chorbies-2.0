@@ -26,111 +26,113 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "\"Event\"")
 public class Event extends DomainEntity {
-
+	
 	//Attributes
-
+	
 	private String	title;
-	private Date	moment;
+	private Date	eventMoment;
 	private String	description;
 	private String	picture;
-	private int		seatsNumber;
-	private double	amount;
-
-
+	private Integer	seatsNumber;
+	private Double	amount;
+	
+	
 	//Constructor
-
+	
 	public Event() {
 		super();
 	}
-
+	
 	//Getter & setter
-
+	
 	@NotBlank
 	@SafeHtml
 	@Size(min = 10, max = 50)
 	public String getTitle() {
 		return this.title;
 	}
-
+	
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-
+	
 	@NotNull
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getMoment() {
-		return this.moment;
+	public Date getEventMoment() {
+		return this.eventMoment;
 	}
-
-	public void setMoment(final Date moment) {
-		this.moment = moment;
+	
+	public void setEventMoment(final Date eventMoment) {
+		this.eventMoment = eventMoment;
 	}
-
+	
 	@NotBlank
 	@SafeHtml
 	@Size(min = 20, max = 200)
 	public String getDescription() {
 		return this.description;
 	}
-
+	
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-
+	
 	@NotBlank
 	@SafeHtml
 	@URL
 	public String getPicture() {
 		return this.picture;
 	}
-
+	
 	public void setPicture(final String picture) {
 		this.picture = picture;
 	}
-
+	
 	@Min(1)
-	public int getSeatsNumber() {
+	@NotNull
+	public Integer getSeatsNumber() {
 		return this.seatsNumber;
 	}
-
-	public void setSeatsNumber(final int seatsNumber) {
+	
+	public void setSeatsNumber(final Integer seatsNumber) {
 		this.seatsNumber = seatsNumber;
 	}
-
-	public double getAmount() {
+	
+	@NotNull
+	public Double getAmount() {
 		return this.amount;
 	}
-
-	public void setAmount(final double amount) {
+	
+	public void setAmount(final Double amount) {
 		this.amount = amount;
 	}
-
-
+	
+	
 	//RelationShips
-
+	
 	private Manager					manager;
 	private Collection<EventChorbi>	eventChorbies;
-
-
+	
+	
 	@Valid
 	@ManyToOne(optional = false)
 	public Manager getManager() {
 		return this.manager;
 	}
-
+	
 	public void setManager(final Manager manager) {
 		this.manager = manager;
 	}
-
+	
 	@Valid
 	@OneToMany(mappedBy = "event")
 	public Collection<EventChorbi> getEventChorbies() {
 		return this.eventChorbies;
 	}
-
+	
 	public void setEventChorbies(final Collection<EventChorbi> eventChorbies) {
 		this.eventChorbies = eventChorbies;
 	}
-
+	
 }

@@ -21,21 +21,16 @@
 	<form:hidden path="id"/>
 	
 	<acme:textbox code="event.title" path="title" mandatory="true" />
-	<br/>
 	
-	<acme:textbox code="event.moment" path="moment" mandatory="true" />
-	<br/>
+	<acme:datetimepicker code="event.moment" path="eventMoment" mandatory="true"/>
 	
 	<acme:textbox code="event.picture" path="picture" mandatory="true" />
-	<br/>
 	
 	<acme:textbox code="event.seatsNumber" path="seatsNumber" mandatory="true" />
-	<br/>
 	
 	<acme:textarea code="event.description" path="description" mandatory="true" />
-	<br/>
 
 	<acme:submit code="event.save" name="save"/>
-	<acme:cancel code="event.back" url=""/>
+	<acme:cancel code="event.back" url="/event/listOfManager.do"/>
 		
 </form:form>

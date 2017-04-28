@@ -656,7 +656,7 @@
 	
 	<bean id="event1" class="domain.Event">
 		<property name="title" value="Actividades entre amigos y algo más" />
-		<property name="moment" value="07/09/2017 12:30" />
+		<property name="eventMoment" value="07/09/2017 12:30" />
 		<property name="description" value="Quedada en el parque del Retiro en el que conocer amigos o quién sabe si algo más. ¡¡No desaproveches la oportunidad!!" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3114/2498673283_655a3024a2_b.jpg" />
 		<property name="seatsNumber" value="60" />
@@ -666,7 +666,7 @@
 	
 	<bean id="event2" class="domain.Event">
 		<property name="title" value="La mejor tarde de tu vida en la mejor compañía" />
-		<property name="moment" value="25/08/2017 19:30" />
+		<property name="eventMoment" value="25/08/2017 19:30" />
 		<property name="description" value="El evento se realizará en Paseo de Colón junto a los bares de copa. Ven y dispondrás de una consumición gratuita" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3707/8998612414_52bf87eed8_b.jpg" />
 		<property name="seatsNumber" value="20" />
@@ -676,7 +676,7 @@
 	
 	<bean id="event3" class="domain.Event">
 		<property name="title" value="Cambia tus planes por nosotros y mejora tu noche" />
-		<property name="moment" value="15/05/2017 21:30" />
+		<property name="eventMoment" value="15/05/2017 21:30" />
 		<property name="description" value="Disfruta de una noche inolvidable con nosotros en la que sin duda alguna repetiras... Y lo sabes!!" />
 		<property name="picture" value="https://c1.staticflickr.com/4/3840/14649445351_305dd81632_b.jpg" />
 		<property name="seatsNumber" value="30" />
@@ -686,7 +686,7 @@
 	
 	<bean id="event4" class="domain.Event">
 		<property name="title" value="Feria de Sevilla 2016..." />
-		<property name="moment" value="1/05/2016 21:30" />
+		<property name="eventMoment" value="1/05/2016 21:30" />
 		<property name="description" value="No dejes escapar la oportunidad de festejar con nosotros la Feria 2016!!" />
 		<property name="picture" value="https://c1.staticflickr.com/3/2935/14189825003_c73d241e99_b.jpg" />
 		<property name="seatsNumber" value="20" />
@@ -696,7 +696,7 @@
 	
 	<bean id="event5" class="domain.Event">
 		<property name="title" value="Congreso muy importante..." />
-		<property name="moment" value="20/05/2017 12:30" />
+		<property name="eventMoment" value="20/05/2017 12:30" />
 		<property name="description" value="Ven a conocer los avances tecnológicos en el gran congreso de..." />
 		<property name="picture" value="https://c1.staticflickr.com/5/4058/4549131161_e2545036c6_z.jpg" />
 		<property name="seatsNumber" value="1" />

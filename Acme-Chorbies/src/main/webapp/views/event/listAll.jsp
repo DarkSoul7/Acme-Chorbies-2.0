@@ -48,10 +48,10 @@
 	<display:column style="${style}" title="${moment}">
 		<jstl:choose>
 			<jstl:when test="${cookie.language.value == 'en'}">
-				<fmt:formatDate value="${row.moment}" pattern="MM/dd/yyyy HH:mm" />
+				<fmt:formatDate value="${row.eventMoment}" pattern="MM/dd/yyyy HH:mm" />
 			</jstl:when>
 			<jstl:otherwise>
-				<fmt:formatDate value="${row.moment}" pattern="dd/MM/yyyy HH:mm" />
+				<fmt:formatDate value="${row.eventMoment}" pattern="dd/MM/yyyy HH:mm" />
 			</jstl:otherwise>
 		</jstl:choose>
 	</display:column>

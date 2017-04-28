@@ -25,11 +25,11 @@
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
 
-<%@ attribute name="disabled" required="false" %>
+<%@ attribute name="readonly" required="false" %>
 <%@ attribute name="mandatory" required="false" %>
 
-<jstl:if test="${disabled == null}">
-	<jstl:set var="disabled" value="false" />
+<jstl:if test="${readonly == null}">
+	<jstl:set var="readonly" value="false" />
 </jstl:if>
 
 <jstl:if test="${mandatory == null}">
@@ -39,26 +39,28 @@
 <%-- Definition --%>
 
 <spring:bind path="${path}">
-	<div class="form-group ${status.error? 'has-error':''}" style="padding-left:1cm">
+	<div class="form-group ${status.error? 'has-error':''}"
+		style="padding-left: 1cm">
 		<form:label path="${path}">
 			<spring:message code="${code}" />:
 			<jstl:if test="${mandatory == true}">
 				<a class="error">(*)</a>
 			</jstl:if>
 		</form:label>
-		<div class="input-group date" data-provide="datepicker" id="${path}_datepicker">
-			<form:input path="${path}" disabled="${disabled}" class="form-control" />	
-		    <div class="input-group-addon">
-		        <span class="glyphicon glyphicon-calendar"></span>
-		    </div>
+		<div class="form-group">
+			<div class='input-group date' id="${path}_datetimepicker">
+				<form:input path="${path}" readonly="${readonly}" class="form-control" />	
+				<span class="input-group-addon"> 
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+			<form:errors path="${path}" cssClass="error" /> 
 		</div>
-		<form:errors path="${path}" cssClass="error" />
 		<script type="text/javascript">
             $(function () {
-            	$.fn.datepicker.defaults.language = '${pageContext.response.locale.language}';
-            	$.fn.datepicker.defaults.format = 'dd/mm/yyyy';
-                $('#${path}_datepicker').datepicker({
-                    autoclose: true,
+                $('#${path}_datetimepicker').datetimepicker({
+                	locale: '${pageContext.response.locale.language}',
+                	format: 'dd/mm/yyyy hh:ii',
                 });
             });
         </script>

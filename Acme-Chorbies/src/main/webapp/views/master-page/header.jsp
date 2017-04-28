@@ -14,10 +14,20 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!-- Scripts -->
+<script type="text/javascript" src="scripts/moment-with-locales.js"></script>
+<script type="text/javascript" src="scripts/transition.min.js"></script>
+<script type="text/javascript" src="scripts/bootstrap-collapse-2.0.4.js"></script>
+<script type="text/javascript" src="scripts/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="scripts/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="scripts/bootstrap-datepicker.es.min.js"></script>
 <script type="text/javascript" src="scripts/bootbox.min.js"></script>
 <script type="text/javascript" src="scripts/acme.js"></script>
 
-<link rel="stylesheet" href="styles/common.css" type="text/css">
+<!-- Stylesheets -->
+<link rel="stylesheet" type="text/css" href="styles/common.css">
+<link rel="stylesheet" type="text/css" href="styles/bootstrap-datetimepicker.css">
+<link rel="stylesheet" type="text/css" href="styles/datepicker-standalone.css">
 
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">

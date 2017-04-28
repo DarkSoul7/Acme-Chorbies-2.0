@@ -18,7 +18,7 @@ public class EventForm {
 	
 	private int						id;
 	private String					title;
-	private Date					moment;
+	private Date					eventMoment;
 	private String					description;
 	private String					picture;
 	private Integer					seatsNumber;
@@ -36,7 +36,7 @@ public class EventForm {
 		
 		this.setId(event.getId());
 		this.description = event.getDescription();
-		this.moment = event.getMoment();
+		this.setEventMoment(event.getEventMoment());
 		this.picture = event.getPicture();
 		this.seatsNumber = event.getSeatsNumber();
 		this.title = event.getTitle();
@@ -49,7 +49,7 @@ public class EventForm {
 		
 		this.setId(event.getId());
 		this.description = event.getDescription();
-		this.moment = event.getMoment();
+		this.setEventMoment(event.getEventMoment());
 		this.picture = event.getPicture();
 		this.seatsNumber = event.getSeatsNumber();
 		this.title = event.getTitle();
@@ -75,13 +75,13 @@ public class EventForm {
 	}
 	
 	@Temporal(value = TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	public Date getMoment() {
-		return this.moment;
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	public Date getEventMoment() {
+		return this.eventMoment;
 	}
 	
-	public void setMoment(final Date moment) {
-		this.moment = moment;
+	public void setEventMoment(Date eventMoment) {
+		this.eventMoment = eventMoment;
 	}
 	
 	public String getDescription() {
