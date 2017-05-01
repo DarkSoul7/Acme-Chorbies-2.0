@@ -42,29 +42,34 @@ public class LikeServiceTest extends AbstractTest {
 	 * Testing cases:
 	 * 1º Good test -> expected: like registered
 	 * 2º Bad test; a chorbi cannot gives a re-like to the same chorbi who have already a like from him -> expected: IllegalArgumentException
-	 * 3º Bad test; an unauthenticated actor cannot gives likes -> expected: IllegalArgumentException
+	 * 3º Bad test; a chorbi cannot gives more than 3 stars and less tha 0 -> expected: IllegalArgumentException
+	 * 4º Bad test; an unauthenticated actor cannot gives likes -> expected: IllegalArgumentException
 	 */
 
 	@Test
 	public void likeChorbiDriver() {
 
 		final Object testingData[][] = {
-			//principal, chorbi id, expected exception
+			//principal, chorbi id, stars, expected exception
 			{
-				"chorbi1", 42, null
+				"chorbi4", 66, 3, null
 			}, {
-				"chorbi1", 41, IllegalArgumentException.class
-			}, {
-				null, 42, IllegalArgumentException.class
+				"chorbi1", 67, 1,  IllegalArgumentException.class
+			},
+			{
+				"chorbi4", 67, 4,  IllegalArgumentException.class
+			}, 
+			{
+				null, 66, 2, IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++) {
-			this.likeChorbiTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.likeChorbiTemplate((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (Class<?>) testingData[i][3]);
 		}
 	}
 
-	protected void likeChorbiTemplate(final String principal, final int chorbiId, final Class<?> expectedException) {
+	protected void likeChorbiTemplate(final String principal, final int chorbiId, final int stars, final Class<?> expectedException) {
 
 		Class<?> caught = null;
 
@@ -75,6 +80,7 @@ public class LikeServiceTest extends AbstractTest {
 
 			likeForm.setComment("Test");
 			likeForm.setIdReceiver(receiver.getId());
+			likeForm.setStars(stars);
 
 			final Like result = this.likeService.reconstruct(likeForm, null);
 
@@ -101,9 +107,9 @@ public class LikeServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			//principal, chorbi id, expected exception
 			{
-				"chorbi1", 41, null
+				"chorbi1", 67, null
 			}, {
-				"chorbi2", 42, IllegalArgumentException.class
+				"chorbi2", 68, IllegalArgumentException.class
 			}, {
 				null, 42, IllegalArgumentException.class
 			}

@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -63,7 +64,7 @@ public class Like extends DomainEntity {
 		this.moment = moment;
 	}
 
-	//@Range(min = 0, max = 3)
+	@Range(min = 0, max = 3)
 	public int getStars() {
 		return this.stars;
 	}

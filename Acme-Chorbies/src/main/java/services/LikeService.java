@@ -64,6 +64,7 @@ public class LikeService {
 		//Check the target chorbi has not already a like from the sender
 		final Like likeDone = this.findLikeFromChorbies(like.getAuthor(), like.getReceiver());
 		Assert.isTrue(likeDone == null);
+		Assert.isTrue(like.getStars()>= 0 && like.getStars() <= 3);
 
 		final Like result = this.likeRepository.save(like);
 

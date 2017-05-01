@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import utilities.AbstractTest;
 import domain.Chirp;
 import domain.Chorbi;
+import domain.Manager;
 import forms.ChirpForm;
+import utilities.AbstractTest;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -30,6 +31,9 @@ public class ChirpServiceTest extends AbstractTest {
 
 	@Autowired
 	private ChorbiService	chorbiService;
+	
+	@Autowired
+	private ManagerService managerService;
 
 
 	// Tests ------------------------------------------------------------------
@@ -203,6 +207,56 @@ public class ChirpServiceTest extends AbstractTest {
 			final Chirp chirp = this.chirpService.findOne(chirpId);
 
 			this.chirpService.delete(chirp);
+			this.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expectedException, caught);
+	}
+	
+	/***
+	 * Broadcast chirp
+	 * Testing cases:
+	 * 1º Good test -> expected: chirp sent to all chorbies that manager have.
+	 * 2º Bad test; an unauthenticated actor cannot broadcast chirp -> expected: IllegalArgumentException
+	 * 3º Bad test; Attachment incorrect -> expected: IllegalArgumentException
+	 */
+	
+	@Test
+	public void broadcastChirp() {
+
+		final Object testingData[][] = {
+			//principal, chorbi receiver id, expected exception
+			{
+				"manager1", "Subject test", "Text test", null, null
+			}, {
+				null, "Subject test", "Text test", null, IllegalArgumentException.class
+			},
+			{
+				"manager1", "Subject test", "Text test", "Attachment incorrect", IllegalArgumentException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.broadcastChirpTemplate((String) testingData[i][0],(String) testingData[i][1],(String) testingData[i][2],
+					(String) testingData[i][3], (Class<?>) testingData[i][4]);
+	}
+	
+	protected void broadcastChirpTemplate(final String principal, final String subject, final String text, final String attachments, 
+			final Class<?> expectedException) {
+		Class<?> caught = null;
+
+		try {
+			this.authenticate(principal);
+			Manager manager = managerService.findByPrincipal();
+			final ChirpForm chirpForm = this.chirpService.create();
+			chirpForm.setReceiver(manager);
+			chirpForm.setEventId(manager.getEvents().iterator().next().getId());
+			chirpForm.setAttachments(attachments);
+			chirpForm.setText(text);
+			chirpForm.setSubject(subject);
+			chirpService.broadcastChirp(chirpForm);
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
