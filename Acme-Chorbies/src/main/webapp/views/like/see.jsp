@@ -25,7 +25,12 @@
 <jstl:out value="${like.comment}"></jstl:out>
 <br/>
 <b><spring:message code="like.stars" />: </b>
-<jstl:out value="${like.stars}"></jstl:out>
+<jstl:forEach begin="1" end="${like.stars}">
+	<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+</jstl:forEach>
+<jstl:forEach begin="${like.stars + 1}" end="3">
+	<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+</jstl:forEach>
 <br/>
 <b><spring:message code="like.moment" />: </b>
 <jstl:choose>

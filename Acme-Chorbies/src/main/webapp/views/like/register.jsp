@@ -22,9 +22,7 @@
 	
 	<acme:textbox code="like.comment" path="comment" />
 	
-	<br/>
-	
-	<acme:textbox code="like.stars" path="stars" />
+	<acme:textbox code="like.stars" path="stars" mandatory="true" />
 	
 	<br/>
 	

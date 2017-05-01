@@ -36,7 +36,7 @@
 	<jstl:if test="${true}">
 		<acme:submit code="chirp.send" name="save"/>
 	
-		<acme:cancel code="chirp.cancel" url="welcome/index.do"/>
+		<acme:cancel code="chirp.cancel" url=""/>
 	</jstl:if>
 		
 </form:form>

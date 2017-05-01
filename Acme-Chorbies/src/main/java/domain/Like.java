@@ -28,30 +28,30 @@ import org.springframework.format.annotation.DateTimeFormat;
 	})
 })
 public class Like extends DomainEntity {
-
+	
 	//Attributes
 	private String	comment;
 	private Date	moment;
-	private int		stars;
-
-
+	private Integer	stars;
+	
+	
 	//Constructor
 	public Like() {
 		super();
 	}
-
+	
 	//Getters and setters
-
+	
 	@SafeHtml
 	@Size(min = 0, max = 200)
 	public String getComment() {
 		return this.comment;
 	}
-
+	
 	public void setComment(final String comment) {
 		this.comment = comment;
 	}
-
+	
 	@Past
 	@NotNull
 	@Temporal(value = TemporalType.TIMESTAMP)
@@ -59,45 +59,46 @@ public class Like extends DomainEntity {
 	public Date getMoment() {
 		return this.moment;
 	}
-
+	
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-
+	
 	@Range(min = 0, max = 3)
-	public int getStars() {
+	@NotNull
+	public Integer getStars() {
 		return this.stars;
 	}
-
-	public void setStars(final int stars) {
+	
+	public void setStars(final Integer stars) {
 		this.stars = stars;
 	}
-
-
+	
+	
 	//RellationShips
-
+	
 	private Chorbi	author;
 	private Chorbi	receiver;
-
-
+	
+	
 	@Valid
 	@ManyToOne(optional = false)
 	public Chorbi getAuthor() {
 		return this.author;
 	}
-
+	
 	public void setAuthor(final Chorbi author) {
 		this.author = author;
 	}
-
+	
 	@Valid
 	@ManyToOne(optional = false)
 	public Chorbi getReceiver() {
 		return this.receiver;
 	}
-
+	
 	public void setReceiver(final Chorbi receiver) {
 		this.receiver = receiver;
 	}
-
+	
 }

@@ -48,7 +48,6 @@
 <br/>
 
 <jstl:if test="${chirp != null}">
-	<acme:cancel url="chirp/reply.do?chirpId=${chirp.id}" code="chirp.reply" class_="btn btn-primary" />
 	<acme:cancel url="chirp/forward.do?chirpId=${chirp.id}" code="chirp.forward" class_="btn btn-primary" />	
 	
 	<jstl:if test="${chirp.parentChirp != null}">
@@ -60,8 +59,15 @@
 	</jstl:if>
 	
 	<jstl:if test="${chirp.childChirp == null}">
+		<acme:cancel url="chirp/reply.do?chirpId=${chirp.id}" code="chirp.reply" class_="btn btn-primary" />
 		<acme:confirm code="chirp.delete" url="chirp/delete.do?chirpId=${chirp.id}&url=" msg="chirp.confirmDeletion" />
 	</jstl:if>
 	
-	<acme:cancel url="" code="chirp.back"/>	
+	<security:authentication var="userAccountId" property="principal.id"/>
+	<jstl:if test="${userAccountId == chirp.sender.userAccount.id}">
+		<acme:cancel url="chirp/sentChirps.do" code="chirp.back"/>	
+	</jstl:if>
+	<jstl:if test="${userAccountId == chirp.receiver.userAccount.id}">
+		<acme:cancel url="chirp/receivedChirps.do" code="chirp.back"/>	
+	</jstl:if>
 </jstl:if>
