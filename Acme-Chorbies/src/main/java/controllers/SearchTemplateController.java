@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CachedTimeService;
+import services.ChorbiService;
+import services.SearchTemplateService;
 import domain.Brand;
 import domain.CachedTime;
 import domain.Chorbi;
 import domain.Genre;
 import domain.Relationship;
 import domain.SearchTemplate;
-import services.CachedTimeService;
-import services.ChorbiService;
-import services.SearchTemplateService;
 
 @Controller
 @RequestMapping(value = "/searchTemplate")
@@ -49,8 +49,9 @@ public class SearchTemplateController extends AbstractController {
 
 		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 		SearchTemplate searchTemplate = chorbi.getSearchTemplate();
-		if (searchTemplate == null)
+		if (searchTemplate == null) {
 			searchTemplate = new SearchTemplate();
+		}
 		result = this.listSaveModelAndView(searchTemplate);
 		return result;
 	}
@@ -59,9 +60,9 @@ public class SearchTemplateController extends AbstractController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final SearchTemplate searchTemplate, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors())
-			result = this.listSaveModelAndView(searchTemplate);
-		else
+		if (binding.hasErrors()) {
+			result = this.listSaveModelAndView(searchTemplate, "searchTemplate.save.error");
+		} else {
 			try {
 				final Collection<Chorbi> chorbiesFound = this.searchTemplateService.searchByPrincipal(searchTemplate);
 				searchTemplate.setListChorbi(chorbiesFound);
@@ -72,6 +73,7 @@ public class SearchTemplateController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = this.listSaveModelAndView(searchTemplate, "searchTemplate.save.error");
 			}
+		}
 		return result;
 	}
 
@@ -106,9 +108,9 @@ public class SearchTemplateController extends AbstractController {
 	public ModelAndView saveCachedTime(@Valid final CachedTime cachedTime, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.createEditModelAndViewCachedTime(cachedTime);
-		else
+		} else {
 			try {
 
 				this.cachedTimeService.save(cachedTime);
@@ -121,6 +123,7 @@ public class SearchTemplateController extends AbstractController {
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndViewCachedTime(cachedTime, "searchTemplate.saveCachedTime.error");
 			}
+		}
 		return result;
 	}
 
@@ -147,6 +150,7 @@ public class SearchTemplateController extends AbstractController {
 		result.addObject("brands", brands);
 		result.addObject("errorMessage", message);
 		result.addObject("RequestURI", "searchTemplate/save.do");
+		result.addObject("RequestURIB", "searchTemplate/list.do");
 
 		return result;
 	}

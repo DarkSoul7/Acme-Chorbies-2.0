@@ -72,7 +72,7 @@
 
 <h2><spring:message code="searchTemplate.results" /></h2>
 
-<display:table name="cachedChorbies" id="row" requestURI="${requestURI}" pagesize="5">
+<display:table name="cachedChorbies" id="row" requestURI="${RequestURIB}" pagesize="5">
 	
 	<spring:message code="chorbi.picture" var="picture" />
 	<display:column title="${picture}">
