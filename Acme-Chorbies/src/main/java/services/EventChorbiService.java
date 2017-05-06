@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.EventChorbiRepository;
 import domain.Chorbi;
 import domain.Event;
 import domain.EventChorbi;
-import repositories.EventChorbiRepository;
 
 @Service
 @Transactional
@@ -40,7 +40,7 @@ public class EventChorbiService {
 	public EventChorbi save(final EventChorbi eventChorbi) {
 		EventChorbi result;
 		Assert.notNull(eventChorbi);
-		eventChorbi.setMomentSubscribed(new Date());
+		eventChorbi.setMomentSubscribed(new Date(System.currentTimeMillis() - 1000));
 		eventChorbi.setAmount(this.feeService.getFee().getAmountChorbi());
 		result = this.eventChorbiRepository.save(eventChorbi);
 
