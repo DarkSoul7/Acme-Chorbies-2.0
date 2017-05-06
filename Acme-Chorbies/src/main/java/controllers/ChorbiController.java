@@ -68,7 +68,6 @@ public class ChorbiController extends AbstractController {
 		return result;
 	}
 
-
 	@RequestMapping(value = "/listLikeHim", method = RequestMethod.GET)
 	public ModelAndView listLikeHim() {
 		ModelAndView result;
@@ -173,18 +172,23 @@ public class ChorbiController extends AbstractController {
 		ModelAndView result = new ModelAndView();
 		final Chorbi chorbi;
 
-		chorbi = this.chorbiService.reconstruct(chorbiForm, binding);
+		try {
+			chorbi = this.chorbiService.reconstruct(chorbiForm, binding);
 
-		if (binding.hasErrors()) {
-			result = this.editModelAndView(chorbiForm, "chorbi.creditCard.error");
-		} else {
-			try {
-				this.chorbiService.save(chorbi);
-				result = new ModelAndView("redirect:/chorbi/edit.do");
-				result.addObject("successMessage", "chorbi.edit.success");
-			} catch (final Throwable oops) {
-				result = this.editModelAndView(chorbiForm, "chorbi.commit.error");
+			if (binding.hasErrors()) {
+				result = this.editModelAndView(chorbiForm, "chorbi.creditCard.error");
+			} else {
+				try {
+					this.chorbiService.save(chorbi);
+					result = new ModelAndView("redirect:/chorbi/edit.do");
+					result.addObject("successMessage", "chorbi.edit.success");
+				} catch (final Throwable oops) {
+					result = this.editModelAndView(chorbiForm, "chorbi.commit.error");
+				}
 			}
+
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(chorbiForm, "chorbi.commit.error");
 		}
 
 		return result;
