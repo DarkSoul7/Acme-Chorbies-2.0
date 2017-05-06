@@ -30,13 +30,14 @@ import services.ManagerService;
 public class EventController extends AbstractController {
 
 	@Autowired
-	private EventService eventService;
+	private EventService	eventService;
 
 	@Autowired
-	private ManagerService managerService;
+	private ManagerService	managerService;
 
 	@Autowired
-	private ChorbiService chorbiService;
+	private ChorbiService	chorbiService;
+
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -59,27 +60,21 @@ public class EventController extends AbstractController {
 		final DateTime now = new DateTime();
 		final DateTime aMonthLater = now.plusMonths(1);
 		final Collection<EventForm> eventsGreyList = this.eventService.getFinishedEvents();
-		final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(now.toDate(),
-				aMonthLater.toDate());
-		final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(now.toDate(),
-				aMonthLater.toDate());
+		final Collection<EventForm> eventsHighlightedList = this.eventService.getFutureHighlighted(now.toDate(), aMonthLater.toDate());
+		final Collection<EventForm> eventsNonHighlightedList = this.eventService.nonHighlighted(now.toDate(), aMonthLater.toDate());
 
 		final Collection<EventForm> allEvents = new ArrayList<EventForm>();
 		allEvents.addAll(eventsGreyList);
 		allEvents.addAll(eventsHighlightedList);
 		allEvents.addAll(eventsNonHighlightedList);
 
-		List<Integer> listChorbiJoinEventYet = new ArrayList<Integer>();
+		final List<Integer> listChorbiJoinEventYet = new ArrayList<Integer>();
 		if (LoginService.isAuthenticated()) {
-			Chorbi chorbi = chorbiService.findByPrincipal();
-			for(EventChorbi eventChorbi : chorbi.getEventChorbies()){
-				for (EventForm eventForm : allEvents) {
-					if (eventChorbi.getEvent().getId() == eventForm.getId()) {
+			final Chorbi chorbi = this.chorbiService.findByPrincipal();
+			for (final EventChorbi eventChorbi : chorbi.getEventChorbies())
+				for (final EventForm eventForm : allEvents)
+					if (eventChorbi.getEvent().getId() == eventForm.getId())
 						listChorbiJoinEventYet.add(eventForm.getId());
-					}
-					
-				}
-			}
 		}
 
 		result = new ModelAndView("event/listAll");
@@ -100,7 +95,7 @@ public class EventController extends AbstractController {
 		result = new ModelAndView("event/list");
 		result.addObject("events", events);
 		result.addObject("chorbiRegister", true);
-		result.addObject("requestURI", "event/list.do");
+		result.addObject("requestURI", "event/listRegister.do");
 
 		return result;
 	}
