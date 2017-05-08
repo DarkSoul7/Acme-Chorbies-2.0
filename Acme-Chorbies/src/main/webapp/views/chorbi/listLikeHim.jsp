@@ -24,6 +24,8 @@
 <jstl:if test="${haveCreditCard == false}">
 	<spring:message code="chorbi.registerCreditCard" var="registerCreditCard" />
 	<h4><jstl:out value="${registerCreditCard}"></jstl:out></h4>
+	<br/>
+	<acme:cancel code="chorbi.profile" url="chorbi/edit.do" />
 </jstl:if>
 
 <jstl:if test="${haveCreditCard == true}">
