@@ -190,7 +190,7 @@ public class ChirpService {
 		result.setReceiver(chirpForm.getReceiver());
 		
 		result.setSender(principal);
-		result.setMoment(new Date());
+		result.setMoment(new Date(System.currentTimeMillis() - 1000));
 		result.setAttachments(attachments);
 		result.setId(0);
 		result.setVersion(0);
