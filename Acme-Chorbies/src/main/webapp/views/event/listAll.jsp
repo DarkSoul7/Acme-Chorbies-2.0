@@ -19,6 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <display:table name="events" id="row" requestURI="${requestURI}"
 	pagesize="5">
@@ -66,18 +67,18 @@
 	</display:column>
 
 	<spring:message code="event.seatsNumber" var="seatsNumber" />
-	<display:column style="${style}" property="seatsNumber"
-		title="${seatsNumber}"  sortable="true"/>
+	<display:column style="${style}" 
+		title="${seatsNumber}"  property="seatsAvailable" sortable="true"/>
 
 	<security:authorize access="hasRole('CHORBI')">
 		<display:column style="${style}">
 			<jstl:if test="${!listChorbiJoinEventYet.contains(row.id)}">
-				<jstl:if test="${row.highlighted == true}">
-					<acme:cancel url="event/join.do?eventId=${row.id}"
-						code="event.join" />
-				</jstl:if>
+<%-- 				<jstl:if test="${row.highlighted == true}"> --%>
+<%-- 					<acme:cancel url="event/join.do?eventId=${row.id}" --%>
+<%-- 						code="event.join" /> --%>
+<%-- 				</jstl:if> --%>
 				<jstl:if
-					test="${(row.highlighted == null) && (row.seatsNumber - row.eventChorbies.size > 0)}">
+					test="${(row.seatsAvailable > 0)}">
 					<acme:cancel url="event/join.do?eventId=${row.id}"
 						code="event.join" />
 				</jstl:if>
