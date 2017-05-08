@@ -62,8 +62,9 @@ public class BannerServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.randomBannerTemplate((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void randomBannerTemplate(final String testingCase, final String principal, final Class<?> expectedException) {
@@ -79,8 +80,9 @@ public class BannerServiceTest extends AbstractTest {
 			} else if (testingCase.equals("case 4")) {
 				this.authenticate(principal);
 				final Collection<Banner> banners = this.bannerService.findAll();
-				for (final Banner banner : banners)
+				for (final Banner banner : banners) {
 					this.bannerService.delete(banner);
+				}
 				this.unauthenticate();
 				result = this.bannerService.getRandomBanner();
 				Assert.isTrue(result == null);
@@ -119,8 +121,9 @@ public class BannerServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.createAndSaveBannerTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void createAndSaveBannerTemplate(final String principal, final Class<?> expectedException) {
@@ -160,8 +163,9 @@ public class BannerServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.editABannerTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void editABannerTemplate(final String principal, final Class<?> expectedException) {
@@ -169,7 +173,7 @@ public class BannerServiceTest extends AbstractTest {
 
 		try {
 			this.authenticate(principal);
-			final Banner banner = this.bannerService.findOne(58);
+			final Banner banner = this.bannerService.findOne(88);
 			banner.setPicture("http://www.testing.es");
 			this.bannerService.save(banner);
 			this.unauthenticate();
@@ -201,8 +205,9 @@ public class BannerServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.deleteABannerTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void deleteABannerTemplate(final String principal, final Class<?> expectedException) {
@@ -210,7 +215,7 @@ public class BannerServiceTest extends AbstractTest {
 
 		try {
 			this.authenticate(principal);
-			final Banner banner = this.bannerService.findOne(58);
+			final Banner banner = this.bannerService.findOne(88);
 
 			this.bannerService.delete(banner);
 			this.unauthenticate();

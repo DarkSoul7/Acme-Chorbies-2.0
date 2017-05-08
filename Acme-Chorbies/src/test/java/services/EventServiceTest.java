@@ -43,7 +43,7 @@ public class EventServiceTest extends AbstractTest {
 	 * Browse event that are going to be organised in less than one month and have seats available
 	 * Testing cases:
 	 * 1º Good test -> expected: event list returned (size = 0)
-	 * 2º Bad test; the method not returns a null list -> expected: IllegalArgumentException
+	 * 2º Bad test; the method not returns a null list -> expected: NullPointerException
 	 * 3º Bad test; the expected list size is 0 -> expected: IllegalArgumentException
 	 */
 
@@ -52,7 +52,7 @@ public class EventServiceTest extends AbstractTest {
 		final Object[][] testingData = {
 			//list size, expected exception
 			{
-				0, null
+				2, null
 			}, {
 				null, NullPointerException.class
 			}, {
@@ -60,8 +60,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.browseEarlyEventTemplate((Integer) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void browseEarlyEventTemplate(final Integer listSize, final Class<?> expectedException) {
@@ -81,7 +82,7 @@ public class EventServiceTest extends AbstractTest {
 	 * Browse list highlighted events
 	 * Testing cases:
 	 * 1º Good test -> expected: lists return expected sizes
-	 * 2º Bad test; the method not returns a null list -> expected: IllegalArgumentException
+	 * 2º Bad test; the method not returns a null list -> expected: NullPointerException
 	 * 3º Bad test; dates are too old -> expected: IllegalArgumentException
 	 */
 
@@ -90,7 +91,7 @@ public class EventServiceTest extends AbstractTest {
 		final Object[][] testingData = {
 			//size greyList, size highlightedList, size non highlightedList, date1, date2, expected exception
 			{
-				1, 1, 3, "2017-01-01", "2018-01-01", null
+				1, 4, 0, "2017-01-01", "2018-01-01", null
 			}, {
 				null, null, null, "2017-01-01", "2017-01-01", NullPointerException.class
 			}, {
@@ -98,8 +99,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.browseHighlightedEventTemplate((Integer) testingData[i][0], (Integer) testingData[i][1], (Integer) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (Class<?>) testingData[i][5]);
+		}
 	}
 
 	protected void browseHighlightedEventTemplate(final Integer greyList, final Integer highlightedList, final Integer nonHighlightedList, final String date1, final String date2, final Class<?> expectedException) {
@@ -143,8 +145,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.listEventTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void listEventTemplate(final String principal, final Class<?> expectedException) {
@@ -184,8 +187,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.registerEventTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void registerEventTemplate(final String principal, final Class<?> expectedException) {
@@ -236,8 +240,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.editEventTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void editEventTemplate(final String principal, final int eventId, final Class<?> expectedException) {
@@ -279,8 +284,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.deleteEventTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void deleteEventTemplate(final String principal, final int eventId, final Class<?> expectedException) {
@@ -321,8 +327,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.subscribeEventTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void subscribeEventTemplate(final String principal, final int eventId, final Class<?> expectedException) {
@@ -333,8 +340,9 @@ public class EventServiceTest extends AbstractTest {
 
 			final Event event = this.eventService.findOne(eventId);
 
-			if (principal.equals("chorbi2"))
+			if (principal.equals("chorbi2")) {
 				event.setSeatsNumber(event.getSeatsNumber() - 1);
+			}
 
 			this.eventService.registerInEvent(event);
 
@@ -367,8 +375,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.unsubscribeEventTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void unsubscribeEventTemplate(final String principal, final int eventId, final Class<?> expectedException) {
@@ -410,8 +419,9 @@ public class EventServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.browseEventListTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void browseEventListTemplate(final String principal, final Class<?> expectedException) {

@@ -62,8 +62,9 @@ public class ChorbiServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.browseChorbiTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void browseChorbiTemplate(final String principal, final Class<?> expectedException) {
@@ -85,8 +86,8 @@ public class ChorbiServiceTest extends AbstractTest {
 	 * Register a chorbi
 	 * Testing cases:
 	 * 1º Good test -> expected: chorbi registered
-	 * 2º Bad test; a chorbi cannot be under age -> expected: IllegalArgumentException
-	 * 3º Bad test; the credit card must be valid, if any -> expected: IllegalArgumentException
+	 * 2º Bad test; a chorbi cannot be under age -> expected: NullPointerException
+	 * 3º Bad test; the credit card must be valid, if any -> expected: NullPointerException
 	 */
 
 	@Test
@@ -97,14 +98,15 @@ public class ChorbiServiceTest extends AbstractTest {
 			{
 				new DateTime(1989, 10, 10, 00, 00).toDate(), false, null
 			}, {
-				new DateTime(2010, 10, 10, 00, 00).toDate(), false, IllegalArgumentException.class
+				new DateTime(2010, 10, 10, 00, 00).toDate(), false, NullPointerException.class
 			}, {
-				new DateTime(1989, 10, 10, 00, 00).toDate(), true, IllegalArgumentException.class
+				new DateTime(1989, 10, 10, 00, 00).toDate(), true, NullPointerException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.registerChorbiTemplate((Date) testingData[i][0], (Boolean) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void registerChorbiTemplate(final Date birthDate, final Boolean creditCard, final Class<?> expectedException) {
@@ -147,12 +149,15 @@ public class ChorbiServiceTest extends AbstractTest {
 
 			result = this.chorbiService.reconstruct(chorbiForm, null);
 
-			if (result.getOverAge() == false)
+			if (result.getOverAge() == false) {
 				throw new IllegalArgumentException();
+			}
 
-			if (creditCard)
-				if (result.getValidCreditCard() == false)
+			if (creditCard) {
+				if (result.getValidCreditCard() == false) {
 					throw new IllegalArgumentException();
+				}
+			}
 
 			this.chorbiService.save(result);
 			this.chorbiService.flush();
@@ -182,8 +187,9 @@ public class ChorbiServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.changeChorbiProfileTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void changeChorbiProfileTemplate(final String principal, final Class<?> expectedException) {
@@ -231,8 +237,9 @@ public class ChorbiServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.banChorbiTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void banChorbiTemplate(final String principal, final Class<?> expectedException) {
@@ -240,7 +247,7 @@ public class ChorbiServiceTest extends AbstractTest {
 
 		try {
 			this.authenticate(principal);
-			final Chorbi chorbi = this.chorbiService.findOne(40);
+			final Chorbi chorbi = this.chorbiService.findOne(67);
 			this.administratorService.banChorbi(chorbi);
 			Assert.isTrue(chorbi.getUserAccount().isEnabled() == false);
 			this.unauthenticate();
@@ -272,16 +279,25 @@ public class ChorbiServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
-			this.unBanChorbiTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		int cont = 0;
+		for (int i = 0; i < testingData.length; i++) {
+			this.unBanChorbiTemplate((String) testingData[i][0], (Class<?>) testingData[i][1], cont);
+			cont++;
+		}
 	}
 
-	protected void unBanChorbiTemplate(final String principal, final Class<?> expectedException) {
+	protected void unBanChorbiTemplate(final String principal, final Class<?> expectedException, final int cont) {
 		Class<?> caught = null;
 
 		try {
+
 			this.authenticate(principal);
-			final Chorbi chorbi = this.chorbiService.findOne(42);
+			final Chorbi chorbi = this.chorbiService.findOne(67);
+
+			if (cont == 0) {
+				this.administratorService.banChorbi(chorbi);
+			}
+
 			this.administratorService.unbanChorbi(chorbi);
 			Assert.isTrue(chorbi.getUserAccount().isEnabled() == true);
 			this.unauthenticate();
@@ -310,8 +326,9 @@ public class ChorbiServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.navigateChorbiesWhoLikeITemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
 	}
 
 	protected void navigateChorbiesWhoLikeITemplate(final String principal, final Class<?> expectedException) {

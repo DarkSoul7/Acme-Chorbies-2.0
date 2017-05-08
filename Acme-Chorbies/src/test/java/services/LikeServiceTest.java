@@ -42,7 +42,7 @@ public class LikeServiceTest extends AbstractTest {
 	 * Testing cases:
 	 * 1º Good test -> expected: like registered
 	 * 2º Bad test; a chorbi cannot gives a re-like to the same chorbi who have already a like from him -> expected: IllegalArgumentException
-	 * 3º Bad test; a chorbi cannot gives more than 3 stars and less tha 0 -> expected: IllegalArgumentException
+	 * 3º Bad test; a chorbi cannot gives more than 3 stars and less than 0 -> expected: NullPointerException
 	 * 4º Bad test; an unauthenticated actor cannot gives likes -> expected: IllegalArgumentException
 	 */
 
@@ -54,12 +54,10 @@ public class LikeServiceTest extends AbstractTest {
 			{
 				"chorbi4", 66, 3, null
 			}, {
-				"chorbi1", 67, 1,  IllegalArgumentException.class
-			},
-			{
-				"chorbi4", 67, 4,  IllegalArgumentException.class
-			}, 
-			{
+				"chorbi1", 67, 1, IllegalArgumentException.class
+			}, {
+				"chorbi4", 67, 4, NullPointerException.class
+			}, {
 				null, 66, 2, IllegalArgumentException.class
 			}
 		};

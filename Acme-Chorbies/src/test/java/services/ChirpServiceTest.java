@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import utilities.AbstractTest;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Manager;
 import forms.ChirpForm;
-import utilities.AbstractTest;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -31,9 +31,9 @@ public class ChirpServiceTest extends AbstractTest {
 
 	@Autowired
 	private ChorbiService	chorbiService;
-	
+
 	@Autowired
-	private ManagerService managerService;
+	private ManagerService	managerService;
 
 
 	// Tests ------------------------------------------------------------------
@@ -51,14 +51,15 @@ public class ChirpServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			//principal, chorbi receiver id, expected exception
 			{
-				"chorbi1", 43, null
+				"chorbi1", 67, null
 			}, {
-				null, 41, IllegalArgumentException.class
+				null, 66, IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.sendChirpTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void sendChirpTemplate(final String principal, final int receiverId, final Class<?> expectedException) {
@@ -96,14 +97,15 @@ public class ChirpServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			//principal, reply chirp, expected exception
 			{
-				"chorbi1", 52, null
+				"chorbi1", 77, null
 			}, {
-				null, 52, IllegalArgumentException.class
+				null, 75, IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.replyChirpTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void replyChirpTemplate(final String principal, final int replyId, final Class<?> expectedException) {
@@ -142,14 +144,15 @@ public class ChirpServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			//principal, receiver id, chirp id, expected exception
 			{
-				"chorbi1", 42, 52, null
+				"chorbi1", 68, 72, null
 			}, {
-				null, 41, 52, IllegalArgumentException.class
+				null, 68, 72, IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.resendChirpTemplate((String) testingData[i][0], (int) testingData[i][1], (int) testingData[i][2], (Class<?>) testingData[i][3]);
+		}
 	}
 
 	protected void resendChirpTemplate(final String principal, final int receiverId, final int chirpId, final Class<?> expectedException) {
@@ -160,7 +163,9 @@ public class ChirpServiceTest extends AbstractTest {
 			final Chirp originalChirp = this.chirpService.findOne(chirpId);
 
 			final ChirpForm resend = this.chirpService.toFormObject(originalChirp, false);
+			final Chorbi receiver = this.chorbiService.findOne(receiverId);
 
+			resend.setReceiver(receiver);
 			resend.setText("Resend");
 
 			final Chirp result = this.chirpService.reconstruct(resend);
@@ -187,16 +192,17 @@ public class ChirpServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			//principal, chirp id, expected exception
 			{
-				"chorbi3", 49, null
+				"chorbi3", 75, null
 			}, {
-				null, 47, IllegalArgumentException.class
+				null, 78, IllegalArgumentException.class
 			}, {
-				"chorbi2", 52, IllegalArgumentException.class
+				"chorbi2", 80, IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.eraseChirpTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		}
 	}
 
 	protected void eraseChirpTemplate(final String principal, final int chirpId, final Class<?> expectedException) {
@@ -214,7 +220,7 @@ public class ChirpServiceTest extends AbstractTest {
 
 		this.checkExceptions(expectedException, caught);
 	}
-	
+
 	/***
 	 * Broadcast chirp
 	 * Testing cases:
@@ -222,7 +228,7 @@ public class ChirpServiceTest extends AbstractTest {
 	 * 2º Bad test; an unauthenticated actor cannot broadcast chirp -> expected: IllegalArgumentException
 	 * 3º Bad test; Attachment incorrect -> expected: IllegalArgumentException
 	 */
-	
+
 	@Test
 	public void broadcastChirp() {
 
@@ -232,31 +238,29 @@ public class ChirpServiceTest extends AbstractTest {
 				"manager1", "Subject test", "Text test", null, null
 			}, {
 				null, "Subject test", "Text test", null, IllegalArgumentException.class
-			},
-			{
+			}, {
 				"manager1", "Subject test", "Text test", "Attachment incorrect", IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
-			this.broadcastChirpTemplate((String) testingData[i][0],(String) testingData[i][1],(String) testingData[i][2],
-					(String) testingData[i][3], (Class<?>) testingData[i][4]);
+		for (int i = 0; i < testingData.length; i++) {
+			this.broadcastChirpTemplate((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
+		}
 	}
-	
-	protected void broadcastChirpTemplate(final String principal, final String subject, final String text, final String attachments, 
-			final Class<?> expectedException) {
+
+	protected void broadcastChirpTemplate(final String principal, final String subject, final String text, final String attachments, final Class<?> expectedException) {
 		Class<?> caught = null;
 
 		try {
 			this.authenticate(principal);
-			Manager manager = managerService.findByPrincipal();
+			final Manager manager = this.managerService.findByPrincipal();
 			final ChirpForm chirpForm = this.chirpService.create();
 			chirpForm.setReceiver(manager);
 			chirpForm.setEventId(manager.getEvents().iterator().next().getId());
 			chirpForm.setAttachments(attachments);
 			chirpForm.setText(text);
 			chirpForm.setSubject(subject);
-			chirpService.broadcastChirp(chirpForm);
+			this.chirpService.broadcastChirp(chirpForm);
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
