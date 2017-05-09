@@ -69,7 +69,9 @@
 	<spring:message code="event.seatsNumber" var="seatsNumber" />
 	<display:column style="${style}" 
 		title="${seatsNumber}"  property="seatsAvailable" sortable="true"/>
-
+	
+	<spring:message code="event.amount" var="amount" />
+	<display:column property="amount" title="${amount}" />
 	<security:authorize access="hasRole('CHORBI')">
 		<display:column style="${style}">
 			<jstl:if test="${!listChorbiJoinEventYet.contains(row.id)}">

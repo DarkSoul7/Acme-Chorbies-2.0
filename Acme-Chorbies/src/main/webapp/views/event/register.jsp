@@ -19,6 +19,7 @@
 
 <form:form action="${requestURI}" modelAttribute="eventForm">
 	<form:hidden path="id"/>
+	<form:hidden path="amount"/>
 	
 	<acme:textbox code="event.title" path="title" mandatory="true" />
 	

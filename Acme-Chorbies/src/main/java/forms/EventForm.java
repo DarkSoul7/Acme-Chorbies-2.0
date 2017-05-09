@@ -25,6 +25,7 @@ public class EventForm {
 	private Boolean					highlighted;
 	private Collection<EventChorbi>	eventChorbies;
 	private int						seatsAvailable;
+	private Double					amount;
 
 
 	//Constructor
@@ -44,6 +45,7 @@ public class EventForm {
 		this.highlighted = highlighted;
 		this.eventChorbies = event.getEventChorbies();
 		this.seatsAvailable = seatsAvailable;
+		this.amount = event.getAmount();
 	}
 
 	public EventForm(final Event event, final int seatsAvailable) {
@@ -133,6 +135,14 @@ public class EventForm {
 
 	public void setEventChorbies(final Collection<EventChorbi> eventChorbies) {
 		this.eventChorbies = eventChorbies;
+	}
+
+	public Double getAmount() {
+		return this.amount;
+	}
+
+	public void setAmount(final Double amount) {
+		this.amount = amount;
 	}
 
 }
