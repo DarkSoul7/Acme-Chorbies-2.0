@@ -71,10 +71,10 @@
 		title="${seatsNumber}"  property="seatsAvailable" sortable="true"/>
 	
 	<spring:message code="event.amount" var="amount" />
-	<display:column property="amount" title="${amount}" />
+	<display:column style="${style}" property="amount" title="${amount}" />
 	<security:authorize access="hasRole('CHORBI')">
 		<display:column style="${style}">
-			<jstl:if test="${!listChorbiJoinEventYet.contains(row.id)}">
+			<jstl:if test="${row.highlighted != false && row.joined != null && row.joined == false}">
 <%-- 				<jstl:if test="${row.highlighted == true}"> --%>
 <%-- 					<acme:cancel url="event/join.do?eventId=${row.id}" --%>
 <%-- 						code="event.join" /> --%>

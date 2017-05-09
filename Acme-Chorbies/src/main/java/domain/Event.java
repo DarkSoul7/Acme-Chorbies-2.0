@@ -43,6 +43,15 @@ public class Event extends DomainEntity {
 		super();
 	}
 	
+	public Event(Event event, int seatsNumber) {
+		this.title = event.getTitle();
+		this.eventMoment = event.getEventMoment();
+		this.description = event.getDescription();
+		this.picture = event.getPicture();
+		this.seatsNumber = seatsNumber;
+		this.amount = event.getAmount();
+	}
+	
 	//Getter & setter
 	
 	@NotBlank
