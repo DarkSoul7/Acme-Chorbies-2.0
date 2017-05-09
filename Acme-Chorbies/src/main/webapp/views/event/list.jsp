@@ -19,6 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <display:table name="events" id="row" requestURI="${requestURI}" pagesize="5">
 
@@ -46,7 +47,9 @@
 	</display:column>
 	
 	<spring:message code="event.seatsNumber" var="seatsNumber"/>
-	<display:column property="seatsNumber" title="${seatsNumber}" sortable="true"/>
+	<display:column title="${seatsNumber}" sortable="true">
+		<jstl:out value="${row.seatsNumber - fn:length(row.eventChorbies) }"></jstl:out>
+	</display:column>
 	
 	<spring:message code="event.amount" var="amount" />
 	<display:column property="amount" title="${amount}" />
